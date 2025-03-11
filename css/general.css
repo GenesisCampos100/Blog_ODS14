@@ -1,0 +1,107 @@
+
+@font-face {
+    font-family: 'miFuente';
+    src: url(../fuentes/MonsterFriendBack.otf);
+}
+@font-face{
+    font-family: 'miFuenteUndertale';
+    src: url(../fuentes/undertale.ttf);
+    
+}
+
+@font-face{
+    font-family: 'miFuentePaparyus';
+    src: url(../fuentes/papyrus-font-undertale.ttf);
+    
+}
+.Titulo{
+    font-family: 'miFuente';
+
+    color: #ffffff;
+    text-align: center;
+    border: rgb(255, 255, 255) 10px double;
+    width: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.cuadros{
+
+    font-family: 'miFuenteUndertale';
+    padding: 10px;
+    border: rgb(255, 255, 255) 10px double;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+
+
+a{
+    font-family: 'miFuenteUndertale';
+    padding: 3px;
+    border: rgb(255, 255, 255) 10px double;
+    text-decoration: none; 
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+}
+
+.texto{
+
+    color: #ffffff;
+}
+
+body{
+
+    background-color: black;
+    color: white;
+    background-image: url('fondos/spp3.gif');
+    background-size: cover;
+    /*background-size:contain;*/
+    background-repeat: no-repeat;
+}
+
+.contenedor{
+
+    font-family: 'miFuenteUndertale';
+}
+
+.cuadroTexto{
+    border: none;
+    color: #ffffff;
+    border: rgb(255, 255, 255) 10px double;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 1100px;
+    height: 50px;
+}
+
+.cuadroTexto:focus{
+    border: rgb(251, 255, 0) 5px double;
+}
+
+.boton{
+    border: rgb(255, 255, 255) 10px double;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    color: #ffffff;
+    
+}
+
+.boton:hover{
+border: rgb(251, 255, 0) 10px solid;
+    color: rgb(251, 255, 0);
+    cursor: url('cor.png'), pointer;
+}
+
+
+.cartas1{
+
+background-color: rgba(0, 0, 0, 0.5);
+text-align: center;
+}
+
+.cuadrosInteriores2{
+font-family: 'miFuenteUndertale';
+display: inline-block;
+background-color: black;
+        
+}

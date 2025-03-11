@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'miFuente';
+    src: url(../fuentes/MonsterFriendBack.otf);
+}
+@font-face{
+    font-family: 'miFuentePapyrus';
+    src: url(../fuentes/papyrus-font-undertale.ttf);
+    
+}
+
+.inicio{
+    font-family: 'miFuente';
+    font-size: 60px;
+}
+.inicio:hover{
+
+    cursor: url('cor.png'), pointer;
+}
+
+form{
+
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+body{
+    background-color: black;
+    color: white;
+    
+
+    background-image: url('fondos/nohaay1.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+
+}
+
+html{
+
+cursor: url('cor.png'), auto;
+cursor: url('cor.png'), default;
+cursor: url('cor.png'), pointer;
+
+
+}
+
+
+
+.texto{
+    font-size: 24px;
+
+    font-family: 'miFuente';
+    
+}
+.texto:hover{
+
+cursor: url('cor.png'), pointer;
+}
+
+.BotonTexto{
+font-size: 24px;
+font-family: 'miFuentePapyrus';
+}
+.BotonTexto:hover{
+cursor: url('cor.png'), pointer;
+}
+
+.boton{
+    border: 0;
+    color: white;
+    background-color: black;
+    font-size: 24px;
+
+    font-family: 'miFuente';
+    transition: color 0.3s;
+     
+}
+
+.boton:hover{
+    border: 0;
+    color: yellow;
+    cursor: url('cor.png'), pointer;
+    
+   
+
+
+}
+
+.cont-inicio{
+
+
+position: relative;
+top:50px
+
+}
+
+.cont-textoPapyrus{
+ background-color: chartreuse;
+
+ width: 800px;
+ height: 200px;
+ position: relative;
+
+ top:300px;
+ left: 100px;
+
+}
+
+.imagenPapyrus{
+    background-color: brown;
+    position: relative;
+    width: 160px;
+    height: 160px;
+    top:10px;
+    left: 10px;
+}
+
+.textoPapyrus{
+background-color: chocolate;
+position: relative;
+width: 590px;
+height: 180px;
+top:-150px;
+left: 200px;
+
+}
+
