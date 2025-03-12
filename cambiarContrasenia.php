@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="bootstrap/all.min.css">
     <script src="bootstrap/bootstrap.min.js"></script>
     <script src="bootstrap/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/admin.css">
     <title>Cambiar Contraseña</title>
 </head>
 <body>

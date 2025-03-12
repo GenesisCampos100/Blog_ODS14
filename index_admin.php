@@ -80,7 +80,7 @@
                         <td><?php echo $cliente->autor_nombre; ?></td>
                         <td><?php echo $cliente->fecha_publicacion; ?></td>
                         <td>
-                            <a class="" href="editar_cliente.php?id=<?php echo $cliente->id;?>">
+                            <a class="" href="editar_publicacion.php?id=<?php echo $cliente->id;?>">
                                 <i class="fa fa-edit"></i>
                                 Editar
                             </a>

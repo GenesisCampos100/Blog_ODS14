@@ -8,7 +8,21 @@ $images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dipsy</title>
     
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script>
+        window.onload = function() {
+            let images = <?php echo json_encode($images); ?>;
+            let index = 0;
+            let imgElement = document.getElementById("image-slider");
+            
+            function changeImage() {
+                imgElement.src = images[index];
+                index = (index + 1) % images.length;
+            }
+            
+            setInterval(changeImage, 3000);
+        };
+    </script>
 </head>
 <body>
     <header>
