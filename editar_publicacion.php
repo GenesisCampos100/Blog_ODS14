@@ -66,17 +66,22 @@
     ?>
 
 <div class="mb-3">
-                <label for="publicacion" class="form-label">Título</label>
-                <input type="text" name="publicacion" class="cuadroTexto" id="publicacion" placeholder="Escribe el título" required>
-            </div>
-            <div class="mb-3">
-                <label for="contenido" class="form-label">Contenido</label>
-                <textarea name="contenido" class="cuadroTexto" id="contenido" placeholder="Escribe el contenido" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="autor_nombre" class="form-label">Nombre del Autor</label>
-                <input type="text" name="autor_nombre" id="autor_nombre" class="cuadroTexto" placeholder="Escribe el nombre del autor" required>
-            </div>
+    <label for="publicacion" class="form-label">Título</label>
+    <input type="text" name="publicacion" class="cuadroTexto" id="publicacion" 
+        value="<?php echo htmlspecialchars($cliente->titulo ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+        placeholder="Escribe el título" required>
+</div>
+
+<div class="mb-3">
+    <label for="contenido" class="form-label">Contenido</label>
+    <textarea name="contenido" class="cuadroTexto" id="contenido" placeholder="Escribe el contenido" required><?php echo htmlspecialchars($cliente->contenido ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+</div>
+
+<div class="mb-3">
+    <label for="autor_nombre" class="form-label">Nombre del Autor</label>
+    <input type="text" name="autor_nombre" id="autor_nombre" class="cuadroTexto" 
+        value="<?php echo htmlspecialchars($cliente->autor_nombre ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+        placeholder="Escribe el nombre del autor" required>
 
             <div class="text-center mt-3">
                 <input type="submit" name="registrar" value="Registrar" class="boton">
@@ -92,7 +97,7 @@
     
     <?php
         if(isset($_POST['registrar'])){
-            $titulo = $_POST['publicacion'];
+            $titulo = $_POST['titulo'];
             $contenido = $_POST['contenido'];
             $autor_nombre = $_POST['autor_nombre'];
 
@@ -132,7 +137,7 @@
             // En la pagina no se muestrara nada
             // sleep(5);
             //header("Location: index_usuario.php");
-            header("refresh:2;url=index_publicacion.php");
+            header("refresh:2;url=index_admin.php");
             
         }
     ?>    

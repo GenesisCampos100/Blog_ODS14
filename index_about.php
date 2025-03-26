@@ -1,5 +1,5 @@
 <?php
-$images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,6 +9,7 @@ $images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
     <title>Dipsy</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/fondos/blog.css">
     <script>
         window.onload = function() {
             let images = <?php echo json_encode($images); ?>;
@@ -62,6 +63,8 @@ $images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
               <button class="btn btn-outline-success" type="submit">Search</button>
             </li>
           </form>
+
+          <
           </div>
         </div>
       </nav>
@@ -73,6 +76,9 @@ $images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
             <img id="image-slider" src="<?php echo $images[0]; ?>" alt="Imagen rotativa" style="width:100%; max-width:500px; display:block; margin:auto;">
         </div>
     </section>
+
+
+    
     <footer>
         &copy; 2025 Mi Página Web
     </footer>

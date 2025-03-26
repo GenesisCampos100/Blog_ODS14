@@ -57,6 +57,9 @@
             
            Publicaciones
         </h1>
+
+      
+
         <div class="contenedor">
         <div class="cuadros">
         <table class="table">
@@ -101,6 +104,33 @@
      Agregar
     </a>
     </div> 
+
+    <?php
+// Comprueba si el usuario ha iniciado sesión
+if (isset($_SESSION['usuario'])) {
+    // Si el usuario ha iniciado sesión, muestra el botón de cierre de sesión
+    echo '<br> <div class="contenedor">';
+    echo '<br><div class="">';
+    echo '<a href="cerrar_sesion.php" class="texto">Cerrar Sesión</a>';
+    echo '</div>';
+    echo '<br>';
+    echo '<div class="">';
+    echo '<a href="cambiarPassword.php" class="texto">Cambiar Comtraseña</a>';
+    echo '</div>';
+    echo '<br>';
+    echo '</div>';
+
+    echo '<div class="mensaje-nivel">';
+    echo '<p>Tu nivel de seguridad es: ' . $_SESSION['nivelSeguridad'] . '</p>';
+    echo '</div>';
+
+    echo '</div>';
+}
+
+
+?>
+
+</center>
     
 </body>
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="bootstrap/all.min.css">
     <script src="bootstrap/bootstrap.min.js"></script>
     <script src="bootstrap/bootstrap.bundle.min.js"></script>
-    <title>Ventas</title>
+    <title>Controlador</title>
 </head>
 <body>
 <?php    
@@ -19,7 +19,6 @@ if(isset($_POST['btningresar'])){
         <div class="container text-center col-10">
             <div class="alert alert-warning mt-3" role="alert">
                 Debes completar todos los datos.
-                <a href="login.php">Regresar</a>
             </div>
         </div>';
         return;
@@ -81,7 +80,6 @@ if(isset($_POST['btningresar'])){
         echo'
         <div class="alert alert-danger mt-3" role="alert">
             Nombre de usuario y/o contraseña incorrectas.
-            <a href="login.php">Regresar</a>
         </div>';
         return;
     }
