@@ -64,7 +64,7 @@
 
         $cliente = obtenerClientePorId($id);
     ?>
-
+<form method="POST">
 <div class="mb-3">
     <label for="publicacion" class="form-label">Título</label>
     <input type="text" name="publicacion" class="cuadroTexto" id="publicacion" 
@@ -97,7 +97,7 @@
     
     <?php
         if(isset($_POST['registrar'])){
-            $titulo = $_POST['titulo'];
+            $titulo = $_POST['publicacion'];
             $contenido = $_POST['contenido'];
             $autor_nombre = $_POST['autor_nombre'];
 
@@ -117,13 +117,13 @@
                 return $respuesta->execute($parametros);
             }
 
-            function editarCliente($titulo, $contenido, $autor_nombre){
+            function editarCliente($id,$titulo, $contenido, $autor_nombre){
                 $sentencia = "UPDATE publicaciones SET titulo = ?, contenido = ?, autor_nombre = ? WHERE id = ?";
-                $parametros = [$titulo, $contenido, $autor_nombre];
+                $parametros = [$titulo, $contenido, $autor_nombre, $id];
                 return editar($sentencia, $parametros);
             }            
             
-            $resultado = editarCliente($titulo, $contenido, $autor_nombre);
+            $resultado = editarCliente($id,$titulo, $contenido, $autor_nombre);
             if($resultado){
                 echo'
                 <div class="container text-center col-10">
