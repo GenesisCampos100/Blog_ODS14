@@ -1,6 +1,4 @@
 <?php
-
-no entiendo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
+ola desde prueba
 
 ?>
