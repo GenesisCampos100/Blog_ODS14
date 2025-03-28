@@ -64,7 +64,7 @@
             </li>
           </form>
 
-          <
+          
           </div>
         </div>
       </nav>
@@ -77,10 +77,38 @@
         </div>
     </section>
 
+    <!-- SECCIONES DEL ABOUT -->
+    <main class="main-content">
+    <section class="about">
+      <h1>Sobre DIPSY</h1>
+      <div class="about-dipsy">...</div>
+    </section>
+    <section class="metas">
+        <h2>Nuestras metas</h2>
+        <div class="goals">
+            <div class="goal mission">...</div>
+            <div class="goal objective">...</div>
+            <div class="goal vision">...</div>
+        </div>
+    </section>
 
-    
-    <footer>
-        &copy; 2025 Mi Página Web
-    </footer>
+    <section class="history">
+        <h2>Nuestra historia</h2>
+        <div class="history-content">...</div>
+    </section>
+
+    <section class="how-to-help">
+        <h2>¿Cómo puedes ayudar?</h2>
+        <div class="help-content">...</div>
+    </section>
+</main>
+
+
+
+
+<footer class="footer">
+    <p>© 2025 Dipsy - Todos los derechos reservados</p>
+</footer>
+
 </body>
-</html> lol
+</html>
