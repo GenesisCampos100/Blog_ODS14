@@ -9,7 +9,7 @@
     <title>Dipsy</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/fondos/blog.css">
+    <link rel="stylesheet" href="css/about.css">
     <script>
         window.onload = function() {
             let images = <?php echo json_encode($images); ?>;
@@ -80,29 +80,30 @@
     <!-- SECCIONES DEL ABOUT -->
     <main class="main-content">
     <section class="about">
-      <h1>Sobre DIPSY</h1>
+      <h1><b>About Dipsy</b></h1>
       <div class="about-dipsy">...</div>
     </section>
     <section class="metas">
-        <h2>Nuestras metas</h2>
+        <h2><b>Our goals</b></h2>
         <div class="goals">
-            <div class="goal mission">...</div>
-            <div class="goal objective">...</div>
-            <div class="goal vision">...</div>
+            <div class="goal mission">Mission</div>
+            <div class="goal objective">Vision</div>
+            <div class="goal vision">Ojective</div>
         </div>
     </section>
 
     <section class="history">
-        <h2>Nuestra historia</h2>
-        <div class="history-content">...</div>
+        <div class="history-content">
+        <h2><b>Our history</b></h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum modi culpa consectetur pariatur vero, eaque dicta quasi natus sit quia tempore, quis porro iste consequuntur ex, sunt alias adipisci?</p>
+        </div>
     </section>
 
     <section class="how-to-help">
-        <h2>¿Cómo puedes ayudar?</h2>
+        <h2><b>How can you help?</b></h2>
         <div class="help-content">...</div>
     </section>
 </main>
-
 
 
 
