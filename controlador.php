@@ -13,80 +13,87 @@
 <body>
 <?php    
 
-if(isset($_POST['btningresar'])){
-    if(empty($_POST['usuario']) || empty($_POST['contrasenia'])){
-        echo'
-        <div class="container text-center col-10">
-            <div class="alert alert-warning mt-3" role="alert">
-                Debes completar todos los datos.
-            </div>
-        </div>';
-        return;
-    }        
+session_start();
 
-    $usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'contrasenia', FILTER_SANITIZE_STRING);
+// Función para conectar a la base de datos
+function conectarBaseDatos() {
+    $host = "localhost";
+    $db   = "login";
+    $user = "root";
+    $pass = "";
+    $charset = 'utf8mb4';
 
-    session_start();
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
 
-    function conectarBaseDatos() {
-        $host = "localhost";
-        $db   = "login";
-        $user = "root";
-        $pass = "";
-        $charset = 'utf8mb4';
-    
-        $options = [
-            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-            \PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-        try {
-             $pdo = new \PDO($dsn, $user, $pass, $options);
-             return $pdo;
-        } catch (\PDOException $e) {
-             throw new \PDOException($e->getMessage(), (int)$e->getCode());
-        }
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    try {
+        return new PDO($dsn, $user, $pass, $options);
+    } catch (PDOException $e) {
+        die("Error en la conexión: " . $e->getMessage());
     }
+}
 
-    function select($sentencia, $parametros = []){
-        $bd = conectarBaseDatos();
-        $respuesta = $bd->prepare($sentencia);
-        $respuesta->execute($parametros);
-        return $respuesta->fetchAll();
-    }
+// Función para ejecutar SELECT
+function select($sentencia, $parametros = []) {
+    $bd = conectarBaseDatos();
+    $respuesta = $bd->prepare($sentencia);
+    $respuesta->execute($parametros);
+    return $respuesta->fetchAll();
+}
 
-    function verificarPassword($idUsuario, $password){
-        $sentencia = "SELECT contrasenia FROM admin WHERE id = ?";
-        $contrasenia = select($sentencia, [$idUsuario])[0]->contrasenia;
-        $verifica = ($password === $contrasenia);
-        if($verifica) return true;
-    }
+// Validación de Inicio de Sesión
+if (isset($_POST['btningresar'])) {
+    if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
+        echo '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
+    } else {
+        $usuario = filter_input(INPUT_POST, 'login_usuario', FILTER_SANITIZE_STRING);
+        $password = filter_input(INPUT_POST, 'login_contrasenia', FILTER_SANITIZE_STRING);
 
-    function iniciarSesion($usuario, $password){
-        $sentencia = "SELECT id, contrasenia FROM admin WHERE usuario  = ?";
+        $sentencia = "SELECT id, contrasenia FROM admin WHERE usuario = ?";
         $resultado = select($sentencia, [$usuario]);
-        if($resultado){
-            $usuario = $resultado[0];
-            $verificaPass = verificarPassword($usuario->id, $password);
-            if($verificaPass) return $usuario;
+
+        if ($resultado && password_verify($password, $resultado[0]->contrasenia)) {
+            $_SESSION['usuario'] = $usuario;
+            $_SESSION['idUsuario'] = $resultado[0]->id;
+            header("location: index_admin.php");
+            exit();
+        } else {
+            echo '<div class="alert alert-danger mt-3 text-center">Nombre de usuario y/o contraseña incorrectos.</div>';
         }
     }
+}
 
-    $datosSesion = iniciarSesion($usuario, $password);
+// Validación de Registro
+if (isset($_POST['btnregistrar'])) {
+    if (
+        empty($_POST['registrar-nombre']) ||
+        empty($_POST['registrar-apellido_paterno']) ||
+        empty($_POST['registrar-apellido_materno']) ||
+        empty($_POST['registrar-correo']) ||
+        empty($_POST['registrar-usuario']) ||
+        empty($_POST['registrar-contrasenia'])
+    ) {
+        echo '<div class="alert alert-warning mt-3 text-center">Todos los campos son obligatorios.</div>';
+    } else {
+        $nombre = filter_input(INPUT_POST, 'registrar-nombre', FILTER_SANITIZE_STRING);
+        $apellido_paterno = filter_input(INPUT_POST, 'registrar-apellido_paterno', FILTER_SANITIZE_STRING);
+        $apellido_materno = filter_input(INPUT_POST, 'registrar-apellido_materno', FILTER_SANITIZE_STRING);
+        $correo = filter_input(INPUT_POST, 'registrar-correo', FILTER_SANITIZE_EMAIL);
+        $usuario = filter_input(INPUT_POST, 'registrar-usuario', FILTER_SANITIZE_STRING);
+        $password = password_hash($_POST['registrar-contrasenia'], PASSWORD_DEFAULT); // Hash de contraseña
 
-    if(!$datosSesion){
-        echo'
-        <div class="alert alert-danger mt-3" role="alert">
-            Nombre de usuario y/o contraseña incorrectas.
-        </div>';
-        return;
+        $bd = conectarBaseDatos();
+        $stmt = $bd->prepare("INSERT INTO admin (nombre, apellido_paterno, apellido_materno, correo, usuario, contrasenia) VALUES (?, ?, ?, ?, ?, ?)");
+        if ($stmt->execute([$nombre, $apellido_paterno, $apellido_materno, $correo, $usuario, $password])) {
+            echo '<div class="alert alert-success mt-3 text-center">Registro exitoso. ¡Ahora puedes iniciar sesión!</div>';
+        } else {
+            echo '<div class="alert alert-danger mt-3 text-center">Error en el registro. Inténtalo de nuevo.</div>';
+        }
     }
-
-    $_SESSION['usuario'] = $datosSesion->usuario;
-    $_SESSION['idUsuario'] = $datosSesion->id;
-    header("location: index_admin.php");
 }
 ?>
 

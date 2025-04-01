@@ -60,7 +60,7 @@
 <body>
 
 <div class="login-container">
-    <h2>Iniciar Sesión</h2>
+    <h2></h2>
     <form method = "post" id="loginForm">
 
         <?php
@@ -68,14 +68,44 @@
         include("controlador.php");
         ?>
 
-        <input type="text" id="username" name = "usuario" placeholder="Nombre de usuario" >
-        <input type="password" id="password"  name = "contrasenia" placeholder="Contraseña" > 
-        <button type="submit" name = "btningresar">Iniciar Sesión</button>
+<form method="post" class="cuadros">
+         <div class="container">
+        <!-- Formulario de inicio de sesión -->
+        <div id="login-form">
+            <h2>Iniciar Sesión</h2>
+            <input type="text" id="login-usuario" name="login_usuario" placeholder="Usuario o Correo">
+            <input type="password" id="login-password" name="login_contrasenia" placeholder="Contraseña">
+            <button type="submit" name="btningresar">Iniciar Sesión</button>
 
-          <!-- Enlace para recuperar la contraseña -->
-          <p style="margin-top: 10px;">
-            <a href="cambiarContrasenia.php" style="color: #007bff; text-decoration: none;">¿Olvidaste tu contraseña?</a>
-        </p>
+            <p>¿No tienes cuenta? <a href="#" onclick="toggleForms()">Regístrate aquí</a></p>
+        </div>
+
+        <!-- Formulario de registro -->
+        <div id="register-form" class="hidden">
+            <h2>Registro</h2>
+            <input type="text" id="nombre" name="registrar-nombre" placeholder="Nombre(s)">
+            <input type="text" id="apellido_paterno" name="registrar-apellido_paterno" placeholder="Apellido Paterno">
+            <input type="text" id="apellido_materno" name="registrar-apellido_materno" placeholder="Apellido Materno">
+            <input type="text" id="correo" name="registrar-correo" placeholder="Correo">
+            <input type="text" id="username" name="registrar-usuario" placeholder="Nombre de usuario">
+            <input type="password" id="password" name="registrar-contrasenia" placeholder="Contraseña">
+            <button type="submit" name="btnregistrar">Registrar</button>
+            <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForms()">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+    </form>
+
+    <script>
+        function toggleForms() {
+            document.getElementById('login-form').style.display = 
+                document.getElementById('login-form').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('register-form').style.display = 
+                document.getElementById('register-form').style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Asegurar que solo el formulario de login esté visible al cargar
+        document.getElementById('register-form').style.display = 'none';
+    </script>
     </form>
 
 </div>
