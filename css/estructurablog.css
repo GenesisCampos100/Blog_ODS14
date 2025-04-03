@@ -1,0 +1,28 @@
+.content {
+    margin-top: 100px; /* Espacio para que el contenido no quede debajo de la barra fija */
+    background-color: #f0f2f2; 
+    width: 90%;  /* Ancho del contenedor */
+    height:auto;
+    border-radius: 10px;
+    position: relative; /* Cambié de absolute a relative para más flexibilidad */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Solo centra horizontalmente */
+    display: flex;
+    flex-direction: column; /* Si tienes varios elementos dentro, se alistan en columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    color: #051f34;
+}
+
+.imgtituloblog {
+    margin-top: 100px; 
+    max-width: 100%; /* Para que no exceda el ancho del contenedor */
+    height: auto; /* Mantiene la proporción */
+    display: block; /* Evita espacios en línea */
+    margin: 0 auto; /* Centra la imagen dentro del contenedor */
+}
+
+#tituloimg{
+    width: 100%;
+    height: auto;
+}
+
