@@ -115,7 +115,7 @@ if (isset($_SESSION['usuario'])) {
     echo '</div>';
     echo '<br>';
     echo '<div class="">';
-    echo '<a href="cambiarPassword.php" class="texto">Cambiar Comtraseña</a>';
+    echo '<a href="cambiarContrasenia.php" class="texto">Cambiar Comtraseña</a>';
     echo '</div>';
     echo '<br>';
     echo '</div>';

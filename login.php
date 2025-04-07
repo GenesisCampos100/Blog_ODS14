@@ -67,33 +67,31 @@
         include("conexion.php");
         include("controlador.php");
         ?>
-
-<form method="post" class="cuadros">
-         <div class="container">
-        <!-- Formulario de inicio de sesión -->
-        <div id="login-form">
-            <h2>Iniciar Sesión</h2>
-            <input type="text" id="login-usuario" name="login_usuario" placeholder="Usuario o Correo">
-            <input type="password" id="login-password" name="login_contrasenia" placeholder="Contraseña">
-            <button type="submit" name="btningresar">Iniciar Sesión</button>
-
-            <p>¿No tienes cuenta? <a href="#" onclick="toggleForms()">Regístrate aquí</a></p>
-        </div>
-
-        <!-- Formulario de registro -->
-        <div id="register-form" class="hidden">
-            <h2>Registro</h2>
-            <input type="text" id="nombre" name="registrar-nombre" placeholder="Nombre(s)">
-            <input type="text" id="apellido_paterno" name="registrar-apellido_paterno" placeholder="Apellido Paterno">
-            <input type="text" id="apellido_materno" name="registrar-apellido_materno" placeholder="Apellido Materno">
-            <input type="text" id="correo" name="registrar-correo" placeholder="Correo">
-            <input type="text" id="username" name="registrar-usuario" placeholder="Nombre de usuario">
-            <input type="password" id="password" name="registrar-contrasenia" placeholder="Contraseña">
-            <button type="submit" name="btnregistrar">Registrar</button>
-            <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForms()">Inicia sesión aquí</a></p>
-        </div>
-    </div>
+        
+        
+    <div id="login-form" class="<?php echo (isset($_SESSION['formulario_actual']) && $_SESSION['formulario_actual'] == 'registro') ? 'hidden' : ''; ?>">
+    <h2>Iniciar Sesión</h2>
+    <form method="POST">
+        <input type="text" name="login_usuario" placeholder="Usuario">
+        <input type="password" name="login_contrasenia" placeholder="Contraseña">
+        <button type="submit" name="btningresar">Iniciar Sesión</button>
+        <p>¿No tienes cuenta? <a href="#" onclick="toggleForms()">Regístrate aquí</a></p>
     </form>
+</div>
+
+<div id="register-form" class="<?php echo (isset($_SESSION['formulario_actual']) && $_SESSION['formulario_actual'] == 'registro') ? '' : 'hidden'; ?>">
+    <h2>Registro</h2>
+    <form method="POST">
+        <input type="text" name="registrar-nombre" placeholder="Nombre(s)">
+        <input type="text" name="registrar-apellido_paterno" placeholder="Apellido Paterno">
+        <input type="text" name="registrar-apellido_materno" placeholder="Apellido Materno">
+        <input type="email" name="registrar-correo" placeholder="Correo">
+        <input type="text" name="registrar-usuario" placeholder="Usuario">
+        <input type="password" name="registrar-contrasenia" placeholder="Contraseña">
+        <button type="submit" name="btnregistrar">Registrar</button>
+        <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForms()">Inicia sesión aquí</a></p>
+    </form>
+</div></div>
 
     <script>
         function toggleForms() {
@@ -101,7 +99,16 @@
                 document.getElementById('login-form').style.display === 'none' ? 'block' : 'none';
             document.getElementById('register-form').style.display = 
                 document.getElementById('register-form').style.display === 'none' ? 'block' : 'none';
+
+            document.getElementById('login-form').classList.toggle('hidden');
+            document.getElementById('register-form').classList.toggle('hidden');
+
+        // Limpiar mensajes de error o éxito cuando se cambia de formulario
+        const alertas = document.querySelectorAll('.alert');
+        alertas.forEach(alerta => alerta.remove());
         }
+
+
 
         // Asegurar que solo el formulario de login esté visible al cargar
         document.getElementById('register-form').style.display = 'none';

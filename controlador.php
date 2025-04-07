@@ -47,6 +47,7 @@ function select($sentencia, $parametros = []) {
 
 // Validación de Inicio de Sesión
 if (isset($_POST['btningresar'])) {
+$_SESSION['formulario_actual'] = 'login';
     if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
         echo '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
     } else {
@@ -69,6 +70,7 @@ if (isset($_POST['btningresar'])) {
 
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
+$_SESSION['formulario_actual'] = 'registro';
     if (
         empty($_POST['registrar-nombre']) ||
         empty($_POST['registrar-apellido_paterno']) ||
@@ -96,6 +98,7 @@ if (isset($_POST['btnregistrar'])) {
     }
 }
 ?>
+
 
 </body>
 </html>
