@@ -36,6 +36,29 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .button-container { 
+        display: flex;
+        justify-content: right; /* Mueve el contenido a la derecha */
+        padding: 10px;
+      }
+
+      .login-button {
+      background-color: #4CAF50; /* Verde */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      position: relative;
+      left: 400px; /* Mueve el botón 100px a la derecha */
+    }
+
+    .login-button:hover {
+      background-color: #45a049;
+    }
     </style>
 </head>
 <body>
@@ -78,6 +101,8 @@
                 
               </li>
               <li class="nav-item">
+
+  
                
               
             <form class="d-flex" role="search">
@@ -85,9 +110,14 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </li>
           </form>
+
+          <div class="button-container">
+            <button class="login-button" onclick="location.href='login.html'">Iniciar Sesión</button>
           </div>
-        </div>
-      </nav>
+        
+    </div>
+    </div>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </header>

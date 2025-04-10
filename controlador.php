@@ -50,6 +50,8 @@ if (isset($_POST['btningresar'])) {
 $_SESSION['formulario_actual'] = 'login';
     if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
         echo '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
+       
+
     } else {
         $usuario = filter_input(INPUT_POST, 'login_usuario', FILTER_SANITIZE_STRING);
         $password = filter_input(INPUT_POST, 'login_contrasenia', FILTER_SANITIZE_STRING);
@@ -70,7 +72,7 @@ $_SESSION['formulario_actual'] = 'login';
 
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
-$_SESSION['formulario_actual'] = 'registro';
+
     if (
         empty($_POST['registrar-nombre']) ||
         empty($_POST['registrar-apellido_paterno']) ||
@@ -79,7 +81,7 @@ $_SESSION['formulario_actual'] = 'registro';
         empty($_POST['registrar-usuario']) ||
         empty($_POST['registrar-contrasenia'])
     ) {
-        echo '<div class="alert alert-warning mt-3 text-center">Todos los campos son obligatorios.</div>';
+        echo '<div class="alert alert-warning mt-3 text-center">Todos los campos son obligatorios.</div>'; 
     } else {
         $nombre = filter_input(INPUT_POST, 'registrar-nombre', FILTER_SANITIZE_STRING);
         $apellido_paterno = filter_input(INPUT_POST, 'registrar-apellido_paterno', FILTER_SANITIZE_STRING);
