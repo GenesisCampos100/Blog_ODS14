@@ -1,80 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap'); /* Importa la fuente Questrial */
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f8ff; /* Azul claro, similar al océano */
+    background: linear-gradient(to right, #00b4db, #0041ff); /* Gradiente de color */
+    font-family: Questrial, sans-serif; /* Utiliza la fuente Questrial */
+}
+@font-face {
+    font-family: 'Kaytek';
+    src: url(../fuentes/KaytekRounded-Bold.ttf);
 }
 
-header {
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 24px;
+.navbar {
+    background-color: #051f34 !important; /* Fondo oscuro para la barra de navegación */
+    position: fixed; /* Fija la barra de navegación en la parte superior */
+    top: 0; /* La coloca en la parte superior de la página */
+    left: 0; /* Alinea la barra con el borde izquierdo */
+    width: 100%; /* Asegura que la barra ocupe todo el ancho de la pantalla */
+    z-index: 1000; /* Asegura que la barra quede por encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
 }
 
-.about-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    gap: 20px;
+/* Cambiar el color de los enlaces */
+.navbar .navbar-nav .nav-link {
+    color: #eff6fd; /* Color para los enlaces */
+    font-size: 25px;
+    font-family: 'Kaytek', sans-serif; /* Asegura que se aplique la fuente correcta */
 }
 
-.about-text {
-    max-width: 600px;
+/* Estilo al pasar el mouse sobre los enlaces */
+.navbar .navbar-nav .nav-link:hover {
+    color: #01eeff; /* Color de los enlaces al pasar el mouse */
 }
 
-.about-text h2 {
-    color: #023e8a;
+/* CSS personalizado para mover el formulario de búsqueda a la derecha */
+.navbar .d-flex {
+    margin-left: auto; /* Mueve el formulario hacia la derecha */
 }
 
-.about-text p {
-    font-size: 18px;
-    color: #333;
+/* Estilo para el logo de la barra */
+.navbar .navbar-brand img {
+    height: auto;
+    width: 100%;      /* Escala la imagen al ancho del contenedor */
+    max-width: 150px; /* Limita el tamaño máximo del logo */
 }
 
-.about-image img {
-    max-width: 400px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+/* Estilo del campo de búsqueda */
+.form-control {
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid #f0f2f2; /* Borde claro */
+    color: #f0f2f2; /* Color del texto */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Suaviza el cambio de borde y fondo */
 }
 
-/* --- General --- */
-body {
-    background-color: #f4f8fb;
-    color: #333;
-    line-height: 1.6;
+/* Efecto hover en el campo de búsqueda */
+.form-control:hover {
+    border-color: #00a1e1; /* Cambia el borde a un azul claro */
 }
+
+/* Estilo del botón de búsqueda */
+.btn-outline-success {
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid #f0f2f2; /* Borde claro */
+    color: #f0f2f2; /* Color del texto */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza el cambio de color y fondo */
+}
+
+/* Efecto hover en el botón */
+.btn-outline-success:hover {
+    background-color: #00a1e1; /* Fondo azul */
+    color: #f0f2f2; /* Cambia el texto a blanco */
+}
+
+/* Opcional: Efecto focus para el campo de búsqueda */
+.form-control:focus {
+    background-color: transparent; /* Fondo transparente al enfocar */
+    border-color: #00a1e1; /* Borde azul al enfocar */
+}
+
+/* Barra de categorías */
+.navbar-categories {
+    background-color: #043385;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    position: relative; /* Hace que se ubique debajo de la barra principal */
+    top: 70px; /* Ubica la barra de categorías justo debajo de la barra principal (ajusta según la altura de tu barra) */
+    width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+    z-index: 999; /* Menor que el de la barra principal, para no interferir */
+    transition: top 0.3s ease;
+    color: #00d6d8; /* Efecto suave al ocultarse */
+}
+
 
 /* --- Contenedor Principal --- */
 .main-content {
     width: 90%;
-    max-width: 1200px;
+    /*max-width: 1200px; */
     margin: auto;
     padding: 40px 0;
 }
 
 .main-content h1 {
     font-size: 28px;
+    font-family: 'Chau Philomene One', sans-serif;    
 }
 
 .main-content h2 {
     font-size: 28px;
+    font-family: 'Chau Philomene One', sans-serif; 
 }
 /* --- Sección About --- */
 .about {
-    background: white;
-    padding: 40px 20px;
+    background-color: white;
+    padding: 60px 50px 100px 50px;
+    max-width: 1080px;  /* Aumenta el ancho máximo */
+    margin: 90px auto;  /* Separa de la navbar y centra horizontalmente */
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
+.about-dipsy-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.about-dipsy-text {
+    flex: 1;
+    min-width: 300px;
+    text-align: left;
+}
+
+.about-dipsy-text p {
+    font-family: Questrial, sans-serif;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.about-dipsy-image img {
+    max-width: 400px;
+    width: 100%;
+    
+}
 /* --- Sección Nuestras Metas --- */
 .metas {
-    background: #e3f2fd;
+    background: #35b7c1;
+    color: white;
     padding: 40px 20px;
-    border-radius: 10px;
+    border-radius: 0;
     text-align: center;
     margin-top: 30px;
 }
@@ -88,27 +164,37 @@ body {
 
 .goal {
     background: white;
+    color: #00202e;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    height: 500px;
+    width: 350px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.goal p {
+    font-size: 18px;
+    text-align: justify;
+    font-family: Questrial, sans-serif;
 }
 
 /* --- Sección Nuestra Historia --- */
 .history {
+    background-color: #00202e;
     position: relative;
-    background-image: url('../img/fondo-about.png');      /*Imagen fondo de historia*/
-    background-size: cover;
+    background-image: url('../img/fondo-about.png');
+    background-size: cover;                /* Cambiado a cover */
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
+    padding: 80px 40px;                    /* Menor padding para evitar bordes oscuros */
+    max-width: 1080px;
+    min-height: 500px;
+    margin: 90px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    height: 100vh;
-    color: white;
-    padding: 20px;
 }
+
 
 .history::before {
     content: "";
@@ -117,7 +203,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Negro con 50% de transparencia */
+    background-color: rgba(0, 0, 0, 0.705); /* Negro con 70% de transparencia */
     z-index: 0;
 }
 
@@ -126,10 +212,10 @@ body {
     z-index: 1;
     color: white;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: normal;
     margin: auto;
     max-width: 900px;
-    text-align: center;
+    text-align: left;
     /*background: white;*/
     /*padding: 20px;*/       /*seccion para el fondo blanco*/
     /*border-radius: 10px;*/
@@ -138,23 +224,7 @@ body {
 
 .history-content p {
     font-size: 18px;
-}
-/* --- Sección Cómo Puedes Ayudar --- */
-.how-to-help {
-    padding: 40px 20px;
-    background-color: white;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 30px;
-}
-
-.help-content {
-    max-width: 800px;
-    margin: auto;
-    background: #e3f2fd;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: justify;
 }
 
 /* --- Responsividad (Móviles) --- */
@@ -170,8 +240,11 @@ body {
 }
 
 .footer {
+    background-color: #00202e;
+    padding: 40px 20px; /* 40px arriba y abajo, 20px izquierda y derecha */
+    color: white;
     text-align: center;
     z-index: 1;
-    max-width: 800px;
-    margin: auto;
+    width: 100%;
+    margin: 0;
 }

@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'Kaytek';
+    src: url(../fuentes/KaytekRounded-Bold.ttf);
+}
+
+.navbar {
+    background-color: #051f34 !important; /* Fondo oscuro para la barra de navegación */
+    position: fixed; /* Fija la barra de navegación en la parte superior */
+    top: 0; /* La coloca en la parte superior de la página */
+    left: 0; /* Alinea la barra con el borde izquierdo */
+    width: 100%; /* Asegura que la barra ocupe todo el ancho de la pantalla */
+    z-index: 1000; /* Asegura que la barra quede por encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+}
+
+/* Cambiar el color de los enlaces */
+.navbar .navbar-nav .nav-link {
+    color: #eff6fd; /* Color para los enlaces */
+    font-size: 25px;
+    font-family: 'Kaytek', sans-serif; /* Asegura que se aplique la fuente correcta */
+}
+
+/* Estilo al pasar el mouse sobre los enlaces */
+.navbar .navbar-nav .nav-link:hover {
+    color: #01eeff; /* Color de los enlaces al pasar el mouse */
+}
+
+/* CSS personalizado para mover el formulario de búsqueda a la derecha */
+.navbar .d-flex {
+    margin-left: auto; /* Mueve el formulario hacia la derecha */
+}
+
+/* Estilo para el logo de la barra */
+.navbar .navbar-brand img {
+    height: auto;
+    width: 100%;      /* Escala la imagen al ancho del contenedor */
+    max-width: 150px; /* Limita el tamaño máximo del logo */
+}
+
+/* Estilo del campo de búsqueda */
+.form-control {
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid #f0f2f2; /* Borde claro */
+    color: #f0f2f2; /* Color del texto */
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Suaviza el cambio de borde y fondo */
+}
+
+/* Efecto hover en el campo de búsqueda */
+.form-control:hover {
+    border-color: #00a1e1; /* Cambia el borde a un azul claro */
+}
+
+/* Estilo del botón de búsqueda */
+.btn-outline-success {
+    background-color: transparent; /* Fondo transparente */
+    border: 1px solid #f0f2f2; /* Borde claro */
+    color: #f0f2f2; /* Color del texto */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza el cambio de color y fondo */
+}
+
+/* Efecto hover en el botón */
+.btn-outline-success:hover {
+    background-color: #00a1e1; /* Fondo azul */
+    color: #f0f2f2; /* Cambia el texto a blanco */
+}
+
+/* Opcional: Efecto focus para el campo de búsqueda */
+.form-control:focus {
+    background-color: transparent; /* Fondo transparente al enfocar */
+    border-color: #00a1e1; /* Borde azul al enfocar */
+}
+
+/* Barra de categorías */
+.navbar-categories {
+    background-color: #043385;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    position: relative; /* Hace que se ubique debajo de la barra principal */
+    top: 70px; /* Ubica la barra de categorías justo debajo de la barra principal (ajusta según la altura de tu barra) */
+    width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+    z-index: 999; /* Menor que el de la barra principal, para no interferir */
+    transition: top 0.3s ease;
+    color: #00d6d8; /* Efecto suave al ocultarse */
+}

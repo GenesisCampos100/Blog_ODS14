@@ -14,106 +14,133 @@ $imagenes = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIPSY</title>
-    <!--Fuente -->
-    <link href="https://fonts.googleapis.com/css2?family=Chau+Philomene+One&display=swap" rel="stylesheet">
+    <title>Mi Página Web</title>
+
+    <!-- Estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="css/barra.css" rel="stylesheet">
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/estructurablog.css" rel="stylesheet">
     <link rel="stylesheet" href="css/about.css?v=<?php echo time(); ?>">
-    
+
+    <!-- Slider de imágenes -->
     <script>
-        window.onload = function() {
+        window.onload = function () {
             let images = <?php echo json_encode($images); ?>;
             let index = 0;
             let imgElement = document.getElementById("image-slider");
-            
+
             function changeImage() {
                 imgElement.src = images[index];
                 index = (index + 1) % images.length;
             }
-            
+
             setInterval(changeImage, 3000);
         };
     </script>
+
+    <!-- Ajuste de altura para la barra azul -->
+    <script>
+        function ajustarAlturaBarra() {
+            const img = document.getElementById('tituloimg');
+            const barra = document.getElementById('barracolor');
+
+            if (img && barra) {
+                barra.style.height = img.offsetHeight + 'px';
+            }
+        }
+
+        window.addEventListener('load', ajustarAlturaBarra);
+        window.addEventListener('resize', ajustarAlturaBarra);
+    </script>
 </head>
 <body>
+    <!-- Header con barra de navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid justify-content-between align-items-center">
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">DIPSY</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.php">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="blog.php">Blog</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Category
+                <!-- Enlaces a la izquierda -->
+                <ul class="navbar-nav flex-row">
+                    <li class="nav-item mx-2"><a class="nav-link" href="index.php">HOME</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="index_about.php">ABOUT</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="blog.php">BLOG</a></li>
+                    <li class="nav-item dropdown mx-2">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        LANGUAGE
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">SPANISH</a></li>
+                            <li><a class="dropdown-item" href="#">ENGLISH</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <!-- Logo centrado -->
+                <a class="navbar-brand mx-auto position-absolute start-50 translate-middle-x" href="#">
+                    <img src="img/logod.png" alt="Logo" style="max-height: 60px;">
                 </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Category 1</a></li>
-                  <li><a class="dropdown-item" href="#">Category 2</a>
-                  </li>
-              </li>
-              </ul>
-              <li class="nav-item">
-                <a class="nav-link" href="login.php">login / signup</a>
-              </li>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!--    
-    <section class="container mt-4">
-        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" daata-bs-interval="1000">
-            <div class="carousel-inner">
-                <?php foreach ($images as $index => $image): ?>
-                    <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                        <img src="<?php echo $image; ?>" class="d-block w-100" alt="Imagen <?php echo $index; ?>">
-                    </div>
-                <?php endforeach; ?>
+                <!-- Buscador a la derecha -->
+                <form class="d-flex search-form" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+        </nav>
+
+        <!-- Barra de categorías -->
+        <div class="navbar-categories">
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link" href="#">Categoría 1</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Categoría 2</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Categoría 3</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Categoría 4</a></li>
+            </ul>
         </div>
-    </section>
-    -->
+    </header>
+     <!-- Script de Bootstrap -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Barra azul detrás de la imagen -->
+    <div id="barracolor" class="barracolor"></div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- SECCIONES DEL ABOUT -->
-    <main class="main-content">
-        <section class="about">
-            <h1><b>ABOUT DIPSY🌊</b></h1>
-            <p>
-            Bienvenido a Dipsy, un blog dedicado a la fascinante vida marina. <br> Nuestro objetivo es explorar los misterios del océano, compartir información <br>sobre las especies que lo habitan y concienciar sobre la importancia de su conservación. <br>
-            Este proyecto universitario nace de nuestra pasión por el mar y la necesidad <br> de educar sobre los desafíos que enfrenta, como la contaminación, el <br> cambio climático y la pérdida de biodiversidad.
-            <br>Acompáñanos en este viaje submarino, donde aprenderás sobre criaturass sorprendentes, <br> ecosistemas únicos y cómo podemos protegerlos para las futuras generaciones.
-            <br>🐠🌎 ¡Sumérgete con nosotros en el mundo de Dipsy! 🌊🐢
-            </p>
-            <div class="about-dipsy"></div>
-        </section>
+    <!-- SECCIÓN DEL ABOUT -->
+< class="main-content">
+  <section class="about">
+    <h1><b>ABOUT DIPSY🌊</b></h1>
+
+    <div class="about-dipsy-container">
+      <!-- Texto -->
+      <div class="about-dipsy-text">
+        <p>
+          Bienvenido a Dipsy, un blog dedicado a la fascinante vida marina. 
+          Nuestro objetivo es explorar los misterios del océano, compartir información 
+          sobre las especies que lo habitan y concienciar sobre la importancia de su conservación. 
+          Este proyecto universitario nace de nuestra pasión por el mar y la necesidad 
+          de educar sobre los desafíos que enfrenta, como la contaminación, el 
+          cambio climático y la pérdida de biodiversidad.
+          Acompáñanos en este viaje submarino, donde aprenderás sobre criaturas sorprendentes, 
+          ecosistemas únicos y cómo podemos protegerlos para las futuras generaciones.
+          <br>
+          🐠🌎 ¡Sumérgete con nosotros en el mundo de Dipsy! 🌊🐢
+        </p>
+      </div>
+
+      <!-- Imagen -->
+      <div class="about-dipsy-image">
+        <img src="img/foto-aboutUS.png" alt="Imagen de Dipsy">
+      </div>
+    </div>
+  </section>
 
         <section class="metas">
             <h2><b>OUR GOALS</b></h2>
@@ -156,11 +183,6 @@ $imagenes = [
                     🐠🌊 Pasamos de ser simples admiradores del mar a convertirnos en sus defensores. Ahora queremos que tú también te unas a esta misión.
                 </p>
             </div>
-        </section>
-
-        <section class="how-to-help">
-            <h2><b>HOW CAN YOU HELP?</b></h2>
-            <div class="help-content">...</div>
         </section>
     </main>
 
