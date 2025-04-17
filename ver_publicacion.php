@@ -84,12 +84,49 @@ if (!$post) {
     <?php endforeach; ?>
 
     
-    <?php if (!empty($post->referencias)): ?>
-        <div class="mt-4">
-            <h5>Referencias</h5>
-            <p><?= nl2br(htmlspecialchars($post->referencias)) ?></p>
-        </div>
-    <?php endif; ?>
+    <?php if (!empty($post->referencias)): ?> 
+<!-- Si el campo de referencias no está vacío, entonces se muestra el bloque -->
+
+    <div class="mt-4">
+        <h5>Referencias</h5>
+        <ul>
+        <?php 
+        $lineas = explode("\n", $post->referencias); 
+        // Separa las referencias por cada salto de línea, creando un array
+
+        foreach ($lineas as $ref): 
+            $ref = trim($ref); 
+            // Quita espacios en blanco al inicio y al final de cada línea
+
+            if (!empty($ref)): 
+                // Solo si la línea no está vacía
+
+                if (filter_var($ref, FILTER_VALIDATE_URL)) {
+                    // Si la línea es una URL válida...
+
+                    $host = parse_url($ref, PHP_URL_HOST);
+                    // Obtiene el dominio del enlace (por ejemplo: www.ejemplo.com)
+
+                    $nombreSitio = ucfirst(str_replace('www.', '', $host));
+                    // Elimina el "www." si existe y pone la primera letra en mayúscula
+
+                    echo "<li>$nombreSitio. (s.f.). Recuperado de <a href=\"$ref\" target=\"_blank\">$ref</a></li>";
+                    // Muestra la referencia con formato APA básico para sitios web
+
+                } else {
+                    echo "<li>" . htmlspecialchars($ref) . "</li>";
+                    // Si no es un enlace, se imprime tal cual el texto de la referencia, protegido con htmlspecialchars
+                }
+            endif;
+        endforeach;
+        ?>
+        </ul>
+    </div>
+
+<?php endif; ?>
+<!-- Fin del bloque si hay referencias -->
+
+
 
     <a href="blog.php" class="btn btn-secondary mt-3">Volver al Blog</a>
     </div>

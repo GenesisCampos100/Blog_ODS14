@@ -29,6 +29,7 @@ function obtenerCategorias() {
     return $stmt->fetchAll();
 }
 
+# Registra todos los datos
 function registrarPublicacion($titulo, $contenido, $referencias, $autor_nombre, $categoria_id) {
     $bd = conectarBaseDatos();
     $sql = "INSERT INTO publicaciones (titulo, contenido, referencias, autor_nombre, fecha_publicacion, categoria_id)
@@ -38,6 +39,7 @@ function registrarPublicacion($titulo, $contenido, $referencias, $autor_nombre, 
     return $bd->lastInsertId();
 }
 
+# Función para identificar si es imagen o texto
 function registrarContenidoElemento($publicacion_id, $contenido_html) {
     $bd = conectarBaseDatos();
     $orden = 1;
@@ -120,9 +122,11 @@ $categorias = obtenerCategorias();
         </div>
 
         <div class="mb-3">
-            <label>Referencias</label>
-            <textarea name="referencias" class="form-control"></textarea>
+    <label>Referencias</label>
+    <textarea name="referencias" class="form-control" placeholder="Ejemplo: https://ejemplo.com/articulo-uno"></textarea>
+    <small class="text-muted">Puedes escribir una referencia por línea. Si solo pones el link, se convertirá en formato APA básico automáticamente.</small>
         </div>
+
 
         <div class="mb-3">
             <label>Nombre del Autor</label>
