@@ -5,6 +5,6 @@ session_unset();
 // Destruye la sesión
 session_destroy();
 // Redirige a la página de inicio de sesión o a donde desees
-header("Location: login.php");
+header("Location: login_admin.php");
 exit;
 ?>
