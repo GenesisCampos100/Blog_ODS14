@@ -86,7 +86,12 @@ function registrarContenidoElemento($publicacion_id, $contenido_html) {
     }
 }
 
-
+$titulo = '';
+$resumen = '';
+$contenido_html = '';
+$referencias = '';
+$autor_nombre = '';
+$categoria_id = '';
 
 $mensaje = "";
 if (isset($_POST['registrar'])) {
@@ -130,10 +135,11 @@ $categorias = obtenerCategorias();
     <h3>Agregar Publicación</h3>
     <?= $mensaje ?? "" ?>
     <form method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label>Título</label>
-            <input type="text" name="publicacion" class="form-control">
-        </div>
+
+    <div class="mb-3">
+    <label>Título</label>
+    <input type="text" name="publicacion" class="form-control" value="<?= htmlspecialchars($titulo) ?>">
+    </div>
 
         <div class="mb-3">
             <label>Imagen de Portada</label>
@@ -142,32 +148,35 @@ $categorias = obtenerCategorias();
 
         <div class="mb-3">
             <label>Resumen (previsualización del blog)</label>
-            <textarea name="resumen" class="form-control"></textarea>
+            <textarea name="resumen" class="form-control"><?= htmlspecialchars($resumen) ?></textarea>
         </div>
 
         <div class="mb-3">
             <label>Contenido</label>
-            <textarea id="contenido" name="contenido" class="form-control"></textarea>
+            <textarea id="contenido" name="contenido" class="form-control"><?= htmlspecialchars($contenido_html) ?></textarea>
         </div>
 
         <div class="mb-3">
-    <label>Referencias</label>
-    <textarea name="referencias" class="form-control" placeholder="Ejemplo: https://ejemplo.com/articulo-uno"></textarea>
-    <small class="text-muted">Puedes escribir una referencia por línea. Si solo pones el link, se convertirá en formato APA básico automáticamente.</small>
+            <label>Referencias</label>
+            <textarea name="referencias" class="form-control" placeholder="Ejemplo: https://ejemplo.com/articulo-uno"><?= htmlspecialchars($referencias) ?></textarea>
+            <small class="text-muted">Puedes escribir una referencia por línea. Si solo pones el link, se convertirá en formato APA básico automáticamente.</small>
         </div>
 
 
         <div class="mb-3">
             <label>Nombre del Autor</label>
-            <input type="text" name="autor_nombre" class="form-control">
+            <input type="text" name="autor_nombre" class="form-control" value="<?= htmlspecialchars($autor_nombre) ?>">
         </div>
+
 
         <div class="mb-3">
             <label>Categoría</label>
             <select name="categoria" id = "categoria" class="form-select" >
                 <option value="">Selecciona una categoría</option>
                 <?php foreach ($categorias as $cat): ?>
-                    <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['nombre']) ?></option>
+                    <option value="<?= $cat['id'] ?>" <?= ($categoria_id == $cat['id']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($cat['nombre']) ?>
+            </option>
                 <?php endforeach; ?>
             </select>
         </div>
