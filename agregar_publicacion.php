@@ -41,6 +41,8 @@ if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === U
 
     if (move_uploaded_file($tmp_name, $ruta_destino)) {
         $imagen_portada = $ruta_destino;
+    } else {
+        $mensaje = '<div class="alert alert-warning mt-3">No se subió la imagen de portada. Asegúrate de elegir un archivo válido.</div>';
     }
 }
 
@@ -94,7 +96,7 @@ if (isset($_POST['registrar'])) {
     $referencias = $_POST['referencias'] ?? '';
     $autor_nombre = $_POST['autor_nombre'] ?? '';
     $categoria_id = $_POST['categoria'] ?? null;
-    $imagen_portada = $_POST['imagen_portada'] ?? '';
+    
 
     if (empty($titulo) || empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)) {
         $mensaje = '<div class="alert alert-danger mt-3">Debes completar todos los campos obligatorios.</div>';
