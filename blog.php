@@ -85,23 +85,36 @@ $publicaciones = obtenerPublicaciones();
       </nav>
         
       <div class="container mt-4">
-        <div class="row">
-            <?php foreach ($publicaciones as $post) { ?>
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-lg">
-                        <div class="card-body">
-                            <h3 class="card-title"><?= htmlspecialchars($post->titulo) ?></h3>
-                            <p class="text-muted">Por <?= htmlspecialchars($post->autor_nombre) ?> - <?= htmlspecialchars($post->fecha_publicacion) ?></p>
-                            <p class="card-text">
-                                <?= nl2br(htmlspecialchars(substr($post->contenido, 0, 150))) ?>...
-                            </p>
-                            <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
-                        </div>
-                    </div>
+    <?php foreach ($publicaciones as $index => $post): ?>
+        <div class="row align-items-center mb-5">
+            <?php if ($index % 2 == 0): ?>
+                <!-- Imagen a la izquierda -->
+                <div class="col-md-4">
+                    <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="img-fluid rounded shadow" alt="Imagen de portada">
                 </div>
-            <?php } ?>
+                <div class="col-md-8">
+                    <h3><?= htmlspecialchars($post->titulo) ?></h3>
+                    <p class="text-muted">Por <?= htmlspecialchars($post->autor_nombre) ?> - <?= htmlspecialchars($post->fecha_publicacion) ?></p>
+                    <p><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
+                    <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
+                </div>
+            <?php else: ?>
+                <!-- Imagen a la derecha -->
+                <div class="col-md-8">
+                    <h3><?= htmlspecialchars($post->titulo) ?></h3>
+                    <p class="text-muted">Por <?= htmlspecialchars($post->autor_nombre) ?> - <?= htmlspecialchars($post->fecha_publicacion) ?></p>
+                    <p><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
+                    <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
+                </div>
+                <div class="col-md-4">
+                    <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="img-fluid rounded shadow" alt="Imagen de portada">
+                </div>
+            <?php endif; ?>
         </div>
-    </div>
+        <hr>
+    <?php endforeach; ?>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -29,13 +29,28 @@ function obtenerCategorias() {
     return $stmt->fetchAll();
 }
 
+$imagen_portada = null;
+if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
+    $tmp_name = $_FILES['imagen_portada']['tmp_name'];
+    $nombre_final = uniqid() . "_" . $_FILES['imagen_portada']['name'];
+    $ruta_destino = "imagen_portada/" . $nombre_final;
+
+    if (!is_dir("imagen_portada")) {
+        mkdir("imagen_portada", 0777, true);
+    }
+
+    if (move_uploaded_file($tmp_name, $ruta_destino)) {
+        $imagen_portada = $ruta_destino;
+    }
+}
+
 # Registra todos los datos
-function registrarPublicacion($titulo, $contenido, $referencias, $autor_nombre, $categoria_id) {
+function registrarPublicacion($titulo, $resumen, $contenido, $referencias, $autor_nombre, $categoria_id, $imagen_portada) {
     $bd = conectarBaseDatos();
-    $sql = "INSERT INTO publicaciones (titulo, contenido, referencias, autor_nombre, fecha_publicacion, categoria_id)
-            VALUES (?, ?, ?, ?, NOW(), ?)";
+    $sql = "INSERT INTO publicaciones (titulo, resumen, contenido, referencias, autor_nombre, fecha_publicacion, categoria_id, imagen_portada)
+            VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)";
     $stmt = $bd->prepare($sql);
-    $stmt->execute([$titulo, '', $referencias, $autor_nombre, $categoria_id]);
+    $stmt->execute([$titulo, $resumen, $contenido, $referencias, $autor_nombre, $categoria_id, $imagen_portada]);
     return $bd->lastInsertId();
 }
 
@@ -74,15 +89,17 @@ function registrarContenidoElemento($publicacion_id, $contenido_html) {
 $mensaje = "";
 if (isset($_POST['registrar'])) {
     $titulo = $_POST['publicacion'] ?? '';
+    $resumen = $_POST['resumen'] ?? '';
     $contenido_html = $_POST['contenido'] ?? '';
     $referencias = $_POST['referencias'] ?? '';
     $autor_nombre = $_POST['autor_nombre'] ?? '';
     $categoria_id = $_POST['categoria'] ?? null;
+    $imagen_portada = $_POST['imagen_portada'] ?? '';
 
     if (empty($titulo) || empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)) {
         $mensaje = '<div class="alert alert-danger mt-3">Debes completar todos los campos obligatorios.</div>';
     } else {
-        $publicacion_id = registrarPublicacion($titulo, $contenido_html, $referencias, $autor_nombre, $categoria_id);
+        $publicacion_id = registrarPublicacion($titulo, $resumen, $contenido_html, $referencias, $autor_nombre, $categoria_id,$imagen_portada);
         if ($publicacion_id) {
             registrarContenidoElemento($publicacion_id, $contenido_html);
             $mensaje = '<div class="alert alert-success mt-3">Publicación registrada con éxito.</div>';
@@ -110,10 +127,20 @@ $categorias = obtenerCategorias();
 <div class="container mt-4">
     <h3>Agregar Publicación</h3>
     <?= $mensaje ?? "" ?>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label>Título</label>
             <input type="text" name="publicacion" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Imagen de Portada</label>
+            <input type="file" name="imagen_portada" accept="image/*" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Resumen (previsualización del blog)</label>
+            <textarea name="resumen" class="form-control"></textarea>
         </div>
 
         <div class="mb-3">
@@ -160,6 +187,21 @@ $categorias = obtenerCategorias();
             },
             toolbar: [
                 'heading', '|','bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload', '|', 'undo', 'redo'
+            ]
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#imagen_portada'), {
+            ckfinder: {
+                uploadUrl: 'subir_imagen.php'
+            },
+            toolbar: [
+             'imageUpload'
             ]
         })
         .catch(error => {
