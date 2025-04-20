@@ -92,3 +92,15 @@ a[href*='agregar_publicacion'] {
 a[href*='agregar_publicacion']:hover {
     background: #218838;
 }
+
+.imagen-publicacion img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
