@@ -120,15 +120,17 @@
 
  <!-- IMAGEN PORTADA -->
  <div class="mb-3">
-        <label for="imagen_portada" class="form-label">Imagen de Portada</label>
-        <input type="file" name="imagen_portada" id="imagen_portada" class="form-control">
-        <?php if (!empty($cliente->imagen_portada)): ?>
-            <div class="mt-2">
-                <img src="imagenes/<?php echo htmlspecialchars($cliente->imagen_portada); ?>" 
-                     alt="Imagen actual" style="max-width: 200px;">
-            </div>
-        <?php endif; ?>
-    </div>
+    <label for="imagen_portada" class="form-label">Imagen de Portada</label>
+    <input type="file" name="imagen_portada" id="imagen_portada" class="form-control">
+
+    <?php if (!empty($cliente->imagen_portada)): ?>
+        <div class="mt-2">
+            <img src="<?php echo htmlspecialchars($cliente->imagen_portada); ?>" 
+                 alt="Imagen actual" style="max-width: 200px;">
+        </div>
+    <?php endif; ?>
+</div>
+
 
  <!-- RESUMEN -->
  <div class="mb-3">
@@ -207,19 +209,23 @@ if(isset($_POST['registrar'])){
         return $respuesta->execute($parametros);
     }
 
-        // Asignamos el valor por defecto (actual) por si no se sube una nueva imagen
+    // Guardamos el valor actual de la imagen de portada (por si no se cambia)
     $imagen_portada = $cliente->imagen_portada;
 
-    if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = time() . '_' . basename($_FILES['imagen_portada']['name']);
-        $rutaDestino = 'imagenes/' . $nombreArchivo;
+if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
+    $nombreArchivo = time() . '_' . basename($_FILES['imagen_portada']['name']);
+    $carpeta = 'imagen_portada/'; // Asegúrate de que coincida con el nombre que usas al crear
+    $rutaDestino = $carpeta . $nombreArchivo;
 
-        if (move_uploaded_file($_FILES['imagen_portada']['tmp_name'], $rutaDestino)) {
-            $imagen_portada = $rutaDestino; // Actualizamos solo si se subió correctamente
-        } else {
-            echo "<div class='alert alert-warning'>No se pudo subir la imagen de portada.</div>";
-        }
+    if (move_uploaded_file($_FILES['imagen_portada']['tmp_name'], $rutaDestino)) {
+        // Guarda la ruta completa con carpeta
+        $imagen_portada = $carpeta . $nombreArchivo;
+    } else {
+        echo "<div class='alert alert-warning'>No se pudo subir la imagen de portada.</div>";
     }
+}
+
+
 
 
     function editarCliente($id, $titulo, $autor_nombre, $imagen_portada, $resumen, $referencias, $categoria_id){
