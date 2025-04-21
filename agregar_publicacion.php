@@ -117,7 +117,7 @@ if (isset($_POST['registrar'])) {
     $categoria_id = $_POST['categoria'] ?? null;
     
 
-    if (empty($titulo) || empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)) {
+    if (empty($titulo) || empty($imagen_portada)|| empty($resumen)|| empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)) {
         $mensaje = '<div class="alert alert-danger mt-3">Debes completar todos los campos obligatorios.</div>';
     } else {
         $publicacion_id = registrarPublicacion($titulo, $resumen, $contenido_html, $referencias, $autor_nombre, $categoria_id,$imagen_portada);

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/all.min.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/editar_publicacion.css">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <title>Editar</title>
 </head>
@@ -109,6 +110,22 @@
        
     ?>
 
+<?php if (!empty($_SESSION['exito'])): ?>
+    <div class="alert alert-success text-center" id="mensajeAnimado">
+        <div class="checkmark-container">
+            <div class="checkmark"></div>
+        </div>
+        Publicación actualizada con éxito
+    </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById("mensajeAnimado").style.display = "none";
+        }, 2500);
+    </script>
+    <?php unset($_SESSION['exito']); ?>
+<?php endif; ?>
+
+
 <!-- TITULO -->
 <form method="POST" enctype="multipart/form-data">
 <div class="mb-3">
@@ -194,7 +211,7 @@ if(isset($_POST['registrar'])){
     $imagen_portada = $cliente->imagen_portada; // valor actual
 
 
-    if(empty($titulo) || empty($contenido) || empty($autor_nombre)){
+    if(empty($titulo)  || empty($resumen) || empty($contenido) || empty($autor_nombre)  || empty($referencias)  || empty($categoria_id) ){
         echo'
         <div class="container text-center col-10">
             <div class="alert alert-danger mt-3" role="alert">
@@ -331,17 +348,10 @@ if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === U
     }
 }
 
-    
-        // Si quieres mostrar un mensaje (opcional)
-        echo '
-        <div class="container text-center col-10">
-            <div class="alert alert-success mt-3" role="alert">
-                Información de la publicación actualizada con éxito.
-            </div>
-        </div>';
-    
-        $contenidoReconstruido = obtenerContenidoCompleto($id);
-        $cliente = obtenerClientePorId($id);
+$_SESSION['exito'] = true; // Guardamos el estado temporal
+header("Location: editar_publicacion.php?id=" . $id); // Recarga forzada
+exit;
+
     }
     
 }

@@ -1,0 +1,44 @@
+.checkmark-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #28a745;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #28a745;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    position: relative;
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 18px;
+    width: 6px;
+    height: 14px;
+    border: solid #28a745;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    animation: stroke .4s cubic-bezier(.65,.05,.36,1) .2s forwards;
+}
+
+@keyframes stroke {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes scale {
+    0%, 100% { transform: none; }
+    50% { transform: scale3d(1.1, 1.1, 1); }
+}
+
+@keyframes fill {
+    100% { box-shadow: inset 0px 0px 0px 30px #28a745; }
+}
