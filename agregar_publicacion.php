@@ -68,7 +68,21 @@ function registrarContenidoElemento($publicacion_id, $contenido_html) {
     $body = $doc->getElementsByTagName('body')->item(0);
     foreach ($body->childNodes as $nodo) {
         if ($nodo->nodeType == XML_ELEMENT_NODE) {
-            if ($nodo->nodeName == 'p' || $nodo->nodeName == 'h1' || $nodo->nodeName == 'h2' || $nodo->nodeName == 'h3' || $nodo->nodeName == 'div') {
+            if (
+                $nodo->nodeName == 'p' ||
+                $nodo->nodeName == 'h1' ||
+                $nodo->nodeName == 'h2' ||
+                $nodo->nodeName == 'h3' ||
+                $nodo->nodeName == 'div' ||
+                $nodo->nodeName == 'ul' ||
+                $nodo->nodeName == 'ol' ||
+                $nodo->nodeName == 'li' ||
+                $nodo->nodeName == 'a' ||
+                $nodo->nodeName == 'strong' ||
+                $nodo->nodeName == 'b' ||
+                $nodo->nodeName == 'em' ||
+                $nodo->nodeName == 'i'
+            ) {
                 $texto = trim($doc->saveHTML($nodo));
                 if (!empty($texto)) {
                     $stmt = $bd->prepare("INSERT INTO publicacion_elementos (publicacion_id, contenido, tipo, orden) VALUES (?, ?, 'texto', ?)");

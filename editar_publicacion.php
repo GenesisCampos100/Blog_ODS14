@@ -80,12 +80,10 @@
             return $html;
         }
         
-
-
-
         $contenidoReconstruido = obtenerContenidoCompleto($id);
         $cliente = obtenerClientePorId($id);
     ?>
+
 
 <form method="POST" enctype="multipart/form-data">
 <div class="mb-3">
@@ -94,15 +92,6 @@
         value="<?php echo htmlspecialchars($cliente->titulo ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
         placeholder="Escribe el título" required>
 </div>
-
-<div class="mb-3">
-    <label for="imagen_portada" class="form-label">Imagen de Portada</label>
-    <input type="file" name="imagen_portada" id="imagen_portada" class="form-control" accept="image/*">
-    <?php if (!empty($cliente->imagen_portada)): ?>
-        <p class="mt-2">Imagen actual: <img src="<?= htmlspecialchars($cliente->imagen_portada) ?>" width="100"></p>
-    <?php endif; ?>
-</div>
-
 
 
 <div class="mb-3">
@@ -120,16 +109,18 @@
 
             <div class="text-center mt-3">
                 <input type="submit" name="registrar" value="Registrar" class="boton">
-                
                 </input>
+
+                
                 <a href="index_admin.php" class="boton">
                     <i class=""></i> 
-                    Cancelar
+                    Volver al panel
                 </a>
             </div>
-        </form>
     </div>
-    
+  </form>  
+
+
     <?php
 if(isset($_POST['registrar'])){
     $titulo = $_POST['publicacion'];
@@ -138,14 +129,6 @@ if(isset($_POST['registrar'])){
 
     $imagen_portada = $cliente->imagen_portada; // valor actual
 
-    if (!empty($_FILES['imagen_portada']['tmp_name'])) {
-        $nombreArchivo = uniqid() . "_" . $_FILES['imagen_portada']['name'];
-        $rutaDestino = 'img/portadas/' . $nombreArchivo;
-
-        if (move_uploaded_file($_FILES['imagen_portada']['tmp_name'], $rutaDestino)) {
-            $imagen_portada = $rutaDestino;
-        }
-    }
 
     if(empty($titulo) || empty($contenido) || empty($autor_nombre)){
         echo'
@@ -154,7 +137,6 @@ if(isset($_POST['registrar'])){
                 Debes completar todos los datos.
             </div>
         </div>';
-        return;
     } 
 
     function editar($sentencia, $parametros ){
@@ -212,7 +194,12 @@ if(isset($_POST['registrar'])){
             if ($node->nodeType === XML_ELEMENT_NODE) {
 
                 // Si el nodo es un párrafo, encabezado o contenedor (bloque de texto)
-                if (in_array($node->nodeName, ['p', 'h1', 'h2', 'div'])) {
+                if (in_array($node->nodeName, [
+                    'p', 'h1', 'h2', 'h3', 'div',
+                    'ul', 'ol', 'li',
+                    'a', 'strong', 'b',
+                    'em', 'i'
+                ])) {
 
                     // Si ese bloque contiene SOLO una imagen (para evitar duplicar)
                     if ($node->getElementsByTagName('img')->length === 1 && $node->childNodes->length === 1) {
@@ -247,8 +234,15 @@ if(isset($_POST['registrar'])){
                 }
             }
         }
+    
 
-          
+            // Antes del header
+        /*session_start();
+        $_SESSION['mensaje_exito'] = "Información del cliente actualizada con éxito.";
+
+        header("Location: editar_publicacion.php?id=$id"); // 🔄 recarga con datos nuevos
+        exit;*/
+
         echo'
         <div class="container text-center col-10">
             <div class="alert alert-success mt-3" role="alert">
@@ -256,12 +250,13 @@ if(isset($_POST['registrar'])){
             </div>
         </div>';
 
-        header("refresh:2;url=index_admin.php");
+        $contenidoReconstruido = obtenerContenidoCompleto($id);
+        $cliente = obtenerClientePorId($id);
+    
+
     }
 }
 ?>
-
-
 
 </body>
 </html>
