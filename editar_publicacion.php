@@ -169,92 +169,96 @@ if(isset($_POST['registrar'])){
     // Primero editamos la publicación base
     $resultado = editarCliente($id, $titulo, $autor_nombre, $imagen_portada);
 
-    if($resultado){
+    if ($resultado) {
         borrarElementosPublicacion($id);
     
-        // Activa el manejo interno de errores de libxml para evitar que se muestren warnings por HTML mal formado
         libxml_use_internal_errors(true);
+        //echo "<pre>" . htmlspecialchars($contenido) . "</pre>";
 
-        // Crea una nueva instancia del DOMDocument (sirve para manipular HTML/XML como objetos)
         $dom = new DOMDocument();
-
-        // Carga el contenido HTML en el DOM, convirtiendo caracteres especiales correctamente
         $dom->loadHTML(mb_convert_encoding($contenido, 'HTML-ENTITIES', 'UTF-8'));
-
-        // Inicializa el orden de los elementos (sirve para mantener el orden en que se guardan)
         $orden = 0;
-
-        // Crea un objeto XPath para poder hacer consultas al DOM fácilmente
         $xpath = new DOMXPath($dom);
+    
+       foreach ($xpath->query('//body/*') as $node) {
+        if ($node->nodeType === XML_ELEMENT_NODE) {
 
-        // Recorre todos los nodos hijos directos del <body> (niveles principales)
-        foreach ($xpath->query('//body/*') as $node) {
-            
-            // Verifica que el nodo sea un elemento HTML válido (por ejemplo, <p>, <div>, <img>, etc.)
-            if ($node->nodeType === XML_ELEMENT_NODE) {
-
-                // Si el nodo es un párrafo, encabezado o contenedor (bloque de texto)
-                if (in_array($node->nodeName, [
-                    'p', 'h1', 'h2', 'h3', 'div',
-                    'ul', 'ol', 'li',
-                    'a', 'strong', 'b',
-                    'em', 'i'
-                ])) {
-
-                    // Si ese bloque contiene SOLO una imagen (para evitar duplicar)
-                    if ($node->getElementsByTagName('img')->length === 1 && $node->childNodes->length === 1) {
-
-                        // Obtiene la imagen del bloque
-                        $img = $node->getElementsByTagName('img')[0];
-
-                        // Toma el atributo src de la imagen (la URL o base64)
-                        $src = $img->getAttribute('src');
-
-                        // Si el src no está vacío, lo guarda como tipo imagen en la base de datos
-                        if (!empty($src)) {
-                            insertarElemento($id, 'imagen', $src, $orden++);
-                        }
-
-                    } else {
-                        // Si el bloque contiene más cosas (texto o más de una imagen), lo guarda como bloque HTML
-                        $html = $dom->saveHTML($node);
-                        insertarElemento($id, 'texto', $html, $orden++);
-                    }
-
-                // Si el nodo es una imagen que está por sí sola (no dentro de un div o p)
-                } elseif ($node->nodeName === 'img') {
-
-                    // Obtiene su src
-                    $src = $node->getAttribute('src');
-
-                    // Y si no está vacío, también lo guarda como imagen
+            if ($node->nodeName === 'figure') {
+                $img = $node->getElementsByTagName('img')[0];
+                if ($img) {
+                    $src = $img->getAttribute('src');
                     if (!empty($src)) {
                         insertarElemento($id, 'imagen', $src, $orden++);
+                       // echo "Imagen desde figure guardada: $src";
                     }
                 }
+                continue;
+            }
+            
+
+            // Imagen suelta
+            if ($node->nodeName === 'img') {
+                $src = $node->getAttribute('src');
+                if (!empty($src)) {
+                    //echo "🖼 Imagen suelta detectada: $src<br>";
+                    insertarElemento($id, 'imagen', $src, $orden++);
+                }
+                continue;
+            }
+
+        // Bloque que puede tener texto o imagen
+        if (in_array($node->nodeName, ['p', 'h1', 'h2', 'h3', 'div', 'ul', 'ol', 'li', 'a', 'strong', 'b', 'em', 'i', 'figure'])) {
+
+            $imgs = $node->getElementsByTagName('img');
+            $onlyImage = true;
+
+            // Verificamos si contiene solo imagen sin texto visible
+            foreach ($node->childNodes as $child) {
+                if (
+                    $child->nodeType === XML_TEXT_NODE &&
+                    trim($child->textContent) !== ''
+                ) {
+                    $onlyImage = false;
+                    break;
+                }
+                if (
+                    $child->nodeType === XML_ELEMENT_NODE &&
+                    $child->nodeName !== 'img'
+                ) {
+                    $onlyImage = false;
+                    break;
+                }
+            }
+
+            if ($imgs->length === 1 && $onlyImage) {
+                $img = $imgs[0];
+                $src = $img->getAttribute('src');
+                if (!empty($src)) {
+                    //echo "🖼 Imagen detectada como única dentro de bloque: $src<br>";
+                    insertarElemento($id, 'imagen', $src, $orden++);
+                }
+            } else {
+                $html = $dom->saveHTML($node);
+                //echo "📝 Bloque con texto o contenido mixto:<br>" . htmlspecialchars($html) . "<br><br>";
+                insertarElemento($id, 'texto', $html, $orden++);
             }
         }
+    }
+}
+
     
-
-            // Antes del header
-        /*session_start();
-        $_SESSION['mensaje_exito'] = "Información del cliente actualizada con éxito.";
-
-        header("Location: editar_publicacion.php?id=$id"); // 🔄 recarga con datos nuevos
-        exit;*/
-
-        echo'
+        // Si quieres mostrar un mensaje (opcional)
+        echo '
         <div class="container text-center col-10">
             <div class="alert alert-success mt-3" role="alert">
-                Información del cliente actualizada con éxito.
+                Información de la publicación actualizada con éxito.
             </div>
         </div>';
-
+    
         $contenidoReconstruido = obtenerContenidoCompleto($id);
         $cliente = obtenerClientePorId($id);
-    
-
     }
+    
 }
 ?>
 
