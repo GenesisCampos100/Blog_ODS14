@@ -55,11 +55,34 @@
             return $respuesta->fetchAll();
         }
 
-        function obtenerClientePorId($id){
+        /*function obtenerClientePorId($id){
             $sentencia = "SELECT * FROM publicaciones WHERE id = ?";
             $cliente = select($sentencia, [$id]);
             if($cliente) return $cliente[0];
+        }*/
+
+        function obtenerCategorias() {
+            $bd = conectarBaseDatos();
+            $stmt = $bd->query("SELECT id, nombre FROM categorias");
+            return $stmt->fetchAll();
         }
+
+    
+        // Esta función obtiene todos los datos de una publicación, incluyendo la categoría_id,
+        // necesaria para preseleccionar correctamente la categoría en el formulario de edición.
+        function obtenerClientePorId($id){
+            $bd = conectarBaseDatos();
+            $sentencia = "
+                SELECT p.*, c.id AS categoria_id 
+                FROM publicaciones p 
+                LEFT JOIN categorias c ON p.categoria_id = c.id 
+                WHERE p.id = ?
+            ";
+            $stmt = $bd->prepare($sentencia);
+            $stmt->execute([$id]);
+            return $stmt->fetch();
+        }
+        
 
         function obtenerContenidoCompleto($id_publicacion) {
             $bd = conectarBaseDatos();
@@ -81,10 +104,12 @@
         }
         
         $contenidoReconstruido = obtenerContenidoCompleto($id);
-        $cliente = obtenerClientePorId($id);
+        $cliente = obtenerClientePorId($id); 
+        $categorias = obtenerCategorias();
+       
     ?>
 
-
+<!-- TITULO -->
 <form method="POST" enctype="multipart/form-data">
 <div class="mb-3">
     <label for="publicacion" class="form-label">Título</label>
@@ -93,39 +118,76 @@
         placeholder="Escribe el título" required>
 </div>
 
+ <!-- IMAGEN PORTADA -->
+ <div class="mb-3">
+        <label for="imagen_portada" class="form-label">Imagen de Portada</label>
+        <input type="file" name="imagen_portada" id="imagen_portada" class="form-control">
+        <?php if (!empty($cliente->imagen_portada)): ?>
+            <div class="mt-2">
+                <img src="imagenes/<?php echo htmlspecialchars($cliente->imagen_portada); ?>" 
+                     alt="Imagen actual" style="max-width: 200px;">
+            </div>
+        <?php endif; ?>
+    </div>
 
+ <!-- RESUMEN -->
+ <div class="mb-3">
+        <label for="resumen" class="form-label">Resumen</label>
+        <textarea name="resumen" id="resumen" class="form-control" rows="3" placeholder="Escribe un resumen breve..."><?php echo htmlspecialchars($cliente->resumen ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+    </div>
+
+ <!-- CONTENIDO -->
 <div class="mb-3">
     <label for="contenido" class="form-label">Contenido</label>
-    
 <textarea name="contenido" id="contenido"><?php echo $contenidoReconstruido; ?></textarea>
-
 </div>
 
+ <!-- REFERENCIAS -->
+ <div class="mb-3">
+        <label for="referencias" class="form-label">Referencias</label>
+        <textarea name="referencias" id="referencias" class="form-control" rows="3" placeholder="Agrega las fuentes o referencias..."><?php echo htmlspecialchars($cliente->referencias ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+    </div>
+
+<!-- NOMBRE AUTOR -->
 <div class="mb-3">
     <label for="autor_nombre" class="form-label">Nombre del Autor</label>
     <input type="text" name="autor_nombre" id="autor_nombre" class="cuadroTexto" 
         value="<?php echo htmlspecialchars($cliente->autor_nombre ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
         placeholder="Escribe el nombre del autor" required>
+ </div>
 
-            <div class="text-center mt-3">
-                <input type="submit" name="registrar" value="Registrar" class="boton">
-                </input>
+<!-- CATEGORÍA -->
+<div class="mb-3">
+        <label for="categoria_id" class="form-label">Categoría</label>
+        <select name="categoria_id" class="form-select" required>
+            <option value="">Selecciona una categoría</option>
+            <?php foreach ($categorias as $cat): ?>
+                <option value="<?= $cat->id ?>" <?= ($cliente->categoria_id == $cat->id) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($cat->nombre) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-                
-                <a href="index_admin.php" class="boton">
-                    <i class=""></i> 
-                    Volver al panel
-                </a>
-            </div>
+
+    <div class="text-center mt-3">
+        <input type="submit" name="registrar" value="Registrar" class="boton"></input>
+        <a href="index_admin.php" class="boton"><i class=" "></i> Volver al panel</a>
     </div>
   </form>  
 
 
     <?php
+
 if(isset($_POST['registrar'])){
-    $titulo = $_POST['publicacion'];
+    $titulo = $_POST['publicacion']; 
+    $resumen = $_POST['resumen'];
     $contenido = $_POST['contenido'];
     $autor_nombre = $_POST['autor_nombre'];
+    $referencias = $_POST['referencias'];
+    $categoria_id = $_POST['categoria_id'];
+
+
 
     $imagen_portada = $cliente->imagen_portada; // valor actual
 
@@ -145,9 +207,26 @@ if(isset($_POST['registrar'])){
         return $respuesta->execute($parametros);
     }
 
-    function editarCliente($id, $titulo, $autor_nombre, $imagen_portada){
-        $sentencia = "UPDATE publicaciones SET titulo = ?, autor_nombre = ?, imagen_portada = ? WHERE id = ?";
-        $parametros = [$titulo, $autor_nombre, $imagen_portada, $id];
+        // Asignamos el valor por defecto (actual) por si no se sube una nueva imagen
+    $imagen_portada = $cliente->imagen_portada;
+
+    if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = time() . '_' . basename($_FILES['imagen_portada']['name']);
+        $rutaDestino = 'imagenes/' . $nombreArchivo;
+
+        if (move_uploaded_file($_FILES['imagen_portada']['tmp_name'], $rutaDestino)) {
+            $imagen_portada = $rutaDestino; // Actualizamos solo si se subió correctamente
+        } else {
+            echo "<div class='alert alert-warning'>No se pudo subir la imagen de portada.</div>";
+        }
+    }
+
+
+    function editarCliente($id, $titulo, $autor_nombre, $imagen_portada, $resumen, $referencias, $categoria_id){
+        $sentencia = "UPDATE publicaciones 
+                      SET titulo = ?, autor_nombre = ?, imagen_portada = ?, resumen = ?, referencias = ?, categoria_id = ? 
+                      WHERE id = ?";
+        $parametros = [$titulo, $autor_nombre, $imagen_portada, $resumen, $referencias, $categoria_id, $id];
         return editar($sentencia, $parametros);
     }
 
@@ -167,7 +246,7 @@ if(isset($_POST['registrar'])){
     
 
     // Primero editamos la publicación base
-    $resultado = editarCliente($id, $titulo, $autor_nombre, $imagen_portada);
+    $resultado = editarCliente($id, $titulo, $autor_nombre, $imagen_portada, $resumen, $referencias, $categoria_id);
 
     if ($resultado) {
         borrarElementosPublicacion($id);

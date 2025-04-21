@@ -1,8 +1,6 @@
 <?php
 session_start();
-if (!isset($_GET['id'])) {
-    die("Publicación no encontrada.");
-}
+
 
 function conectarBaseDatos() {
     $host = "localhost";
