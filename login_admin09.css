@@ -62,7 +62,7 @@ form {
 
 .input-box {
     position: relative;
-    margin: 30px 0;
+    margin: 5px 0;
 }
 
 .input-box input {
@@ -96,7 +96,7 @@ form {
 }
 
 .forgot-link a {
-    font-size: 14.5px;
+    font-size: 13.5px;
     color: #333;
     text-decoration: none;
 }
