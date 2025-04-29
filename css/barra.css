@@ -68,18 +68,36 @@
 .form-control:focus {
     background-color: transparent; /* Fondo transparente al enfocar */
     border-color: #00a1e1; /* Borde azul al enfocar */
+    color: #f0f2f2;
 }
 
 /* Barra de categorías */
 .navbar-categories {
+    margin-top: 70px;
+    width: 100%;
+    z-index: 900;
     background-color: #043385;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    position: relative; /* Hace que se ubique debajo de la barra principal */
-    top: 70px; /* Ubica la barra de categorías justo debajo de la barra principal (ajusta según la altura de tu barra) */
-    width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
-    z-index: 999; /* Menor que el de la barra principal, para no interferir */
-    transition: top 0.3s ease;
-    color: #00d6d8; /* Efecto suave al ocultarse */
+    font-size: 20px;
 }
+
+.navbar-categories .nav {
+    display: flex;
+    justify-content: space-around; /* Distribuye uniformemente */
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    
+    
+}
+
+
+.navbar-categories .nav-link {
+    color: #01eeff;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Kaytek';
+}
+
 
 

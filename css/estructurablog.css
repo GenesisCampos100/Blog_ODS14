@@ -1,28 +1,69 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(../fuentes/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'Questrial';
+    src: url(../fuentes/Questrial-Regular.ttf);
+}
+
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+#barracolor {
+    margin-top: 201px;
+    background-color: #043385; /* El color azul que desees */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    z-index: 0; /* Si quieres que coincida con la imagen */
+}
+
 .content {
-    margin-top: 100px; /* Espacio para que el contenido no quede debajo de la barra fija */
+    margin-top: 45px; /* Espacio para que el contenido no quede debajo de la barra fija */
     background-color: #f0f2f2; 
-    width: 90%;  /* Ancho del contenedor */
-    height:auto;
+    width: 90%;  
+    height: auto;
     border-radius: 10px;
-    position: relative; /* Cambié de absolute a relative para más flexibilidad */
-    left: 50%; /* Centra horizontalmente */
-    transform: translateX(-50%); /* Solo centra horizontalmente */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column; /* Si tienes varios elementos dentro, se alistan en columna */
-    align-items: center; /* Centra los elementos horizontalmente */
+    flex-direction: column;
+    align-items: center;
     color: #051f34;
+    padding-top: 40px; /* Asegúrate de que haya espacio también en la parte superior */
 }
 
 .imgtituloblog {
-    margin-top: 100px; 
-    max-width: 100%; /* Para que no exceda el ancho del contenedor */
-    height: auto; /* Mantiene la proporción */
-    display: block; /* Evita espacios en línea */
-    margin: 0 auto; /* Centra la imagen dentro del contenedor */
-}
-
-#tituloimg{
     width: 100%;
     height: auto;
+    position: relative;
+    z-index: 1;
+    display: block;
 }
+
+.titulo{
+    margin-top: 50px;
+    width: 80%;
+    height: fit-content;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 60px;
+}
+
+.textoblog{
+    margin-top: 50px;
+    width: 80%;
+    height: fit-content;
+    font-family: 'Questrial';
+    font-size: 35px;
+    text-align: justify;
+}
+
 
