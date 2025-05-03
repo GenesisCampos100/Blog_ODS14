@@ -72,33 +72,44 @@ $_SESSION['formulario_actual'] = 'login';
 
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
+    // Recolectar y sanitizar
+    $nombre_usuario = trim(filter_input(INPUT_POST, 'registrar-usuario', FILTER_SANITIZE_STRING));
+    $correo = trim(filter_input(INPUT_POST, 'registrar-correo', FILTER_SANITIZE_EMAIL));
+    $nombre = trim(filter_input(INPUT_POST, 'registrar-nombre', FILTER_SANITIZE_STRING));
+    $apellidos = trim(filter_input(INPUT_POST, 'registrar-apellidos', FILTER_SANITIZE_STRING));
+    $contrasenia = $_POST['registrar-contrasenia'] ?? '';
+    $confirmar_contrasenia = $_POST['registrar-confirmar'] ?? '';
 
-    if (
-        empty($_POST['registrar-nombre']) ||
-        empty($_POST['registrar-apellido_paterno']) ||
-        empty($_POST['registrar-apellido_materno']) ||
-        empty($_POST['registrar-correo']) ||
-        empty($_POST['registrar-usuario']) ||
-        empty($_POST['registrar-contrasenia'])
-    ) {
-        echo '<div class="alert alert-warning mt-3 text-center">Todos los campos son obligatorios.</div>'; 
+    // Validaciones
+    if (!$nombre_usuario || !$correo || !$nombre || !$apellidos || !$contrasenia || !$confirmar_contrasenia) {
+        echo '<div class="alert alert-warning text-center mt-3">Todos los campos son obligatorios.</div>';
+    } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        echo '<div class="alert alert-warning text-center mt-3">El correo no es válido.</div>';
+    } elseif ($contrasenia !== $confirmar_contrasenia) {
+        echo '<div class="alert alert-warning text-center mt-3">Las contraseñas no coinciden.</div>';
     } else {
-        $nombre = filter_input(INPUT_POST, 'registrar-nombre', FILTER_SANITIZE_STRING);
-        $apellido_paterno = filter_input(INPUT_POST, 'registrar-apellido_paterno', FILTER_SANITIZE_STRING);
-        $apellido_materno = filter_input(INPUT_POST, 'registrar-apellido_materno', FILTER_SANITIZE_STRING);
-        $correo = filter_input(INPUT_POST, 'registrar-correo', FILTER_SANITIZE_EMAIL);
-        $usuario = filter_input(INPUT_POST, 'registrar-usuario', FILTER_SANITIZE_STRING);
-        $password = password_hash($_POST['registrar-contrasenia'], PASSWORD_DEFAULT); // Hash de contraseña
-
         $bd = conectarBaseDatos();
-        $stmt = $bd->prepare("INSERT INTO admin (nombre, apellido_paterno, apellido_materno, correo, usuario, contrasenia) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($stmt->execute([$nombre, $apellido_paterno, $apellido_materno, $correo, $usuario, $password])) {
-            echo '<div class="alert alert-success mt-3 text-center">Registro exitoso. ¡Ahora puedes iniciar sesión!</div>';
+
+        // Verificar si el usuario o correo ya existe
+        $verificar = $bd->prepare("SELECT id FROM usuarios WHERE nombre_usuario = ? OR correo = ?");
+        $verificar->execute([$nombre_usuario, $correo]);
+
+        if ($verificar->fetch()) {
+            echo '<div class="alert alert-danger text-center mt-3">El usuario o correo ya están registrados.</div>';
         } else {
-            echo '<div class="alert alert-danger mt-3 text-center">Error en el registro. Inténtalo de nuevo.</div>';
+            // Insertar en la tabla usuarios
+            $hash = password_hash($contrasenia, PASSWORD_DEFAULT);
+            $stmt = $bd->prepare("INSERT INTO usuarios (nombre_usuario, correo, nombre, apellidos, contraseña) VALUES (?, ?, ?, ?, ?)");
+
+            if ($stmt->execute([$nombre_usuario, $correo, $nombre, $apellidos, $hash])) {
+                echo '<div class="alert alert-success text-center mt-3">¡Registro exitoso! Ya puedes iniciar sesión.</div>';
+            } else {
+                echo '<div class="alert alert-danger text-center mt-3">Error al registrar. Intenta de nuevo.</div>';
+            }
         }
     }
 }
+
 ?>
 
 

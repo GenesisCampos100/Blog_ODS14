@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrador</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/login_admin09.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <!-- Login Form -->
+<div class="form-box login">
+    <form action="controlador.php" method="POST">
+        <h1>Login</h1>
+        <div class="input-box">
+            <input type="text" name="login_usuario" placeholder="Username" required>
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+            <input type="password" name="login_contrasenia" placeholder="Password" required>
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+        <button type="submit" name="btningresar" class="btn">Login</button>
+        <p>Welcome to Dipsy</p>
+        <div class="forgot-link">
+            <a href="#">Forgot password?</a>
+        </div>
+    </form>
+</div>
+
+<!-- Register Form -->
+<div class="form-box register">
+    <form action="controlador.php" method="POST">
+        <h1>Registration</h1>
+        <div class="input-box">
+            <input type="text" name="registrar-usuario" placeholder="Username" required>
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+            <input type="email" name="registrar-correo" placeholder="Email" required>
+            <i class='bx bxs-envelope'></i>
+        </div>
+        <div class="input-box">
+            <input type="text" name="registrar-nombre" placeholder="Name" required>
+            <i class='bx bx-user'></i>
+        </div>
+        <div class="input-box">
+            <input type="text" name="registrar-apellidos" placeholder="Last name" required>
+            <i class='bx bx-user-pin'></i>
+        </div>
+        <div class="input-box">
+            <input type="password" name="registrar-contrasenia" placeholder="Password" required>
+            <i class='bx bxs-lock-open-alt'></i>
+        </div>
+        <div class="input-box">
+            <input type="password" name="registrar-confirmar" placeholder="Confirm Password" required>
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+        <button type="submit" name="btnregistrar" class="btn">Register</button>
+        <p>Welcome</p>
+        <div class="social-icons">
+            <a href="#"><i class='bx bxl-google'></i></a>
+        </div>
+    </form>
+</div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
