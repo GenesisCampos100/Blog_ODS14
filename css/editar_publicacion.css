@@ -1,44 +1,40 @@
-.checkmark-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+
+#mensajeAnimado {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #d4edda;
+    color: #155724;
+    padding: 20px 30px;
+    border: 2px solid #c3e6cb;
+    border-radius: 10px;
+    z-index: 9999;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
-.checkmark {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: block;
-    stroke-width: 2;
-    stroke: #28a745;
-    stroke-miterlimit: 10;
-    box-shadow: inset 0px 0px 0px #28a745;
-    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-    position: relative;
+#mensajeError {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f30202;
+    color: #fff8f8;
+    padding: 20px 30px;
+    border: 2px solid #fb3f3f;
+    border-radius: 10px;
+    z-index: 9999;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
-.checkmark::after {
-    content: '';
-    position: absolute;
-    left: 12px;
-    top: 18px;
-    width: 6px;
-    height: 14px;
-    border: solid #28a745;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    animation: stroke .4s cubic-bezier(.65,.05,.36,1) .2s forwards;
-}
 
-@keyframes stroke {
-    100% { stroke-dashoffset: 0; }
-}
 
-@keyframes scale {
-    0%, 100% { transform: none; }
-    50% { transform: scale3d(1.1, 1.1, 1); }
-}
-
-@keyframes fill {
-    100% { box-shadow: inset 0px 0px 0px 30px #28a745; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
 }

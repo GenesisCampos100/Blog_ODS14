@@ -110,20 +110,6 @@
        
     ?>
 
-<?php if (!empty($_SESSION['exito'])): ?>
-    <div class="alert alert-success text-center" id="mensajeAnimado">
-        <div class="checkmark-container">
-            <div class="checkmark"></div>
-        </div>
-        Publicación actualizada con éxito
-    </div>
-    <script>
-        setTimeout(() => {
-            document.getElementById("mensajeAnimado").style.display = "none";
-        }, 2500);
-    </script>
-    <?php unset($_SESSION['exito']); ?>
-<?php endif; ?>
 
 
 <!-- TITULO -->
@@ -194,7 +180,22 @@
         <a href="index_admin.php" class="boton"><i class=" "></i> Volver al panel</a>
     </div>
   </form>  
-
+    
+  <?php if (!empty($_SESSION['exito'])): ?>
+    <div class="alert alert-success text-center" id="mensajeAnimado">
+        <div class="checkmark-container">
+            <div class="checkmark"></div>
+        </div>
+        Publicación actualizada con éxito
+    </div>
+    
+    <script>
+        setTimeout(() => {
+            document.getElementById("mensajeAnimado").style.display = "none";
+        }, 2500);
+    </script>
+    <?php unset($_SESSION['exito']); ?>
+<?php endif; ?>
 
     <?php
 
@@ -212,13 +213,32 @@ if(isset($_POST['registrar'])){
 
 
     if(empty($titulo)  || empty($resumen) || empty($contenido) || empty($autor_nombre)  || empty($referencias)  || empty($categoria_id) ){
-        echo'
-        <div class="container text-center col-10">
-            <div class="alert alert-danger mt-3" role="alert">
-                Debes completar todos los datos.
-            </div>
-        </div>';
-    } 
+        echo "
+        <div id='mensajeError'>
+            <div class='palomita'>X</div>
+            <p>Debes completar todos los datos</p>
+        </div>
+        <script>
+            setTimeout(function() {
+                location.href = location.href; // Recarga forzada
+            }, 1000);
+        </script>
+    ";
+    } else {
+
+        echo "
+        <div id='mensajeAnimado'>
+            <div class='palomita'>✔</div>
+            <p>¡Publicación actualizada!</p>
+        </div>
+        <script>
+            setTimeout(function() {
+                location.href = location.href; // Recarga forzada
+            }, 1000);
+        </script>
+    ";
+
+    }
 
     function editar($sentencia, $parametros ){
         $bd = conectarBaseDatos();
@@ -348,11 +368,8 @@ if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === U
     }
 }
 
-$_SESSION['exito'] = true; // Guardamos el estado temporal
-header("Location: editar_publicacion.php?id=" . $id); // Recarga forzada
-exit;
-
     }
+
     
 }
 ?>

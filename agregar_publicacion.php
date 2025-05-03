@@ -1,6 +1,34 @@
 <?php
 session_start();
 
+// Si viene de "nuevo", limpiar todo
+if (isset($_GET['nuevo']) && $_GET['nuevo'] == 1) {
+    unset($_SESSION['previa_data']);
+    unset($_SESSION['imagen_portada_temp']);
+}
+
+// Si viene de "cancelar", repoblar los datos
+if (isset($_GET['cancelar']) && $_GET['cancelar'] == 1) {
+    $titulo = $_SESSION['previa_data']['titulo'] ?? '';
+    $resumen = $_SESSION['previa_data']['resumen'] ?? '';
+    $contenido_html = $_SESSION['previa_data']['contenido'] ?? '';
+    $referencias = $_SESSION['previa_data']['referencias'] ?? '';
+    $autor_nombre = $_SESSION['previa_data']['autor_nombre'] ?? '';
+    $categoria_id = $_SESSION['previa_data']['categoria_id'] ?? '';
+    $imagen_portada = $_SESSION['imagen_portada_temp'] ?? '';
+
+
+} else {
+    // Entrar desde cero (formulario limpio)
+    $titulo = '';
+    $resumen = '';
+    $contenido_html = '';
+    $referencias = '';
+    $autor_nombre = '';
+    $categoria_id = '';
+}
+
+
 // Funciones
 function conectarBaseDatos() {
     $host = "localhost";
@@ -29,22 +57,7 @@ function obtenerCategorias() {
     return $stmt->fetchAll();
 }
 
-$imagen_portada = null;
-if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
-    $tmp_name = $_FILES['imagen_portada']['tmp_name'];
-    $nombre_final = uniqid() . "_" . $_FILES['imagen_portada']['name'];
-    $ruta_destino = "imagen_portada/" . $nombre_final;
 
-    if (!is_dir("imagen_portada")) {
-        mkdir("imagen_portada", 0777, true);
-    }
-
-    if (move_uploaded_file($tmp_name, $ruta_destino)) {
-        $imagen_portada = $ruta_destino;
-    } else {
-        $mensaje = '<div class="alert alert-warning mt-3">No se subió la imagen de portada. Asegúrate de elegir un archivo válido.</div>';
-    }
-}
 
 # Registra todos los datos
 function registrarPublicacion($titulo, $resumen, $contenido, $referencias, $autor_nombre, $categoria_id, $imagen_portada) {
@@ -100,38 +113,104 @@ function registrarContenidoElemento($publicacion_id, $contenido_html) {
     }
 }
 
-$titulo = '';
-$resumen = '';
-$contenido_html = '';
-$referencias = '';
-$autor_nombre = '';
-$categoria_id = '';
 
-$mensaje = "";
-if (isset($_POST['registrar'])) {
+if (isset($_POST['previa'])) {
+    // Capturamos los datos del formulario
     $titulo = $_POST['publicacion'] ?? '';
     $resumen = $_POST['resumen'] ?? '';
     $contenido_html = $_POST['contenido'] ?? '';
     $referencias = $_POST['referencias'] ?? '';
     $autor_nombre = $_POST['autor_nombre'] ?? '';
     $categoria_id = $_POST['categoria'] ?? null;
+
+    $imagen_portada = ''; // importante declarar antes
+
+    // Procesar imagen de portada
+    if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
+        $nombreArchivo = time() . '_' . basename($_FILES['imagen_portada']['name']);
+        $rutaDestino = 'imagen_portada/' . $nombreArchivo;
+
+        if (move_uploaded_file($_FILES['imagen_portada']['tmp_name'], $rutaDestino)) {
+            $imagen_portada = $rutaDestino;
+            $_SESSION['imagen_portada_temp'] = $imagen_portada; // guardar en sesión
+        } else {
+            $mensaje = '<div class="alert alert-warning mt-3">No se pudo subir la imagen de portada.</div>';
+        }
+    }
+
+        // Si no se subió nueva imagen, usar la anterior guardada en sesión
+    if (empty($imagen_portada) && isset($_SESSION['imagen_portada_temp'])) {
+        $imagen_portada = $_SESSION['imagen_portada_temp'];
+    }
+
+
+    // Validación
+    if (empty($titulo) || empty($resumen) || empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)  || empty($imagen_portada)) {
+        $mensaje = '<div class="alert alert-danger mt-3">Debes completar todos los campos.</div>';
+    } else {
+        
+
+        // Guardar los demás datos temporalmente
+        $_SESSION['previa_data'] = [
+            'titulo' => $titulo,
+            'resumen' => $resumen,
+            'contenido' => $contenido_html,
+            'referencias' => $referencias,
+            'autor_nombre' => $autor_nombre,
+            'categoria_id' => $categoria_id
+            
+        ];
+
+        // Mostrar la vista previa
+        include 'previa_publicacion.php';
+        exit;
+    }
+}
+
+//$imagen_portada = $_SESSION['imagen_portada_temp'] ?? '';
+//$titulo = '';
+//$resumen = '';
+//$contenido_html = '';
+//$referencias = '';
+//$autor_nombre = '';
+//$categoria_id = '';
+
+//$mensaje = "";
+
+if (isset($_POST['registrar'])) {
+    $datos = $_SESSION['previa_data'] ?? [];
+    $titulo = $datos['titulo'] ?? '';
+    $resumen = $datos['resumen'] ?? '';
+    $contenido_html = $datos['contenido'] ?? '';
+    $referencias = $datos['referencias'] ?? '';
+    $autor_nombre = $datos['autor_nombre'] ?? '';
+    $categoria_id = $datos['categoria_id'] ?? null;
+    $imagen_portada = $_SESSION['imagen_portada_temp'] ?? '';
     
 
-    if (empty($titulo) || empty($imagen_portada)|| empty($resumen)|| empty($contenido_html) || empty($referencias) || empty($autor_nombre) || empty($categoria_id)) {
-        $mensaje = '<div class="alert alert-danger mt-3">Debes completar todos los campos obligatorios.</div>';
-    } else {
+
         $publicacion_id = registrarPublicacion($titulo, $resumen, $contenido_html, $referencias, $autor_nombre, $categoria_id,$imagen_portada);
         if ($publicacion_id) {
             registrarContenidoElemento($publicacion_id, $contenido_html);
             $mensaje = '<div class="alert alert-success mt-3">Publicación registrada con éxito.</div>';
+            
+            // Limpia la sesión después de guardar
+            unset($_SESSION['previa_data']);
+            unset($_SESSION['imagen_portada_temp']);
+
             header("refresh:2;url=index_admin.php");
+            exit;
         } else {
             $mensaje = '<div class="alert alert-danger mt-3">Error al registrar la publicación.</div>';
         }
     }
-}
 
-$categorias = obtenerCategorias();
+
+if (isset($_POST['cancelar'])) {
+    header("Location: agregar_publicacion.php");
+    exit;
+}
+$categorias = obtenerCategorias();    
 ?>
 
 <!DOCTYPE html>
@@ -147,7 +226,7 @@ $categorias = obtenerCategorias();
 <body>
 <div class="container mt-4">
     <h3>Agregar Publicación</h3>
-    <?= $mensaje ?? "" ?>
+    <?php if (!empty($mensaje)) echo $mensaje; ?>
     <form method="post" enctype="multipart/form-data">
 
     <div class="mb-3">
@@ -155,10 +234,20 @@ $categorias = obtenerCategorias();
     <input type="text" name="publicacion" class="form-control" value="<?= htmlspecialchars($titulo) ?>">
     </div>
 
-        <div class="mb-3">
-            <label>Imagen de Portada</label>
-            <input type="file" name="imagen_portada" accept="image/*" class="form-control">
+    <div class="mb-3">
+    <label>Imagen de Portada</label>
+    <input type="file" name="imagen_portada" accept="image/*" class="form-control">
+
+    <?php if (!empty($imagen_portada)): ?>
+        <div class="mt-2">
+            <label>Imagen ya cargada:</label>
+            <input type="text" class="form-control" value="<?= htmlspecialchars($imagen_portada) ?>" readonly>
+
+            <!-- Mostrar imagen -->
+            <img src="<?= htmlspecialchars($imagen_portada) ?>" alt="Imagen de portada" style="max-width: 50%; height: auto; border: 1px solid #ccc; padding: 5px;">
         </div>
+    <?php endif; ?>
+</div>
 
         <div class="mb-3">
             <label>Resumen (previsualización del blog)</label>
@@ -196,7 +285,8 @@ $categorias = obtenerCategorias();
         </div>
 
         <div class="text-center mt-3">
-            <input type="submit" name="registrar" value="Registrar" class="btn btn-primary">
+        <input type="submit" name="previa" value="Listo (Previsualizar)" class="btn btn-success me-2">
+        
             <a href="index_admin.php" class="btn btn-secondary"><i class="fa fa-times"></i> Cancelar</a>
         </div>
     </form>

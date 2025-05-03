@@ -80,7 +80,7 @@
         <input type="text" name="registrar-usuario" placeholder="Usuario">
         <input type="password" name="registrar-contrasenia" placeholder="Contraseña">
         <button type="submit" name="btnregistrar">Registrar</button>
-        <p>¿Ya tienes cuenta? <a href="login_admin.php" onclick="">Inicia sesión aquí</a></p>
+        <p>¿Ya tienes cuenta? <a href="" onclick="">Inicia sesión aquí</a></p>
     </form>
 
 

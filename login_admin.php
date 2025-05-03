@@ -1,93 +1,92 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <style>
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhz6V0UogEc4f-rfAwAQpBoTYSDisG8JxxJMIV4dzHfSNq7pT-rnlvM8slL6amobEgw0-wcx5dqeaJmdqL1eMOg2kL8sPG-dqH28AB9dwoMtB_ZwL260q7zhM6SB20glizFCHh0oWwNi8U/s1600/focanadando.gif.gif'); /* Reemplaza con la URL de tu GIF */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        .login-container h2 {
-            margin-bottom: 20px;
-        }
-        .login-container input {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .login-container button {
-            width: 80%;
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background-color: #218838;
-        }
-        .anonymous-btn {
-            background-color: #007bff;
-        }
-        .anonymous-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Login Administrador</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/login_admin09.css">
 </head>
-<body>
 
-<div class="login-container">
-    <h2></h2>
-    <form method = "post" id="loginForm">
 
-        <?php
-        include("conexion.php");
-        include("controlador.php");
-        ?>
+
         
+
+        <body>
         
     
-    <h2>Iniciar Sesión</h2>
-    <form method="POST">
-        <input type="text" name="login_usuario" placeholder="Usuario">
-        <input type="password" name="login_contrasenia" placeholder="Contraseña">
-        <button type="submit" name="btningresar">Iniciar Sesión</button>
-        <p>¿No tienes cuenta? <a href="registro_admin.php" onclick="">Regístrate aquí</a></p>
-    </form>
-</div>
+    <div class="container">
+        <div class="form-box login">
+            <form action="">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p>welcome to dipsy</p>
+                <div class="social-icons">
+                </div>
+                <div class="forgot-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+        <div class="form-box register">
+            <form action="">
+                <h1>Registration</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="name" placeholder="Name" required>
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="last name" placeholder="Last name" required>
+                    <i class='bx bx-user-pin' ></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required>
+                    <i class='bx bxs-lock-open-alt'></i>
+                </div>
+                <div class="input-box">
+                    <input type=" confirm password" placeholder="Confirm Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <p>welcome</p>
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-google'></i></a>
+                </div>
+            </form>
+        </div>
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
 
-
-<div>
-    
-    </form>
-
-</div>
-
-
-</script>
-
+    <script src="script.js"></script>
 </body>
+
 </html>
