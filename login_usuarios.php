@@ -62,10 +62,6 @@
             <i class='bx bxs-lock-alt'></i>
         </div>
         <button type="submit" name="btnregistrar" class="btn">Register</button>
-        <p>Welcome</p>
-        <div class="social-icons">
-            <a href="#"><i class='bx bxl-google'></i></a>
-        </div>
     </form>
 </div>
 

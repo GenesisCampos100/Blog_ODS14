@@ -45,18 +45,20 @@ function select($sentencia, $parametros = []) {
     return $respuesta->fetchAll();
 }
 
+$mensaje_login = ''; // Inicializar variable
+
 // Validación de Inicio de Sesión
 if (isset($_POST['btningresar'])) {
-$_SESSION['formulario_actual'] = 'login';
-    if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
-        echo '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
-       
+    $_SESSION['formulario_actual'] = 'login';
 
+    if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
+        $mensaje_login = '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
     } else {
         $usuario = filter_input(INPUT_POST, 'login_usuario', FILTER_SANITIZE_STRING);
         $password = filter_input(INPUT_POST, 'login_contrasenia', FILTER_SANITIZE_STRING);
 
-        $sentencia = "SELECT id, contrasenia FROM admin WHERE usuario = ?";
+        // Nota: Cambiado a "nombre_usuario" en vez de "usuario"
+        $sentencia = "SELECT id, contrasenia FROM usuarios WHERE nombre_usuario = ?";
         $resultado = select($sentencia, [$usuario]);
 
         if ($resultado && password_verify($password, $resultado[0]->contrasenia)) {
@@ -65,10 +67,12 @@ $_SESSION['formulario_actual'] = 'login';
             header("location: index_admin.php");
             exit();
         } else {
-            echo '<div class="alert alert-danger mt-3 text-center">Nombre de usuario y/o contraseña incorrectos.</div>';
+            $mensaje_login = '<div class="alert alert-danger mt-3 text-center">Nombre de usuario y/o contraseña incorrectos.</div>';
         }
     }
 }
+
+$mensaje_registrar = ''; // Inicializar variable
 
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
@@ -82,11 +86,15 @@ if (isset($_POST['btnregistrar'])) {
 
     // Validaciones
     if (!$nombre_usuario || !$correo || !$nombre || !$apellidos || !$contrasenia || !$confirmar_contrasenia) {
-        echo '<div class="alert alert-warning text-center mt-3">Todos los campos son obligatorios.</div>';
+        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">Todos los campos son obligatorios.</div>';
     } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        echo '<div class="alert alert-warning text-center mt-3">El correo no es válido.</div>';
+        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">El correo no es válido.</div>';
     } elseif ($contrasenia !== $confirmar_contrasenia) {
-        echo '<div class="alert alert-warning text-center mt-3">Las contraseñas no coinciden.</div>';
+        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">Las contraseñas no coinciden.</div>';
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $contrasenia)) {
+        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">
+                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un carácter especial.
+              </div>';
     } else {
         $bd = conectarBaseDatos();
 
@@ -95,20 +103,21 @@ if (isset($_POST['btnregistrar'])) {
         $verificar->execute([$nombre_usuario, $correo]);
 
         if ($verificar->fetch()) {
-            echo '<div class="alert alert-danger text-center mt-3">El usuario o correo ya están registrados.</div>';
+            $mensaje_registrar = '<div class="alert alert-danger text-center mt-3">El usuario o correo ya están registrados.</div>';
         } else {
             // Insertar en la tabla usuarios
             $hash = password_hash($contrasenia, PASSWORD_DEFAULT);
-            $stmt = $bd->prepare("INSERT INTO usuarios (nombre_usuario, correo, nombre, apellidos, contraseña) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $bd->prepare("INSERT INTO usuarios (nombre_usuario, correo, nombre, apellidos, contrasenia) VALUES (?, ?, ?, ?, ?)");
 
             if ($stmt->execute([$nombre_usuario, $correo, $nombre, $apellidos, $hash])) {
-                echo '<div class="alert alert-success text-center mt-3">¡Registro exitoso! Ya puedes iniciar sesión.</div>';
+                $mensaje_registrar = '<div class="alert alert-success text-center mt-3">¡Registro exitoso! Ya puedes iniciar sesión.</div>';
             } else {
-                echo '<div class="alert alert-danger text-center mt-3">Error al registrar. Intenta de nuevo.</div>';
+                $mensaje_registrar = '<div class="alert alert-danger text-center mt-3">Error al registrar. Intenta de nuevo.</div>';
             }
         }
     }
 }
+
 
 ?>
 
