@@ -259,3 +259,31 @@ form {
 .toggle-panel h1 {
     font-size: 30px;
 } }
+
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+}
+
+.custom-alert.success { background-color: #28a745; }
+.custom-alert.error { background-color: #dc3545; }
+.custom-alert.warning { background-color: #ffc107; color: #333; }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-20px); display: none; }
+}
+
+

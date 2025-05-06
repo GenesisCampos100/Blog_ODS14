@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,19 +11,39 @@
     <link rel="stylesheet" href="css/login_admin09.css">
 </head>
 
+<?php
+session_start();
 
-<body>
+// Mostrar el mensaje si existe
+if (isset($_SESSION['mensaje'])) {
+    $tipo = $_SESSION['tipo_mensaje'];
+    $mensaje = $_SESSION['mensaje'];
+    echo "<div class='custom-alert $tipo'>$mensaje</div>";
+    unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']);
+}
+
+// Detectar cuál formulario mostrar
+$form_actual = $_SESSION['formulario_actual'] ?? 'login';
+$clase_body = ($form_actual === 'registro') ? 'show-register' : 'show-login';
+unset($_SESSION['formulario_actual']); // Limpia después de usar
+?>
+ 
+
+ <body> 
+    
+<!-- Login Form -->
     <div class="container">
-        <!-- Login Form -->
+       
 <div class="form-box login">
+
     <form action="controlador.php" method="POST">
         <h1>Login</h1>
         <div class="input-box">
-            <input type="text" name="login_usuario" placeholder="Username" required>
+            <input type="text" name="login_usuario" placeholder="Username" >
             <i class='bx bxs-user'></i>
         </div>
         <div class="input-box">
-            <input type="password" name="login_contrasenia" placeholder="Password" required>
+            <input type="password" name="login_contrasenia" placeholder="Password" >
             <i class='bx bxs-lock-alt'></i>
         </div>
         <button type="submit" name="btningresar" class="btn">Login</button>
@@ -38,27 +59,28 @@
     <form action="controlador.php" method="POST">
         <h1>Registration</h1>
         <div class="input-box">
-            <input type="text" name="registrar-usuario" placeholder="Username" required>
+
+            <input type="text" name="registrar-usuario" placeholder="Username" >
             <i class='bx bxs-user'></i>
         </div>
         <div class="input-box">
-            <input type="email" name="registrar-correo" placeholder="Email" required>
+            <input type="email" name="registrar-correo" placeholder="Email" >
             <i class='bx bxs-envelope'></i>
         </div>
         <div class="input-box">
-            <input type="text" name="registrar-nombre" placeholder="Name" required>
+            <input type="text" name="registrar-nombre" placeholder="Name" >
             <i class='bx bx-user'></i>
         </div>
         <div class="input-box">
-            <input type="text" name="registrar-apellidos" placeholder="Last name" required>
+            <input type="text" name="registrar-apellidos" placeholder="Last name" >
             <i class='bx bx-user-pin'></i>
         </div>
         <div class="input-box">
-            <input type="password" name="registrar-contrasenia" placeholder="Password" required>
+            <input type="password" name="registrar-contrasenia" placeholder="Password" >
             <i class='bx bxs-lock-open-alt'></i>
         </div>
         <div class="input-box">
-            <input type="password" name="registrar-confirmar" placeholder="Confirm Password" required>
+            <input type="password" name="registrar-confirmar" placeholder="Confirm Password" >
             <i class='bx bxs-lock-alt'></i>
         </div>
         <button type="submit" name="btnregistrar" class="btn">Register</button>

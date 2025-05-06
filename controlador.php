@@ -45,19 +45,19 @@ function select($sentencia, $parametros = []) {
     return $respuesta->fetchAll();
 }
 
-$mensaje_login = ''; // Inicializar variable
-
 // Validación de Inicio de Sesión
 if (isset($_POST['btningresar'])) {
     $_SESSION['formulario_actual'] = 'login';
 
     if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
-        $mensaje_login = '<div class="alert alert-warning mt-3 text-center">Debes completar todos los datos.</div>';
+        $_SESSION['tipo_mensaje'] = 'warning';
+        $_SESSION['mensaje'] = 'Debes completar todos los datos.';
+        header("Location: login_usuarios.php"); // Ajusta a tu archivo real
+        exit();
     } else {
         $usuario = filter_input(INPUT_POST, 'login_usuario', FILTER_SANITIZE_STRING);
         $password = filter_input(INPUT_POST, 'login_contrasenia', FILTER_SANITIZE_STRING);
 
-        // Nota: Cambiado a "nombre_usuario" en vez de "usuario"
         $sentencia = "SELECT id, contrasenia FROM usuarios WHERE nombre_usuario = ?";
         $resultado = select($sentencia, [$usuario]);
 
@@ -67,15 +67,17 @@ if (isset($_POST['btningresar'])) {
             header("location: index_admin.php");
             exit();
         } else {
-            $mensaje_login = '<div class="alert alert-danger mt-3 text-center">Nombre de usuario y/o contraseña incorrectos.</div>';
+            $_SESSION['tipo_mensaje'] = 'error';
+            $_SESSION['mensaje'] = 'Nombre de usuario y/o contraseña incorrectos.';
+            header("Location:login_usuarios.php");
+            exit();
         }
     }
 }
 
-$mensaje_registrar = ''; // Inicializar variable
-
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
+    $_SESSION['formulario_actual'] = 'registro';
     // Recolectar y sanitizar
     $nombre_usuario = trim(filter_input(INPUT_POST, 'registrar-usuario', FILTER_SANITIZE_STRING));
     $correo = trim(filter_input(INPUT_POST, 'registrar-correo', FILTER_SANITIZE_EMAIL));
@@ -86,38 +88,45 @@ if (isset($_POST['btnregistrar'])) {
 
     // Validaciones
     if (!$nombre_usuario || !$correo || !$nombre || !$apellidos || !$contrasenia || !$confirmar_contrasenia) {
-        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">Todos los campos son obligatorios.</div>';
+        $_SESSION['tipo_mensaje'] = 'warning';
+        $_SESSION['mensaje'] = 'Todos los campos son obligatorios.';
     } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">El correo no es válido.</div>';
+        $_SESSION['tipo_mensaje'] = 'warning';
+        $_SESSION['mensaje'] = 'El correo no es válido.';
     } elseif ($contrasenia !== $confirmar_contrasenia) {
-        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">Las contraseñas no coinciden.</div>';
+        $_SESSION['tipo_mensaje'] = 'warning';
+        $_SESSION['mensaje'] = 'Las contraseñas no coinciden.';
     } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $contrasenia)) {
-        $mensaje_registrar = '<div class="alert alert-warning text-center mt-3">
-                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un carácter especial.
-              </div>';
+        $_SESSION['tipo_mensaje'] = 'warning';
+        $_SESSION['mensaje'] = 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un carácter especial.';
     } else {
         $bd = conectarBaseDatos();
 
-        // Verificar si el usuario o correo ya existe
         $verificar = $bd->prepare("SELECT id FROM usuarios WHERE nombre_usuario = ? OR correo = ?");
         $verificar->execute([$nombre_usuario, $correo]);
 
         if ($verificar->fetch()) {
-            $mensaje_registrar = '<div class="alert alert-danger text-center mt-3">El usuario o correo ya están registrados.</div>';
+            $_SESSION['tipo_mensaje'] = 'error';
+            $_SESSION['mensaje'] = 'El usuario o correo ya están registrados.';
         } else {
-            // Insertar en la tabla usuarios
             $hash = password_hash($contrasenia, PASSWORD_DEFAULT);
             $stmt = $bd->prepare("INSERT INTO usuarios (nombre_usuario, correo, nombre, apellidos, contrasenia) VALUES (?, ?, ?, ?, ?)");
 
             if ($stmt->execute([$nombre_usuario, $correo, $nombre, $apellidos, $hash])) {
-                $mensaje_registrar = '<div class="alert alert-success text-center mt-3">¡Registro exitoso! Ya puedes iniciar sesión.</div>';
+                $_SESSION['tipo_mensaje'] = 'success';
+                $_SESSION['mensaje'] = '¡Registro exitoso! Ya puedes iniciar sesión.';
             } else {
-                $mensaje_registrar = '<div class="alert alert-danger text-center mt-3">Error al registrar. Intenta de nuevo.</div>';
+                $_SESSION['tipo_mensaje'] = 'error';
+                $_SESSION['mensaje'] = 'Error al registrar. Intenta de nuevo.';
             }
         }
     }
-}
 
+    // Redirigir al mismo formulario
+    $_SESSION['formulario_actual'] = 'registro';
+    header("Location: login_usuarios.php");
+    exit();
+}
 
 ?>
 
