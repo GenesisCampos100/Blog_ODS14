@@ -1,90 +1,47 @@
 @font-face {
-    font-family: 'miFuente';
-    src: url(../fuentes/MonsterFriendBack.otf);
+    font-family: 'Roboto';
+    src: url(../fuentes/Roboto-Bold.ttf);
 }
 
 @font-face {
-    font-family: 'miFuenteUndertale';
-    src: url(../fuentes/undertale.ttf);
+    font-family: 'Questrial';
+    src: url(../fuentes/Questrial-Regular.ttf);
 }
 
 @font-face {
-    font-family: 'miFuentePaparyus';
-    src: url(../fuentes/papyrus-font-undertale.ttf);
+    font-family: 'Novecentos';
+    src: url(../fuentes/Novecentosanswide-Normal.otf);
 }
 
-.Titulo {
-    font-family: 'miFuente';
-    color: #ffffff;
-    text-align: center;
-    border: 10px double rgb(255, 255, 255);
-    width: 600px;
-    background-color: rgba(0, 0, 0, 0.5);
+@font-face {
+    font-family: 'Kaytek';
+    src: url(../fuentes/KaytekRounded-Bold.ttf);
 }
 
-.cuadros {
-    font-family: 'miFuenteUndertale';
-    padding: 10px;
-    border: 10px double rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    color: #ffffff;
+@font-face {
+    font-family: 'Novecentos';
+    src: url(../fuentes/Novecentosanswide-Normal.otf);
 }
 
-a {
-    font-family: 'miFuenteUndertale';
-    padding: 3px;
-    text-decoration: none; 
-    color: #e1d8c7;
-    font-size: 20px;
+@font-face {
+  font-family: 'Circle';
+  src: url(../fuentes/Circle\ Cake.otf);
 }
 
-.texto {
-    color: #ffffff;
+@font-face {
+  font-family: 'Howdy';
+  src: url(../fuentes/Howdy\ Frog.otf);
 }
+
+@font-face {
+  font-family: 'Sarnie';
+  src: url(../fuentes/KGWhattheTeacherWants.ttf);
+}
+
 
 body {
     background-color: #00a1e1;
     color: white;
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-.contenedor {
-    font-family: 'miFuenteUndertale';
-}
-
-.cuadroTexto {
-    border: 10px double rgb(255, 255, 255);
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 1100px;
-    height: 50px;
-}
-
-.cuadroTexto:focus {
-    border: 5px double rgb(251, 255, 0);
-}
-
-.boton {
-    border: 10px double rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #ffffff;
-}
-
-.boton:hover {
-    border: 10px solid rgb(251, 255, 0);
-    color: rgb(251, 255, 0);
-    cursor: url('cor.png'), pointer;
-}
-
-.cartas1 {
-    background-color: rgba(0, 0, 0, 0.5);
-    text-align: center;
-}
-
-.cuadrosInteriores2 {
-    font-family: 'miFuenteUndertale';
-    display: inline-block;
-    background-color: black;
 }

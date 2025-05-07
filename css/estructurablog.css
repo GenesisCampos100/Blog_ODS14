@@ -1,17 +1,5 @@
-@font-face {
-    font-family: 'Roboto';
-    src: url(../fuentes/Roboto-Bold.ttf);
-}
 
-@font-face {
-    font-family: 'Questrial';
-    src: url(../fuentes/Questrial-Regular.ttf);
-}
 
-@font-face {
-    font-family: 'Novecentos';
-    src: url(../fuentes/Novecentosanswide-Normal.otf);
-}
 .img-wrapper {
     position: relative;
     width: 100%;
@@ -30,12 +18,12 @@
 }
 
 .content {
-    margin-top: 45px; /* Espacio para que el contenido no quede debajo de la barra fija */
+    margin-top: 150px; /* Espacio para que el contenido no quede debajo de la barra fija */
     background-color: #f7f8f9; 
     width: 90%;  
     height: auto;
     border-radius: 10px;
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
