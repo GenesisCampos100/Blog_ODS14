@@ -64,20 +64,14 @@ $imagenes = [
 
                 <!-- Enlaces a la izquierda -->
                 <ul class="navbar-nav flex-row">
-                    <li class="nav-item mx-2"><a class="nav-link" href="index.php">HOME</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" href="index_about.php">ABOUT</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" href="blog.php">BLOG</a></li>
-                    <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        LANGUAGE
-                    </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">SPANISH</a></li>
-                            <li><a class="dropdown-item" href="#">ENGLISH</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item mx-2"><a class="nav-link" id="navInicio" href="index.php">INICIO</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" id= "navAcercaDe"href="index_about.php">ACERCA DE</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" id= "navBlog" href="blog.php">BLOG</a></li>
+                    <button onclick="traducirContenido('es', 'en')">Inglés</button>
+                    <button onclick="traducirContenido('en', 'es')">Español</button>    
 
+                    <li class="nav-item dropdown mx-2">
+                    </li>
                 </ul>
 
                 <!-- Logo centrado -->
@@ -96,10 +90,10 @@ $imagenes = [
         <!-- Barra de categorías -->
         <div class="navbar-categories">
             <ul class="nav">
-                <li class="nav-item"><a class="nav-link" href="#">Categoría 1</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Categoría 2</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Categoría 3</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Categoría 4</a></li>
+                <li class="nav-item"><a class="nav-link" id="navCategoria1" href="#">Categoría 1</a></li>
+                <li class="nav-item"><a class="nav-link" id="navCategoria2" href="#">Categoría 2</a></li>
+                <li class="nav-item"><a class="nav-link" id="navCategoria3" href="#">Categoría 3</a></li>
+                <li class="nav-item"><a class="nav-link" id="navCategoria4" href="#">Categoría 4</a></li>
             </ul>
         </div>
     </header>
@@ -116,12 +110,11 @@ $imagenes = [
     <!-- SECCIÓN DEL ABOUT -->
 < class="main-content">
   <section class="about">
-    <h1><b>ABOUT DIPSY🌊</b></h1>
-
+    <h1><b>DIPSY🌊</b></h1>
     <div class="about-dipsy-container">
       <!-- Texto -->
       <div class="about-dipsy-text">
-        <p>
+        <p id = "parrafoDipsy">
           Bienvenido a Dipsy, un blog dedicado a la fascinante vida marina. 
           Nuestro objetivo es explorar los misterios del océano, compartir información 
           sobre las especies que lo habitan y concienciar sobre la importancia de su conservación. 
@@ -143,27 +136,27 @@ $imagenes = [
   </section>
 
         <section class="metas">
-            <h2><b>OUR GOALS</b></h2>
+            <h2 id = "tituloMetas"><b>NUESTRAS METAS</b></h2>
             <div class="goals">
                 <div class="goal mission">
-                    <br><h2>🌊MISSION</h2></b>
-                    <p>
+                    <br><h2 id = "tituloMision">🌊MISION</h2></b>
+                    <p id = "parrafoMision">
                     Informar, concientizar y educar a la comunidad sobre la importancia de la vida marina y la conservación de los océanos. 
                     A través de contenido accesible y actualizado, buscamos fomentar prácticas sostenibles y promover el respeto por los ecosistemas marinos.
                     </p>
                     <!-- Imagen de la misión -->
                 </div>
                 <div class="goal objective">
-                    <br><h2>🌍VISION</h2></b>
-                    <p>
+                    <br><h2 = id = "tituloVision">🌍VISION</h2></b>
+                    <p id = "parrafoVision">
                     Ser un referente digital en la divulgación del ODS 14, inspirando a estudiantes, investigadores y ciudadanos a tomar acciones concretas para la protección de los océanos. 
                     Buscamos generar un impacto positivo en la sociedad mediante el conocimiento y la sensibilización ambiental.
                     </p>
                      <!-- Imagen de la visión -->
                 </div>
                 <div class="goal vision">
-                    <br><h2>🎯OBJECTIVE</h2></b>
-                    <p>
+                    <br><h2 id = "tituloObjectivo">🎯OBJECTIVO</h2></b>
+                    <p id = "parrafoObjectivo">
                     Desarrollar un blog informativo e interactivo que difunda la importancia de la vida submarina, los desafíos que enfrenta y las soluciones para su conservación.
                     A través de artículos, entrevistas, infografías y contenido multimedia, queremos fortalecer la educación ambiental y motivar el cambio hacia un futuro sostenible para nuestros océanos.
                     </p>
@@ -174,8 +167,8 @@ $imagenes = [
 
         <section class="history">
             <div class="history-content">
-                <h2><b>HISTORY</b></h2>
-                <p>
+                <h2 id = "tituloHistoria"><b>HISTORIA</b></h2>
+                <p id = "parrafoHistoria">
                     Desde pequeños hemos sentido una profunda fascinación por el mar y sus misterios. Cada ola, cada criatura y cada arrecife cuentan una historia increíble que queremos compartir contigo.
 
                     Este blog nació como un proyecto universitario con un propósito claro: explorar, informar y sensibilizar sobre la importancia de la vida marina. Queremos que más personas descubran la belleza de los océanos y comprendan por qué es vital protegerlos.
@@ -188,9 +181,9 @@ $imagenes = [
 
     <!-- FOOTER -->
     <footer class="footer">
-        <p>© 2025 Dipsy - Todos los derechos reservados</p>
+        <p id = "parrafoFooter">© 2025 Dipsy - Todos los derechos reservados</p>
     </footer>
-
+    <script src="traductor.js"></script>
 </body>
 </html>
 
