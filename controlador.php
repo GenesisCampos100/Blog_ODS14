@@ -102,6 +102,10 @@ if (isset($_POST['btningresar'])) {
             exit();
         }
     }
+     // Redirigir al mismo formulario
+     $_SESSION['formulario_actual'] = 'login';
+     header("Location: login_usuarios.php");
+     exit();
 }
 
 // Validación de Registro
@@ -128,6 +132,7 @@ if (isset($_POST['btnregistrar'])) {
     } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $contrasenia)) {
         $_SESSION['tipo_mensaje'] = 'warning';
         $_SESSION['mensaje'] = 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un carácter especial.';
+        
     } else {
         $bd = conectarBaseDatos();
 
@@ -154,7 +159,7 @@ if (isset($_POST['btnregistrar'])) {
     // Redirigir al mismo formulario
     $_SESSION['formulario_actual'] = 'registro';
     header("Location: login_usuarios.php");
-    exit();
+   exit();
 }
 
 ?>
