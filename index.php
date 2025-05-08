@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,7 +14,7 @@
   <!--<link href="css/cartas.css" rel="stylesheet" />-->
   <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -96,7 +97,7 @@
 
         <!-- Botón de login -->
          <div class="logg">
-        <a href="login.php" class="d-flex align-items-center text-white text-decoration-none">
+        <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
           <i class="bi bi-person fs-5 me-1"></i>
           <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
         </a>
