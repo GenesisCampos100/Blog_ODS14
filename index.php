@@ -44,23 +44,23 @@ function obtenerElementosPublicacion($id_publicacion) {
 $post = obtenerUltimaPublicacion();
 $elementos = $post ? obtenerElementosPublicacion($post->id) : [];
 
-function obtenerSegundaPublicacion() {
+function obtenerPublicacionesRecientes($limite = 5, $offset = 1) {
   $bd = conectarBaseDatos();
   $sql = "SELECT p.*, c.nombre AS categoria 
           FROM publicaciones p 
           JOIN categorias c ON p.categoria_id = c.id 
           ORDER BY fecha_publicacion DESC 
-          LIMIT 1 OFFSET 1"; // <-- Segundo resultado
+          LIMIT ? OFFSET ?";
   $stmt = $bd->prepare($sql);
+  $stmt->bindValue(1, (int)$limite, PDO::PARAM_INT);
+  $stmt->bindValue(2, (int)$offset, PDO::PARAM_INT);
   $stmt->execute();
-  return $stmt->fetch();
+  return $stmt->fetchAll();
 }
 
-$segunda_post = obtenerSegundaPublicacion();
-
+$tarjetas = obtenerPublicacionesRecientes();
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -72,31 +72,16 @@ $segunda_post = obtenerSegundaPublicacion();
 
   <!-- Estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="css/barra.css" rel="stylesheet" />
-  <link href="css/general.css" rel="stylesheet" />
-  <link href="css/estructurablog.css" rel="stylesheet">
+  
+  <link href="css/estructurablog.css" rel="stylesheet"/>
   <link href="css/cartas.css" rel="stylesheet" />
-  <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
+  <link href="css/barra.css" rel="stylesheet" />
+  <link href="css/general.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-
-  <script>
-    function obtenerUltimaPublicacion() {
-      $bd = conectarBaseDatos();
-      $sql = "SELECT p.*, c.nombre AS categoria 
-              FROM publicaciones p 
-              JOIN categorias c ON p.categoria_id = c.id 
-              ORDER BY fecha_publicacion DESC 
-              LIMIT 1";
-      $stmt = $bd->prepare($sql);
-      $stmt->execute();
-      return $stmt->fetch();
-  }
-  </script>
 
 
 
@@ -113,7 +98,7 @@ $segunda_post = obtenerSegundaPublicacion();
     window.addEventListener('resize', ajustarAlturaBarra);
   </script>
 
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script crossorigin="anonymous"></script>
 
 
 </head>
@@ -127,7 +112,7 @@ $segunda_post = obtenerSegundaPublicacion();
 
     <!-- Logo -->
     <a class="navbar-brand" href="#">
-      <img src="img/Dipsyy.png" alt="Logo" style="max-height: 60px;" />
+      <img src="img/Logoo.png" alt="Logo" style="max-height: 60px;" />
     </a>
 
     <!-- Botón hamburguesa -->
@@ -197,10 +182,10 @@ $segunda_post = obtenerSegundaPublicacion();
     
     <div class="navbar-categories">
       <ul class="nav justify-content-center">
-        <li class="nav-item"><a class="nav-link categoria-link" href="#">ECOSISTEMAS</a></li>
-        <li class="nav-item"><a class="nav-link categoria-link" href="#">CONTAMINACION</a></li>
-        <li class="nav-item"><a class="nav-link categoria-link" href="#">PESCA</a></li>
-        <li class="nav-item"><a class="nav-link categoria-link" href="#">EDUCAR</a></li>
+        <li class="nav-item"><a class="nav-link categoria-link" href="#">Conservacion de Ecosistemas</a></li>
+        <li class="nav-item"><a class="nav-link categoria-link" href="#">Contaminación Marina</a></li>
+        <li class="nav-item"><a class="nav-link categoria-link" href="#">Pesca Sostenible</a></li>
+        <li class="nav-item"><a class="nav-link categoria-link" href="#">Educacion Oceanica</a></li>
       </ul>
     </div>
   </header>
@@ -276,37 +261,26 @@ $segunda_post = obtenerSegundaPublicacion();
       </div>
     </div>
 
-
+    
 <!-- From Uiverse.io by JesusRafaelNavaCruz --> 
 <div class="publicacionesrecientes">
-  <div class="publicacion_tarjeta">
-    <p class="titulo_tarjeta">
-      Rick Sanchez
-    </p>
-  </div>
-  <div class="publicacion_tarjeta">
-    <p class="titulo_tarjeta">
-      Morty Smith
-    </p>
-  </div>
-  <div class="publicacion_tarjeta">
-    <p class="titulo_tarjeta">
-      Summer Smith
-    </p>
-  </div>
 
-  <div class="publicacion_tarjeta">
-    <p class="titulo_tarjeta">
-      Beth Smith
-    </p>
-  </div>
+<div class="titulopublicaciones">Publicaciones Recientes</div>
 
-  <div class="publicacion_tarjeta">
-    <p class="titulo_tarjeta">
-      Dunno Smith
-    </p>
-  </div>
+  <?php foreach ($tarjetas as $tarjeta): ?>
+    <div class="publicacion_tarjeta">
+      <img src="<?= htmlspecialchars($tarjeta->imagen_portada) ?>" alt="Imagen de portada" class="imagen_tarjeta">
+      <div class="categoria_tarjeta"><?= htmlspecialchars($tarjeta->categoria) ?></div>
+      <div class="contenido_tarjeta">
+        <p class="titulo_tarjeta"><?= htmlspecialchars($tarjeta->titulo) ?></p>
+        <p class="resumen_tarjeta"><?= htmlspecialchars($tarjeta->resumen) ?></p>
+        <a href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" id="leer">Leer más</a>
+      </div>
+
+    </div>
+  <?php endforeach; ?>
 </div>
+
     
         <?php endif; ?>
 
@@ -321,10 +295,6 @@ $segunda_post = obtenerSegundaPublicacion();
     <p>No hay publicaciones aún.</p>
 </div>
 <?php endif; ?>
-
-
-
-
 
 
 

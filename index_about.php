@@ -15,6 +15,7 @@
   <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link href="css/estructurablog.css" rel="stylesheet"/>
   <link rel="stylesheet" href="css/about.css" />
   
 
