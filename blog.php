@@ -1,37 +1,37 @@
 <?php
-session_start();
+  session_start();
 
-// Conexión a la base de datos
-function conectarBaseDatos() {
-    $host = "localhost";
-    $db   = "login";
-    $user = "root";
-    $pass = "";
-    $charset = 'utf8mb4';
+  // Conexión a la base de datos
+  function conectarBaseDatos() {
+      $host = "localhost";
+      $db   = "login";
+      $user = "root";
+      $pass = "";
+      $charset = 'utf8mb4';
 
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    try {
-         $pdo = new PDO($dsn, $user, $pass, $options);
-         return $pdo;
-    } catch (PDOException $e) {
-         die("Error de conexión: " . $e->getMessage());
-    }
-}
+      $options = [
+          PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+          PDO::ATTR_EMULATE_PREPARES   => false,
+      ];
+      $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+      try {
+          $pdo = new PDO($dsn, $user, $pass, $options);
+          return $pdo;
+      } catch (PDOException $e) {
+          die("Error de conexión: " . $e->getMessage());
+      }
+  }
 
-// Obtener publicaciones
-function obtenerPublicaciones() {
-    $bd = conectarBaseDatos();
-    $sentencia = "SELECT * FROM publicaciones ORDER BY fecha_publicacion DESC";
-    $consulta = $bd->query($sentencia);
-    return $consulta->fetchAll();
-}
+  // Obtener publicaciones
+  function obtenerPublicaciones() {
+      $bd = conectarBaseDatos();
+      $sentencia = "SELECT * FROM publicaciones ORDER BY fecha_publicacion DESC";
+      $consulta = $bd->query($sentencia);
+      return $consulta->fetchAll();
+  }
 
-$publicaciones = obtenerPublicaciones();
+  $publicaciones = obtenerPublicaciones();
 ?>
 
 

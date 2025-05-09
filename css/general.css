@@ -38,6 +38,10 @@
   src: url(../fuentes/KGWhattheTeacherWants.ttf);
 }
 
+@font-face {
+  font-family: 'Roboto';
+  src: url(../fuentes/Roboto-Medium.ttf);
+}
 
 body {
     background-color: #00a1e1;

@@ -127,6 +127,8 @@
     </div>
   </header>
 
+  
+
     <!-- SECCIÓN DEL ABOUT -->
     < class="main-content">
   <section class="about">

@@ -1,3 +1,66 @@
+<?php
+session_start();
+
+function conectarBaseDatos() {
+    $host = "localhost";
+    $db   = "login";
+    $user = "root";
+    $pass = "";
+    $charset = 'utf8mb4';
+
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    try {
+        return new PDO($dsn, $user, $pass, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ]);
+    } catch (PDOException $e) {
+        die("Error de conexión: " . $e->getMessage());
+    }
+}
+
+function obtenerUltimaPublicacion() {
+    $bd = conectarBaseDatos();
+    $sql = "SELECT p.*, c.nombre AS categoria 
+            FROM publicaciones p 
+            JOIN categorias c ON p.categoria_id = c.id 
+            ORDER BY fecha_publicacion DESC 
+            LIMIT 1";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch();
+}
+
+function obtenerElementosPublicacion($id_publicacion) {
+    $bd = conectarBaseDatos();
+    $sql = "SELECT tipo, contenido FROM publicacion_elementos WHERE publicacion_id = ? ORDER BY orden ASC";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute([$id_publicacion]);
+    return $stmt->fetchAll();
+}
+
+// Obtener publicación más reciente
+$post = obtenerUltimaPublicacion();
+$elementos = $post ? obtenerElementosPublicacion($post->id) : [];
+
+function obtenerSegundaPublicacion() {
+  $bd = conectarBaseDatos();
+  $sql = "SELECT p.*, c.nombre AS categoria 
+          FROM publicaciones p 
+          JOIN categorias c ON p.categoria_id = c.id 
+          ORDER BY fecha_publicacion DESC 
+          LIMIT 1 OFFSET 1"; // <-- Segundo resultado
+  $stmt = $bd->prepare($sql);
+  $stmt->execute();
+  return $stmt->fetch();
+}
+
+$segunda_post = obtenerSegundaPublicacion();
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,13 +74,30 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="css/barra.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet" />
-  <!--<link href="css/cartas.css" rel="stylesheet" />-->
+  <link href="css/estructurablog.css" rel="stylesheet">
+  <link href="css/cartas.css" rel="stylesheet" />
   <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+  <script>
+    function obtenerUltimaPublicacion() {
+      $bd = conectarBaseDatos();
+      $sql = "SELECT p.*, c.nombre AS categoria 
+              FROM publicaciones p 
+              JOIN categorias c ON p.categoria_id = c.id 
+              ORDER BY fecha_publicacion DESC 
+              LIMIT 1";
+      $stmt = $bd->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetch();
+  }
+  </script>
+
 
 
   <!-- Ajuste de altura para la barra azul -->
@@ -125,8 +205,128 @@
     </div>
   </header>
 
+  <div id="barracolor" class="barracolor"></div>
 
-  
+  <?php if ($post): ?>
+<div class="publicacionhome">
+
+  <div class="imagenportada">
+  <img id="tituloimg" class="imgtituloblog" src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen Portada" class="img-fluid">
+    </div>
+
+  <div class="categoriass">
+      <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
+    </div>
+
+
+  <div class="titulopublicacion">
+    <?= htmlspecialchars($post->titulo) ?>
+  </div>
+
+
+  <div class="resumenpublicacion">
+    <?= htmlspecialchars($post->resumen) ?>
+  </div>
+
+  <div class="autor">
+      <div class="autor-info">
+        <div class="autorr"><?= htmlspecialchars($post->autor_nombre) ?></div>
+        <div class="fecha"><?= htmlspecialchars($post->fecha_publicacion) ?></div>
+      </div>
+      <div class="comentariolink">COMENTARIOS</div>
+    </div>
+
+
+
+    <?php foreach ($elementos as $el): ?>
+        <?php if ($el->tipo === 'texto'): ?>
+          <div class="textoblog">
+            <?= $el->contenido ?>
+        </div>
+        <?php elseif ($el->tipo === 'imagen'): ?>
+            <div class="imagen-publicacion">
+                <img src="<?= htmlspecialchars($el->contenido) ?>" alt="Imagen de la publicación" class="img-fluid">
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
+
+    <?php if (!empty($post->referencias)): ?>
+
+      <div class="referencias">
+      <div class="tituloref">Referencias</div>
+      <div class="referenciass">
+      <ul>
+                <?php 
+                $lineas = explode("\n", $post->referencias); 
+                foreach ($lineas as $ref): 
+                    $ref = trim($ref);
+                    if (!empty($ref)):
+                        if (filter_var($ref, FILTER_VALIDATE_URL)) {
+                            $host = parse_url($ref, PHP_URL_HOST);
+                            $nombreSitio = ucfirst(str_replace('www.', '', $host));
+                            echo "<li>$nombreSitio. (s.f.). Recuperado de <a href=\"$ref\" target=\"_blank\">$ref</a></li>";
+                        } else {
+                            echo "<li>" . htmlspecialchars($ref) . "</li>";
+                        }
+                    endif;
+                endforeach;
+                ?>
+            </ul>
+      </div>
+    </div>
+
+
+<!-- From Uiverse.io by JesusRafaelNavaCruz --> 
+<div class="publicacionesrecientes">
+  <div class="publicacion_tarjeta">
+    <p class="titulo_tarjeta">
+      Rick Sanchez
+    </p>
+  </div>
+  <div class="publicacion_tarjeta">
+    <p class="titulo_tarjeta">
+      Morty Smith
+    </p>
+  </div>
+  <div class="publicacion_tarjeta">
+    <p class="titulo_tarjeta">
+      Summer Smith
+    </p>
+  </div>
+
+  <div class="publicacion_tarjeta">
+    <p class="titulo_tarjeta">
+      Beth Smith
+    </p>
+  </div>
+
+  <div class="publicacion_tarjeta">
+    <p class="titulo_tarjeta">
+      Dunno Smith
+    </p>
+  </div>
+</div>
+    
+        <?php endif; ?>
+
+
+        
+
+   
+
+
+<?php else: ?>
+<div class="container mt-5">
+    <p>No hay publicaciones aún.</p>
+</div>
+<?php endif; ?>
+
+
+
+
+
+
 
 
   <!-- Scripts -->
