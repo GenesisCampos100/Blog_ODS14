@@ -59,44 +59,56 @@ $imagenes = [
 <body>
     <!-- Header con barra de navegación -->
     <header>
-        <nav class="navbar navbar-expand-lg custom-navbar">
-            <div class="container-fluid justify-content-between align-items-center">
+  <nav class="navbar navbar-expand-lg custom-navbar mb-0">
+    <div class="container-fluid align-items-center">
 
-                <!-- Enlaces a la izquierda -->
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item mx-2"><a class="nav-link" id="navInicio" href="index.php">INICIO</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" id= "navAcercaDe"href="index_about.php">ACERCA DE</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" id= "navBlog" href="blog.php">BLOG</a></li>
-                    <button onclick="traducirContenido('es', 'en')">Inglés</button>
-                    <button onclick="traducirContenido('en', 'es')">Español</button>    
-
-                    <li class="nav-item dropdown mx-2">
-                    </li>
-                </ul>
-
-                <!-- Logo centrado -->
-                <a class="navbar-brand mx-auto position-absolute start-50 translate-middle-x" href="#">
-                    <img src="img/logod.png" alt="Logo" style="max-height: 60px;">
-                </a>
-
-                <!-- Buscador a la derecha -->
-                <form class="d-flex search-form" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
-            </div>
-        </nav>
-
-        <!-- Barra de categorías -->
-        <div class="navbar-categories">
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link" id="navCategoria1" href="#">Categoría 1</a></li>
-                <li class="nav-item"><a class="nav-link" id="navCategoria2" href="#">Categoría 2</a></li>
-                <li class="nav-item"><a class="nav-link" id="navCategoria3" href="#">Categoría 3</a></li>
-                <li class="nav-item"><a class="nav-link" id="navCategoria4" href="#">Categoría 4</a></li>
+      <!-- Enlaces a la izquierda + ícono de idioma -->
+      <ul class="navbar-nav flex-row me-auto align-items-center">
+        
+        <!-- Enlaces de navegación -->
+        <li class="nav-item mx-2"><a class="nav-link" id="navInicio" href="index.php">INICIO</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" id="navAcercaDe" href="index_about.php">ACERCA DE</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" id="navBlog" href="blog.php">BLOG</a></li>
+        <!-- Ícono de idioma -->
+        <li class="nav-item mx-2">
+          <div class="dropdown">
+            <button id="botonIdioma" class="icon-button dropdown-toggle btn btn-link p-0" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+              <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
+              <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
             </ul>
-        </div>
-    </header>
+          </div>
+        </li>
+      </ul>
+      <!-- Logo centrado -->
+      <a class="navbar-brand mx-auto position-absolute start-50 translate-middle-x" href="#">
+        <img src="img/logod.png" alt="Logo" style="max-height: 60px;">
+      </a>
+
+      <!-- Buscador a la derecha -->
+      <div class="d-flex align-items-center">
+        <form class="d-flex search-form me-2" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Barra de categorías (pegada a la navbar) -->
+  <div class="navbar-categories mt-0">
+    <ul class="nav justify-content-center">
+      <li class="nav-item"><a class="nav-link" id="navCategoria1" href="#">Categoría 1</a></li>
+      <li class="nav-item"><a class="nav-link" id="navCategoria2" href="#">Categoría 2</a></li>
+      <li class="nav-item"><a class="nav-link" id="navCategoria3" href="#">Categoría 3</a></li>
+      <li class="nav-item"><a class="nav-link" id="navCategoria4" href="#">Categoría 4</a></li>
+    </ul>
+  </div>
+</header>
+
      <!-- Script de Bootstrap -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -108,7 +120,7 @@ $imagenes = [
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- SECCIÓN DEL ABOUT -->
-< class="main-content">
+<div class="main-content">
   <section class="about">
     <h1><b>DIPSY🌊</b></h1>
     <div class="about-dipsy-container">
@@ -184,6 +196,8 @@ $imagenes = [
         <p id = "parrafoFooter">© 2025 Dipsy - Todos los derechos reservados</p>
     </footer>
     <script src="traductor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
 
