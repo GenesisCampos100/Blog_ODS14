@@ -26,7 +26,13 @@
   // Obtener publicaciones
   function obtenerPublicaciones() {
       $bd = conectarBaseDatos();
-      $sentencia = "SELECT * FROM publicaciones ORDER BY fecha_publicacion DESC";
+      $sentencia = "
+  SELECT publicaciones.*, categorias.nombre AS categoria_nombre
+  FROM publicaciones
+  JOIN categorias ON publicaciones.categoria_id = categorias.id
+  ORDER BY publicaciones.fecha_publicacion DESC
+";
+
       $consulta = $bd->query($sentencia);
       return $consulta->fetchAll();
   }
@@ -49,7 +55,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="css/barra.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet" />
-  <!--<link href="css/cartas.css" rel="stylesheet" />-->
+  <link href="css/Blogs.css" rel="stylesheet" />
   <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
@@ -58,21 +64,15 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 
-  <!-- Ajuste de altura para la barra azul 
+
   <script>
-    function ajustarAlturaBarra() {
-      const img = document.getElementById('tituloimg');
-      const barra = document.getElementById('barracolor');
-      if (img && barra) {
-        barra.style.height = img.offsetHeight + 'px';
-      }
-    }
-    window.addEventListener('load', ajustarAlturaBarra);
-    window.addEventListener('resize', ajustarAlturaBarra);
+    var myCarousel = document.querySelector('#myCarousel')
+var carousel = new bootstrap.Carousel(myCarousel)
+
   </script>
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
--->
+
 
 
 </head>
@@ -174,42 +174,87 @@
 
 </header>
 
+<?php
+$primeras_por_categoria = [];
+foreach ($publicaciones as $post) {
+    if (!isset($primeras_por_categoria[$post->categoria_nombre])) {
+        $primeras_por_categoria[$post->categoria_nombre] = $post;
+    }
+}
+?>
 
   
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top:150px">
+  <div class="carousel-indicators">
+    <?php foreach (array_values($primeras_por_categoria) as $i => $pub): ?>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?= $i ?>" <?= $i === 0 ? 'class="active" aria-current="true"' : '' ?> aria-label="Slide <?= $i+1 ?>"></button>
+    <?php endforeach; ?>
+  </div>
+  <div class="carousel-inner">
+    <?php foreach (array_values($primeras_por_categoria) as $i => $pub): ?>
+      <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
+  <a href="ver_publicacion.php?id=<?= $pub->id ?>">
+    <div class="carousel-img-wrapper">
+      <img src="<?= htmlspecialchars($pub->imagen_portada) ?>" class="carousel-img" alt="Imagen de portada">
+    </div>
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+      <h5><?= htmlspecialchars($pub->titulo) ?></h5>
+      <p><?= nl2br(htmlspecialchars($pub->resumen)) ?></p>
+    </div>
+  </a>
+</div>
+
+
+    <?php endforeach; ?>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
 
 
   
         
-    <div class="container" style="padding-top: 150px">
-    <?php foreach ($publicaciones as $index => $post): ?>
-        <div class="row align-items-center mb-5">
-            <?php if ($index % 2 == 0): ?>
-                <!-- Imagen a la izquierda -->
-                <div class="col-md-4">
-                    <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="img-fluid rounded shadow" alt="Imagen de portada">
-                </div>
-                <div class="col-md-8">
-                    <h3><?= htmlspecialchars($post->titulo) ?></h3>
-                    <p class="text-muted">Por <?= htmlspecialchars($post->autor_nombre) ?> - <?= htmlspecialchars($post->fecha_publicacion) ?></p>
-                    <p><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
-                    <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
-                </div>
-            <?php else: ?>
-                <!-- Imagen a la derecha -->
-                <div class="col-md-8">
-                    <h3><?= htmlspecialchars($post->titulo) ?></h3>
-                    <p class="text-muted">Por <?= htmlspecialchars($post->autor_nombre) ?> - <?= htmlspecialchars($post->fecha_publicacion) ?></p>
-                    <p><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
-                    <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
-                </div>
-                <div class="col-md-4">
-                    <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="img-fluid rounded shadow" alt="Imagen de portada">
-                </div>
-            <?php endif; ?>
+<div class="publicacionescaja">
+  <?php foreach ($publicaciones as $index => $post): ?>
+    <div class="publicacion">
+      <?php if ($index % 2 == 0): ?>
+        <!-- Imagen a la izquierda -->
+        <div class="coverimg">
+          <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
+          <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
         </div>
-        <hr>
-    <?php endforeach; ?>
+        
+        <div class="texto">
+          <div class="titulop"><?= htmlspecialchars($post->titulo) ?></div>
+          <div class="autorp"><?= htmlspecialchars($post->autor_nombre) ?></div>
+          <div class="resumen"><?= nl2br(htmlspecialchars($post->resumen)) ?></div>
+          <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
+        </div>
+      <?php else: ?>
+        <!-- Imagen a la derecha -->
+        <div class="texto">
+          <div class="titulop"><?= htmlspecialchars($post->titulo) ?></div>
+          <div class="autorp"><?= htmlspecialchars($post->autor_nombre) ?></div>
+          <div class="resumen"><?= nl2br(htmlspecialchars($post->resumen)) ?></div>
+          <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
+        </div>
+
+        <div class="coverimg">
+          <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
+          <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+        </div>
+      <?php endif; ?>
+    </div>
+    <hr>
+  <?php endforeach; ?>
 </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

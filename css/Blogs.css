@@ -1,0 +1,141 @@
+.carousel-img-wrapper {
+    width: 100%;
+    height: 400px; /* Altura base para escritorio */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  /* Ajustes para pantallas medianas (tabletas) */
+  @media (max-width: 768px) {
+    .carousel-img-wrapper {
+      height: 300px;
+    }
+  
+    .carousel-caption {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+  
+  /* Ajustes para pantallas pequeñas (móviles) */
+  @media (max-width: 576px) {
+    .carousel-img-wrapper {
+      height: 220px;
+    }
+  
+    .carousel-caption h5 {
+      font-size: 1rem;
+    }
+  
+    .carousel-caption p {
+      font-size: 0.8rem;
+    }
+  
+    .carousel-caption {
+      padding: 8px;
+      bottom: 10px;
+    }
+  }
+  
+  
+
+.publicacionescaja{
+    margin-top: 50px;
+    background-color: #f7f8f9; 
+    width: 90%;  
+    height: fit-content;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #051f34;
+    padding-bottom: 120px;
+}
+
+.publicacion{
+    width: 100%;
+    height: fit-content;
+    /*background-color: rgb(4, 69, 125);*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.coverimg
+{
+    position: relative;
+    width: 400px;
+    height: 250px;
+}
+
+.coverimg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.texto{
+    margin: 20px;
+    width: 60%;
+    height: fit-content;
+    
+}
+
+.titulop{
+  width: 100%;
+  text-align:left;
+  overflow: hidden;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  line-height: normal;
+  color: #072036;
+}
+
+.categoriap {
+    position: absolute;
+    top: 10px; /* distancia desde la parte inferior */
+    left: 10px;/* distancia desde la izquierda */
+    background-color: #007ade;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Novecentos';
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+.autorp
+{
+    font-weight: bold;
+    font-family: 'Novecentos';
+    text-transform: uppercase;
+}
+
+.resumen
+{
+    margin-top: 20px;
+    font-family: 'Questrial';
+    font-size: 15px;
+    text-align: justify;
+}
+
+.btn
+{
+    margin-top: 20px;
+}
