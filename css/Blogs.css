@@ -1,5 +1,7 @@
 .carousel-img-wrapper {
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     height: 400px; /* Altura base para escritorio */
     overflow: hidden;
     position: relative;
