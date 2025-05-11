@@ -1,5 +1,4 @@
 
-
 .navbar {
     background-color: #051f34 !important; 
     position: fixed;
@@ -7,7 +6,8 @@
     left: 0; 
     width: 100%; 
     z-index: 1000; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 
@@ -22,7 +22,7 @@
 
 #homel
 {
-  color: #0084ff;
+  color: #46a0f4;
 }
 
 #aboutl
@@ -48,7 +48,7 @@
 
 #loginn:hover
 {
-  color: #0084ff;
+  color: #43a1f8;
 }
 
 .logg
@@ -62,15 +62,12 @@
 }
 
 
-
-
 .navbar .navbar-brand img {
     height: auto;
     width: 100%;    
     max-width: 150px;
-    margin-top: -3px;
-}
 
+}
 
 .navbar-nav.flex-row {
     align-items: center;
@@ -91,7 +88,7 @@
   
 
 .navbar-categories {
-    margin-top: 80px !important;
+    margin-top: 110px;
     width: 100%;
     z-index: 999;
     background-color: #022473;
@@ -114,14 +111,13 @@
   text-align: center;
   font-family: 'Novecentos', sans-serif;
   text-transform: uppercase;
+  letter-spacing: 1px;
   font-size: 13px;
-  letter-spacing: 5px;
   position: relative;
   display: inline-block;
   padding: 10px 0;
   transition: color 0.3s ease;
 }
-
 .navbar-categories .nav-link::after {
   content: "";
   position: absolute;
@@ -139,6 +135,32 @@
 
 .navbar-categories .nav-link:hover {
   color: #ffffff;
+}
+
+
+@media (max-width: 768px) {
+  .navbar-categories .navbar-toggler {
+    display: block; /* Asegúrate de mostrar el botón de toggling en pantallas pequeñas */
+  }
+
+  .navbar-categories .navbar-collapse {
+    display: flex;
+    justify-content: center; /* Centra los elementos cuando se expanden */
+  }
+
+  .navbar-categories .nav {
+    flex-direction: row !important; /* Mantiene los enlaces en una fila */
+    justify-content: center; /* Centra los elementos */
+  }
+
+  .navbar-categories .nav-item {
+    margin: 0 15px; /* Ajusta el espacio entre los elementos */
+  }
+
+  .navbar-categories .nav-link {
+    font-size: 13px; /* Ajusta el tamaño de la fuente para dispositivos pequeños */
+    padding: 12px 0; /* Ajusta el padding para pantallas pequeñas */
+  }
 }
 
 

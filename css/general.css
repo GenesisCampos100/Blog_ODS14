@@ -19,11 +19,6 @@
 }
 
 @font-face {
-    font-family: 'Novecentos';
-    src: url(../fuentes/Novecentosanswide-Normal.otf);
-}
-
-@font-face {
   font-family: 'Circle';
   src: url(../fuentes/Circle\ Cake.otf);
 }
@@ -38,11 +33,15 @@
   src: url(../fuentes/KGWhattheTeacherWants.ttf);
 }
 
+@font-face {
+  font-family: 'Roboto';
+  src: url(../fuentes/Roboto-Medium.ttf);
+}
 
 body {
     background-color: #00a1e1;
-    color: white;
     background-size: cover;
     background-repeat: no-repeat;
     
 }
+
