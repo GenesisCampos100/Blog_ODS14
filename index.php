@@ -167,12 +167,30 @@ $tarjetas = obtenerPublicacionesRecientes();
           </form>
 
           <!-- Botón de login -->
-          <div class="logg">
+    
+         
+         <?php if (isset($_SESSION['usuario_nombre'])): ?>
+  <div class="dropdown">
+    <a class="usuario-logeado d-flex align-items-center text-white dropdown-toggle text-decoration-none" href="" id="dropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle fs-5 me-2"></i>
+      <span class="d-none d-sm-inline"><?= htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUsuario">
+      <li>
+        <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?');">
+          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+        </a>
+      </li>
+    </ul>
+  </div>
+<?php else: ?>
+   <div class="logg">
             <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
               <i class="bi bi-person fs-5 me-1"></i>
               <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
             </a>
           </div>
+<?php endif; ?>
 
         </div>
       </div>

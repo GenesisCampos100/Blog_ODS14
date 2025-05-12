@@ -11,6 +11,13 @@
 </head>
 
 <body>
+
+<a href="index.php" class="return-btn">
+    <i class='bx bx-left-arrow-alt'></i>
+</a>
+
+
+
     <?php
     if (isset($_SESSION['mensaje'])) {
         $tipo = $_SESSION['tipo_mensaje'];
@@ -126,6 +133,11 @@
             localStorage.setItem(input.name, input.value);
         });
     });
+
+    window.addEventListener("beforeunload", () => {
+    localStorage.clear();
+});
+
 });
 
     

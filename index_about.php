@@ -1,3 +1,26 @@
+<?php
+session_start();
+
+
+function conectarBaseDatos() {
+    $host = "localhost";
+    $db   = "login";
+    $user = "root";
+    $pass = "";
+    $charset = 'utf8mb4';
+
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    try {
+         return new PDO($dsn, $user, $pass, [
+             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+             PDO::ATTR_EMULATE_PREPARES   => false,
+         ]);
+    } catch (PDOException $e) {
+         die("Error de conexión: " . $e->getMessage());
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -6,6 +29,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Dipssy</title>
+
+  
 
   <!-- Estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -58,12 +83,19 @@
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
+          <!-- Ícono de idioma -->
+        <li class="nav-item mx-2">
+          <div class="dropdown">
+            <button id="botonIdioma" class="icon-button dropdown-toggle btn btn-link p-0" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+              <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
+              <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
             </ul>
-          </li>
+          </div>
+        </li>
         </ul>
 
         <!-- Búsqueda y Login -->
@@ -90,12 +122,36 @@
           </form>
 
           <!-- Botón de login -->
-          <div class="logg">
+  <?php
+// Si aún no hay URL guardada y no estamos en login
+if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+}
+?>
+
+  <?php if (isset($_SESSION['usuario_nombre'])): ?>
+    
+  <div class="dropdown">
+    <a class="usuario-logeado d-flex align-items-center text-white dropdown-toggle text-decoration-none" href="" id="dropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle fs-5 me-2"></i>
+      <span class="d-none d-sm-inline"><?= htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUsuario">
+      <li>
+        <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?');">
+          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+        </a>
+      </li>
+    </ul>
+  </div>
+<?php else: ?>
+   <div class="logg">
             <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
               <i class="bi bi-person fs-5 me-1"></i>
               <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
             </a>
           </div>
+<?php endif; ?>
 
         </div>
       </div>

@@ -46,10 +46,34 @@ function obtenerElementosPublicacion($id_publicacion) {
 $post = obtenerPublicacion($_GET['id']);
 $elementos = obtenerElementosPublicacion($_GET['id']);
 
-
 if (!$post) {
     die("Publicación no encontrada.");
 }
+
+// Obtener comentarios de una publicación
+function obtenerComentarios($publicacion_id) {
+    $bd = conectarBaseDatos();
+    $sql = "SELECT c.*, u.nombre AS autor 
+            FROM comentarios c 
+            JOIN usuarios u ON c.usuario_id = u.id 
+            WHERE c.publicacion_id = ? 
+            ORDER BY c.fecha_comentario DESC";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute([$publicacion_id]);
+    return $stmt->fetchAll();
+}
+
+// Registrar un nuevo comentario
+function agregarComentario($publicacion_id, $usuario_id, $contenido) {
+    $bd = conectarBaseDatos();
+    $sql = "INSERT INTO comentarios (publicacion_id, usuario_id, contenido) VALUES (?, ?, ?)";
+    $stmt = $bd->prepare($sql);
+    return $stmt->execute([$publicacion_id, $usuario_id, $contenido]);
+}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +83,16 @@ if (!$post) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Dipssy</title>
+
+  <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS (para dropdown) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 
   <!-- Estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -155,13 +189,40 @@ if (!$post) {
             </label>
           </form>
 
-          <!-- Botón de login -->
-          <div class="logg">
+   
+         <!-- Botón de login -->
+  <?php
+// Si aún no hay URL guardada y no estamos en login
+if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+}
+?>
+
+  <?php if (isset($_SESSION['usuario_nombre'])): ?>
+    
+  <div class="dropdown">
+    <a class="usuario-logeado d-flex align-items-center text-white dropdown-toggle text-decoration-none" href="" id="dropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle fs-5 me-2"></i>
+      <span class="d-none d-sm-inline"><?= htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUsuario">
+      <li>
+        <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?');">
+          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+        </a>
+      </li>
+    </ul>
+  </div>
+<?php else: ?>
+   <div class="logg">
             <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
               <i class="bi bi-person fs-5 me-1"></i>
               <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
             </a>
           </div>
+<?php endif; ?>
+
+ 
 
         </div>
       </div>
@@ -217,7 +278,7 @@ if (!$post) {
         <div class="autorr"><?= htmlspecialchars($post->autor_nombre) ?></div>
         <div class="fecha"><?= htmlspecialchars($post->fecha_publicacion) ?></div>
       </div>
-      <div class="comentariolink">COMENTARIOS</div>
+
     </div>
     
     
@@ -256,12 +317,22 @@ if (!$post) {
             endforeach;
             ?>
         </ul>
-    </div>
-    </div>
-
-    <?php endif; ?>
+ <?php endif; ?>
 <!-- Fin del bloque si hay referencias -->
 
+      <!-- Sección de comentarios -->
+<div class="comentarios">
+    <h3>Comentarios</h3>
+
+    
+</div>
+
+</div>
+
+    </div>
+    </div>
+
+   
 
 
     <a href="blog.php" class="btn btn-secondary mt-3">Volver al Blog</a>
