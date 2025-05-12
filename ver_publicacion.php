@@ -50,7 +50,29 @@ if (!$post) {
     die("Publicación no encontrada.");
 }
 
-// Obtener comentarios de una publicación
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("ID inválido");
+}
+$id_publicacion = intval($_GET['id']);
+ 
+
+//require_once 'db.php'; // Conexión
+
+// Validar ID
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("ID inválido");
+}
+$id_publicacion = intval($_GET['id']);
+
+// Función para insertar comentario
+function agregarComentario($publicacion_id, $usuario_id, $contenido) {
+    $bd = conectarBaseDatos();
+    $sql = "INSERT INTO comentarios (publicacion_id, usuario_id, contenido) VALUES (?, ?, ?)";
+    $stmt = $bd->prepare($sql);
+    return $stmt->execute([$publicacion_id, $usuario_id, $contenido]);
+}
+
+// Función para obtener comentarios como objetos
 function obtenerComentarios($publicacion_id) {
     $bd = conectarBaseDatos();
     $sql = "SELECT c.*, u.nombre AS autor 
@@ -60,16 +82,42 @@ function obtenerComentarios($publicacion_id) {
             ORDER BY c.fecha_comentario DESC";
     $stmt = $bd->prepare($sql);
     $stmt->execute([$publicacion_id]);
-    return $stmt->fetchAll();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
-// Registrar un nuevo comentario
+// Procesar comentario si se envía
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_comentar'])) {
+    if (isset($_SESSION['idUsuario']) && !empty($_POST['comentario'])) {
+        $usuario_id = $_SESSION['idUsuario'];
+        $contenido = trim($_POST['comentario']);
+
+        if (!empty($contenido)) {
+            if (agregarComentario($id_publicacion, $usuario_id, $contenido)) {
+                header("Location: " . $_SERVER['REQUEST_URI']);
+                exit();
+            } else {
+                $_SESSION['error_comentario'] = "Hubo un error al guardar tu comentario.";
+            }
+        } else {
+            $_SESSION['error_comentario'] = "El comentario no puede estar vacío.";
+        }
+    } else {
+        $_SESSION['error_comentario'] = "Debes iniciar sesión para comentar.";
+    }
+
+    // Redirigir para evitar reenvío del formulario
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
+}
+
+
+/*/ Registrar un nuevo comentario
 function agregarComentario($publicacion_id, $usuario_id, $contenido) {
     $bd = conectarBaseDatos();
     $sql = "INSERT INTO comentarios (publicacion_id, usuario_id, contenido) VALUES (?, ?, ?)";
     $stmt = $bd->prepare($sql);
     return $stmt->execute([$publicacion_id, $usuario_id, $contenido]);
-}
+}*/
 
 
 
@@ -320,12 +368,56 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
  <?php endif; ?>
 <!-- Fin del bloque si hay referencias -->
 
-      <!-- Sección de comentarios -->
-<div class="comentarios">
+  
+
+
+<!-- Sección de comentarios -->
+<div class="comentarios mt-4">
     <h3>Comentarios</h3>
 
-    
+    <?php if (isset($_SESSION['usuario_nombre'])): ?>
+        <!-- Formulario para agregar un comentario -->
+        <form action="" method="POST" class="mb-3">
+            <div class="mb-2">
+                <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+            </div>
+            <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+        </form>
+    <?php else: ?>
+        <p class="text-muted">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
+    <?php endif; ?>
+
+    <!-- Mostrar mensajes de error si existen -->
+    <?php if (isset($_SESSION['error_comentario'])): ?>
+        <p class="text-danger"><?= $_SESSION['error_comentario'] ?></p>
+        <?php unset($_SESSION['error_comentario']); // Limpiar el mensaje después de mostrarlo ?>
+    <?php endif; ?>
+
+    <!-- Mostrar los comentarios -->
+    <div class="lista-comentarios mt-3">
+        <?php
+        // Obtener comentarios de la publicación
+        $comentarios = obtenerComentarios($id_publicacion); // asegúrate de tener $id_publicacion definido
+
+        if ($comentarios):
+            foreach ($comentarios as $comentario):
+        ?>
+                <div class="comentario border-bottom py-2">
+                     <strong><?= htmlspecialchars($comentario->autor) ?></strong><br>
+                    <p class="mb-1"><?= nl2br(htmlspecialchars($comentario->contenido)) ?></p>
+                    <small class="text-muted"><?= $comentario->fecha_comentario ?></small>
+                </div>
+        <?php
+            endforeach;
+        else:
+            echo "<p class='text-muted'>Aún no hay comentarios.</p>";
+        endif;
+        ?>
+    </div>
 </div>
+
+
+
 
 </div>
 
