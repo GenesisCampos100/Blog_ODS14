@@ -1,57 +1,80 @@
-.carousel-img-wrapper {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    height: 400px; /* Altura base para escritorio */
-    overflow: hidden;
-    position: relative;
+
+.carousel-inner {
+  width: 100%;
+  height: 400px; /* altura fija */
+  position: relative;
+}
+
+.carousel-item {
+  height: 100%;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* CORRIGE LA POSICIÓN DEL CAPTION */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 51, 102, 0.6);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 10;
+  width: 90%;
+  max-width: 700px;
+}
+
+.carousel-caption h5 {
+  color: #00e5ff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-size: 1.1rem;
+  color: #e0f7fa;
+}
+
+/* Flechas y puntos del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #004d40;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #00bcd4;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .carousel-inner {
+    height: 300px;
   }
-  
-  .carousel-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+
+  .carousel-caption h5 {
+    font-size: 1.5rem;
   }
-  
-  /* Ajustes para pantallas medianas (tabletas) */
-  @media (max-width: 768px) {
-    .carousel-img-wrapper {
-      height: 300px;
-    }
-  
-    .carousel-caption {
-      font-size: 0.9rem;
-      padding: 10px;
-    }
+
+  .carousel-caption p {
+    font-size: 1rem;
   }
-  
-  /* Ajustes para pantallas pequeñas (móviles) */
-  @media (max-width: 576px) {
-    .carousel-img-wrapper {
-      height: 220px;
-    }
-  
-    .carousel-caption h5 {
-      font-size: 1rem;
-    }
-  
-    .carousel-caption p {
-      font-size: 0.8rem;
-    }
-  
-    .carousel-caption {
-      padding: 8px;
-      bottom: 10px;
-    }
-  }
+}
+
   
   
 
 .publicacionescaja{
-    margin-top: 50px;
-    background-color: #f7f8f9; 
-    width: 90%;  
+    width: 95%;  
     height: fit-content;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -66,6 +89,7 @@
 }
 
 .publicacion{
+      background-color: #f7f8f9; 
     width: 100%;
     height: fit-content;
     /*background-color: rgb(4, 69, 125);*/
@@ -141,3 +165,76 @@
 {
     margin-top: 20px;
 }
+
+.card-title {
+  font-size: 1.2rem;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de líneas visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.card-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.publicacioncar
+{
+  position: relative;
+  margin-top: 90px;
+  flex: 0 0 auto;
+  width: 280px; /* o el tamaño que prefieras */
+  scroll-snap-align: start;
+  background: #ffffff40;
+  box-shadow: 0 8px 32px 0 #1f26875e;
+  backdrop-filter: blur(7px);
+}
+
+.titulopubli {
+  position: relative;
+  width: 90%;
+  height: 60px;
+  margin: 20px auto;
+  overflow: hidden;
+    border-left: #0903b8 solid 10px;
+}
+
+/* Imagen como fondo decorativo */
+.imgt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  
+  z-index: 1;
+  filter: brightness(0.8); /* Oscurece la imagen para mejorar contraste con el texto */
+}
+
+/* Texto centrado encima de la imagen */
+.titulopublii {
+  position: relative;
+  font-size: 40px;
+  padding-left: 20px;
+  width: 100%;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  z-index: 2;
+  font-weight: bold;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .titulopublii {
+    font-size: 1.8rem;
+  }
+}
+

@@ -39,7 +39,7 @@
 }
 
 body {
-    background-color: #00a1e1;
+    background: linear-gradient(90deg, #137dff, #00aaff) ;
     background-size: cover;
     background-repeat: no-repeat;
     

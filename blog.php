@@ -1,3 +1,4 @@
+
 <?php
   session_start();
 
@@ -38,6 +39,10 @@
   }
 
   $publicaciones = obtenerPublicaciones();
+
+  $primerasCinco = array_slice($publicaciones, 0, 5);
+$restoPublicaciones = array_slice($publicaciones, 5);
+
 ?>
 
 
@@ -56,7 +61,7 @@
   <link href="css/barra.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet" />
   <link href="css/Blogs.css" rel="stylesheet" />
-  <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
+  <link href="css/cartas.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
 
@@ -157,16 +162,17 @@ var carousel = new bootstrap.Carousel(myCarousel)
   <div class="navbar-categories">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Conservacion de Ecosistemas</a>
+        <!-- Usa ID o nombre -->
+        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Contaminación Marina</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Educacion Oceanica</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>
@@ -183,53 +189,139 @@ foreach ($publicaciones as $post) {
 }
 ?>
 
-  
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top:150px">
-  <div class="carousel-indicators">
-    <?php foreach (array_values($primeras_por_categoria) as $i => $pub): ?>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?= $i ?>" <?= $i === 0 ? 'class="active" aria-current="true"' : '' ?> aria-label="Slide <?= $i+1 ?>"></button>
-    <?php endforeach; ?>
-  </div>
+
+
+
+<div id="ods14Carousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 115px">
   <div class="carousel-inner">
-    <?php foreach (array_values($primeras_por_categoria) as $i => $pub): ?>
-      <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
-  <a href="ver_publicacion.php?id=<?= $pub->id ?>">
-    <div class="carousel-img-wrapper">
-      <img src="<?= htmlspecialchars($pub->imagen_portada) ?>" class="carousel-img" alt="Imagen de portada">
-    </div>
-    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
-      <h5><?= htmlspecialchars($pub->titulo) ?></h5>
-      <p><?= nl2br(htmlspecialchars($pub->resumen)) ?></p>
-    </div>
-  </a>
-</div>
 
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <img src="img/11.jpg" class="d-block w-100" alt="Coral">
+      <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
+        <h5>Protección de los ecosistemas marinos</h5>
+        <p>ODS 14 busca conservar y utilizar sosteniblemente los océanos, mares y recursos marinos.</p>
+      </div>
+    </div>
 
-    <?php endforeach; ?>
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <img src="img/22.jpg" class="d-block w-100" alt="Contaminación Marina">
+      <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
+        <h5>Reducción de la contaminación marina</h5>
+        <p>Se busca reducir la contaminación por plásticos y otros desechos que dañan la vida submarina.</p>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <img src="img/33.jpg" class="d-block w-100" alt="Pesca sostenible">
+      <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
+        <h5>Pesca sostenible</h5>
+        <p>Una gestión responsable de la pesca es esencial para preservar las especies marinas.</p>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-item">
+      <img src="img/44.jpg" class="d-block w-100" alt="Biodiversidad marina">
+      <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
+        <h5>Preservación de la biodiversidad marina</h5>
+        <p>La vida submarina es clave para el equilibrio del planeta y necesita ser protegida.</p>
+      </div>
+    </div>
+
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+
+  <!-- Controles -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#ods14Carousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Anterior</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#ods14Carousel" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Siguiente</span>
   </button>
 </div>
 
 
+<div class="titulopubli" style="margin-top: 60px">
+  <!--<img src="img/5.jpg" class="imgt">-->
+  <div class="titulopublii"> Últimas publicaciones...</div>
+</div>
   
-        
+<!-- Publicaciones recientes -->
+<div class="publicacionescaja" style="padding:15px; margin-top:20px">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <?php foreach ($primerasCinco as $post): ?>
+      <div class="publicacion_car">
+        <div class="card h-100 border-0">
+          <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="imagen_tarjeta" alt="Imagen de portada">
+          <div class="contenido_tarjeta">
+            <div class="categoria_tarjeta"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+            <h5 class="titulo_tarjeta"><?= htmlspecialchars($post->titulo) ?></h5>
+            <p class="card-text text-muted"><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
+            <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-sm btn-outline-primary">Leer más</a>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+
+
+<section class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Ecosistemas</h5>
+          <p class="card-text">Conservación de ecosistemas marinos y costeros para un futuro sostenible.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Contaminación Marina</h5>
+          <p class="card-text">Reducir los desechos marinos, especialmente el plástico.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Pesca Sostenible</h5>
+          <p class="card-text">Fomentar la pesca responsable y regulada para preservar recursos.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Educación Oceánica</h5>
+          <p class="card-text">Promover la conciencia sobre la importancia de los océanos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="titulopubli">
+  <!--<img src="img/5.jpg" class="imgt">-->
+  <div class="titulopublii"> Descubre más...</div>
+</div>
+<!-- Otras publicaciones -->
 <div class="publicacionescaja">
-  <?php foreach ($publicaciones as $index => $post): ?>
+  <?php foreach ($restoPublicaciones as $index => $post): ?>
     <div class="publicacion">
       <?php if ($index % 2 == 0): ?>
-        <!-- Imagen a la izquierda -->
         <div class="coverimg">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
           <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
         </div>
-        
         <div class="texto">
           <div class="titulop"><?= htmlspecialchars($post->titulo) ?></div>
           <div class="autorp"><?= htmlspecialchars($post->autor_nombre) ?></div>
@@ -237,14 +329,12 @@ foreach ($publicaciones as $post) {
           <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
         </div>
       <?php else: ?>
-        <!-- Imagen a la derecha -->
         <div class="texto">
           <div class="titulop"><?= htmlspecialchars($post->titulo) ?></div>
           <div class="autorp"><?= htmlspecialchars($post->autor_nombre) ?></div>
           <div class="resumen"><?= nl2br(htmlspecialchars($post->resumen)) ?></div>
           <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
         </div>
-
         <div class="coverimg">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
           <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
@@ -257,7 +347,20 @@ foreach ($publicaciones as $post) {
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    </body>
+
+<section class="bg-primary text-white text-center py-5">
+  <h2>¡Súmate al cambio!</h2>
+  <p>Participa en nuestras campañas, comparte información y actúa.</p>
+  <a href="index_about.php
+  
+  " class="btn btn-light">Más sobre nosotors</a>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+
+
+
+  
