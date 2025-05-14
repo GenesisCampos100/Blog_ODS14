@@ -65,6 +65,9 @@ $restoPublicaciones = array_slice($publicaciones, 5);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -200,7 +203,7 @@ foreach ($publicaciones as $post) {
       <img src="img/11.jpg" class="d-block w-100" alt="Coral">
       <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
         <h5>Protección de los ecosistemas marinos</h5>
-        <p>ODS 14 busca conservar y utilizar sosteniblemente los océanos, mares y recursos marinos.</p>
+        <p> La ODS 14 busca conservar y utilizar sosteniblemente los océanos, mares y recursos marinos.</p>
       </div>
     </div>
 
@@ -251,11 +254,11 @@ foreach ($publicaciones as $post) {
 </div>
   
 <!-- Publicaciones recientes -->
-<div class="publicacionescaja" style="padding:15px; margin-top:20px">
+<div class="publicacionescaja" style="margin-top:20px">
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <?php foreach ($primerasCinco as $post): ?>
       <div class="publicacion_car">
-        <div class="card h-100 border-0">
+        <div class="card h-100">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="imagen_tarjeta" alt="Imagen de portada">
           <div class="contenido_tarjeta">
             <div class="categoria_tarjeta"><?= htmlspecialchars($post->categoria_nombre) ?></div>
@@ -271,11 +274,12 @@ foreach ($publicaciones as $post) {
 
 
 
-<section class="container my-5">
+<section class="tarjetascat">
   <div class="row text-center">
     <div class="col-md-3">
       <div class="card shadow-sm">
         <div class="card-body">
+          <i class="fas fa-water iconotarjeta"></i>
           <h5 class="card-title">Ecosistemas</h5>
           <p class="card-text">Conservación de ecosistemas marinos y costeros para un futuro sostenible.</p>
         </div>
@@ -284,6 +288,7 @@ foreach ($publicaciones as $post) {
     <div class="col-md-3">
       <div class="card shadow-sm">
         <div class="card-body">
+          <i class="fas fa-recycle iconotarjeta"></i>
           <h5 class="card-title">Contaminación Marina</h5>
           <p class="card-text">Reducir los desechos marinos, especialmente el plástico.</p>
         </div>
@@ -292,6 +297,7 @@ foreach ($publicaciones as $post) {
     <div class="col-md-3">
       <div class="card shadow-sm">
         <div class="card-body">
+          <i class="fas fa-fish iconotarjeta"></i>
           <h5 class="card-title">Pesca Sostenible</h5>
           <p class="card-text">Fomentar la pesca responsable y regulada para preservar recursos.</p>
         </div>
@@ -300,6 +306,7 @@ foreach ($publicaciones as $post) {
     <div class="col-md-3">
       <div class="card shadow-sm">
         <div class="card-body">
+          <i class="fas fa-book-open iconotarjeta"></i>
           <h5 class="card-title">Educación Oceánica</h5>
           <p class="card-text">Promover la conciencia sobre la importancia de los océanos.</p>
         </div>

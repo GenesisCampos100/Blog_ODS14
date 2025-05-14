@@ -39,7 +39,8 @@
 }
 
 body {
-    background: linear-gradient(90deg, #137dff, #00aaff) ;
+    background: linear-gradient(90deg, #0d7ad8, #44b1e7) ;
+    /*background-color: #44a5e7;*/
     background-size: cover;
     background-repeat: no-repeat;
     
