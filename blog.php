@@ -40,8 +40,8 @@
 
   $publicaciones = obtenerPublicaciones();
 
-  $primerasCinco = array_slice($publicaciones, 0, 5);
-$restoPublicaciones = array_slice($publicaciones, 5);
+  $primerasCinco = array_slice($publicaciones, 0, 6);
+$restoPublicaciones = array_slice($publicaciones, 6);
 
 ?>
 
@@ -62,6 +62,7 @@ $restoPublicaciones = array_slice($publicaciones, 5);
   <link href="css/general.css" rel="stylesheet" />
   <link href="css/Blogs.css" rel="stylesheet" />
   <link href="css/cartas.css" rel="stylesheet" />
+  <link href="css/footer.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
 
@@ -179,7 +180,7 @@ var carousel = new bootstrap.Carousel(myCarousel)
       </li>
     </ul>
   </div>
-  <nav>
+</nav>
 
 </header>
 
@@ -195,7 +196,7 @@ foreach ($publicaciones as $post) {
 
 
 
-<div id="ods14Carousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 115px">
+<div id="ods14Carousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 110px">
   <div class="carousel-inner">
 
     <!-- Slide 1 -->
@@ -261,10 +262,12 @@ foreach ($publicaciones as $post) {
         <div class="card h-100">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" class="imagen_tarjeta" alt="Imagen de portada">
           <div class="contenido_tarjeta">
-            <div class="categoria_tarjeta"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+            <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>">
+              <div class="categoria_tarjetaa"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+    </a>
             <h5 class="titulo_tarjeta"><?= htmlspecialchars($post->titulo) ?></h5>
             <p class="card-text text-muted"><?= nl2br(htmlspecialchars($post->resumen)) ?></p>
-            <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-sm btn-outline-primary">Leer más</a>
+            <a href="ver_publicacion.php?id=<?= $post->id ?>" class="btn btn-primary">Leer más</a>
           </div>
         </div>
       </div>
@@ -274,41 +277,50 @@ foreach ($publicaciones as $post) {
 
 
 
-<section class="tarjetascat">
+<section class="tarjetascat" style="margin-top:40px">
+  
   <div class="row text-center">
     <div class="col-md-3">
       <div class="card shadow-sm">
-        <div class="card-body">
+        <div class="card-body" style="padding:10px">
+          <a href="categoria.php?id=2">
           <i class="fas fa-water iconotarjeta"></i>
           <h5 class="card-title">Ecosistemas</h5>
           <p class="card-text">Conservación de ecosistemas marinos y costeros para un futuro sostenible.</p>
+    </a>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card shadow-sm">
-        <div class="card-body">
+        <div class="card-body" style="padding:10px">
+          <a href="categoria.php?id=1">
           <i class="fas fa-recycle iconotarjeta"></i>
           <h5 class="card-title">Contaminación Marina</h5>
           <p class="card-text">Reducir los desechos marinos, especialmente el plástico.</p>
+    </a>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card shadow-sm">
-        <div class="card-body">
+        <div class="card-body" style="padding:10px">
+          <a href="categoria.php?id=3">
           <i class="fas fa-fish iconotarjeta"></i>
           <h5 class="card-title">Pesca Sostenible</h5>
           <p class="card-text">Fomentar la pesca responsable y regulada para preservar recursos.</p>
+    </a>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card shadow-sm">
-        <div class="card-body">
+        <div class="card-body" style="padding:10px">
+          <a href="categoria.php?id=4">
           <i class="fas fa-book-open iconotarjeta"></i>
           <h5 class="card-title">Educación Oceánica</h5>
           <p class="card-text">Promover la conciencia sobre la importancia de los océanos.</p>
+    </a>
         </div>
       </div>
     </div>
@@ -327,7 +339,9 @@ foreach ($publicaciones as $post) {
       <?php if ($index % 2 == 0): ?>
         <div class="coverimg">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
-          <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+          <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>">
+            <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+      </a>
         </div>
         <div class="texto">
           <div class="titulop"><?= htmlspecialchars($post->titulo) ?></div>
@@ -344,7 +358,9 @@ foreach ($publicaciones as $post) {
         </div>
         <div class="coverimg">
           <img src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen de portada">
-          <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+          <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>">
+            <div class="categoriap"><?= htmlspecialchars($post->categoria_nombre) ?></div>
+      </a>
         </div>
       <?php endif; ?>
     </div>
@@ -356,16 +372,60 @@ foreach ($publicaciones as $post) {
 
 
 
-<section class="bg-primary text-white text-center py-5">
-  <h2>¡Súmate al cambio!</h2>
+<section class="sumate">
+  <h1>¡Súmate al cambio!</h1>
   <p>Participa en nuestras campañas, comparte información y actúa.</p>
-  <a href="index_about.php
-  
-  " class="btn btn-light">Más sobre nosotors</a>
+  <a href="index_about.php" class="btn btn-light">Más sobre nosotors</a>
 </section>
 
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Información y logo -->
+    <div class="footer-col">
+      <img src="img/logooo.png" alt="Logo" class="footer-logo">
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
+    </div>
+
+    <!-- Columna 2: Enlaces -->
+    <div class="footer-col">
+      <h4 id="enlaces">ENLACES</h4>
+      <ul>
+        <li><a id="iniciofo"href="index.php">Inicio</a></li>
+        <li><a id="nosotrosfo" href="index_about.php">Acerca De</a></li>
+        <li><a id="blogfo"href="#">Blog</a></li>
+        <li><a id="contactofo" href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Redes Sociales -->
+    <div class="footer-col">
+      <h4 id="redessocial">REDES SOCIALES</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 4: Newsletter -->
+    <div class="footer-col">
+      <h4 id="contacto">CONTACTANOS</h4>
+      <form class="newsletter">
+      <input type="email" placeholder="Email">
+        <input type="text" placeholder="Mensaje">
+        <button id="correo"type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>©Dipsy 2025</p>
+  </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+</body> 
 </html>
 
 

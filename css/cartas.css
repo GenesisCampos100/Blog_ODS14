@@ -56,6 +56,27 @@
   left: 10px;
 }
 
+.categoria_tarjeta-link {
+  display: inline-block; /* Así solo el contenido es clickeable */ /* Opcional: quitar subrayado */
+}
+
+.categoria_tarjetaa
+{
+
+  width: fit-content;
+  display: inline-block;
+  background-color: #1159c4;
+  margin: 0px;
+  color: aliceblue;
+  font-family: 'Novecentos';
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 3px;
+  border-radius: 2px;
+  top: 10px;  /* Ajusta la distancia desde la parte superior */
+  left: 10px;
+}
+
 .imagen_tarjeta{
   width: 100%;
   height: 200px;
@@ -73,12 +94,24 @@
 .titulo_tarjeta{
   width: 100%;
   text-align:left;
-  display: inline-block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* número de líneas deseado */
+  -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
   margin: 1rem auto;
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 20px;
   line-height: normal;
   color: #072036;
+}
+
+.resumen_tarjeta
+{
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* número de líneas deseado */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 

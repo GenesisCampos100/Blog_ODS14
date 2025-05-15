@@ -55,6 +55,7 @@ $nombre_categoria = obtenerNombreCategoria($categoria_id);
   <link href="css/Blogs.css" rel="stylesheet">
   <link href="css/barra.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet" />
+  <link href="css/footer.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
   <!-- jQuery -->
@@ -158,7 +159,7 @@ $nombre_categoria = obtenerNombreCategoria($categoria_id);
       </li>
     </ul>
   </div>
-  <nav>
+</nav>
 
 </header>
 
@@ -198,5 +199,51 @@ $nombre_categoria = obtenerNombreCategoria($categoria_id);
   <?php endforeach; ?>
 </div>
 
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Información y logo -->
+    <div class="footer-col">
+      <img src="img/logooo.png" alt="Logo" class="footer-logo">
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
+    </div>
+
+    <!-- Columna 2: Enlaces -->
+    <div class="footer-col">
+      <h4 id="enlaces">ENLACES</h4>
+      <ul>
+        <li><a id="iniciofo"href="index.php">Inicio</a></li>
+        <li><a id="nosotrosfo" href="index_about.php">Acerca De</a></li>
+        <li><a id="blogfo"href="#">Blog</a></li>
+        <li><a id="contactofo" href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Redes Sociales -->
+    <div class="footer-col">
+      <h4 id="redessocial">REDES SOCIALES</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 4: Newsletter -->
+    <div class="footer-col">
+      <h4 id="contacto">CONTACTANOS</h4>
+      <form class="newsletter">
+      <input type="email" placeholder="Email">
+        <input type="text" placeholder="Mensaje">
+        <button id="correo"type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>©Dipsy 2025</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,20 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap'); /* Importa la fuente Questrial */
+/* Fuente e íconos */
+
 
 body {
     background: linear-gradient(to right, #00b4db, #0041ff); /* Gradiente de color */
     font-family: Questrial, sans-serif; /* Utiliza la fuente Questrial */
+    
 }
 @font-face {
     font-family: 'Kaytek';
     src: url(../fuentes/KaytekRounded-Bold.ttf);
 }
 
+@font-face {
+  font-family: 'Questrial';
+  src: url(../fuentes/Questrial-Regular.ttf); 
+}
 
 
 
 /* --- Contenedor Principal --- */
 .main-content {
-    width: 90%;
+    width: 100%;
     /*max-width: 1200px; */
     margin: auto;
     padding: 40px 0;
@@ -22,7 +29,8 @@ body {
 
 .main-content h1 {
     font-size: 28px;
-    font-family: 'Chau Philomene One', sans-serif;    
+    font-family: 'Chau Philomene One', sans-serif;   
+    color: #000; 
 }
 
 .main-content h2 {
@@ -56,7 +64,7 @@ body {
 }
 
 .about-dipsy-text p {
-    font-family: Questrial, sans-serif;
+    font-family: 'Questrial', sans-serif;
     font-size: 18px;
     color: #333;
     line-height: 1.6;
@@ -160,14 +168,4 @@ body {
     .goal {
         width: 90%;
     }
-}
-
-.footer {
-    background-color: #00202e;
-    padding: 40px 20px; /* 40px arriba y abajo, 20px izquierda y derecha */
-    color: white;
-    text-align: center;
-    z-index: 1;
-    width: 100%;
-    margin: 0;
 }

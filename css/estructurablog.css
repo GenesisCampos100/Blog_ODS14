@@ -96,6 +96,10 @@
     text-transform: uppercase;
 }
 
+.categoria-link {
+  display: inline-block; /* Así solo el contenido es clickeable */
+  text-decoration: none; /* Opcional: quitar subrayado */
+}
 
 .resumenpublicacion{
     margin-top: 30px;
@@ -177,86 +181,14 @@
     text-align: justify;
 }
 
-
-
-
-
-
-/*
-.imagenportada {
-    position: relative;
-    width: 100%;
-    display: inline-block;
-}
-    */
-
-    /*
-#barracolor {
-    margin-top: 190px;
-    background-color: #043385;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0px;
-    z-index: 0; 
-}
-
-*/
-
-
-/*
-.content {
-    margin-top: 150px; 
-    background-color: #f7f8f9; 
-    width: 90%;  
-    height: auto;
-    border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #051f34;
-    padding-top: 40px; 
-    padding-bottom: 100px;
-}
-
-.imgtituloblog {
-    width: 100%;
-    height: auto;
-    position: relative;
-    z-index: 1;
-    display: block;
-}
-
-.titulo{
-    margin-top: 20px;
-    width:70%;
-    height: fit-content;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    font-size: 40px;
-}
-
-
-
-
-
-
-
-.tarjetas
+.flechaatras
 {
-    margin-top: 80px;
-    position: relative;
-    width: 90%;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    position: fixed;
+    background-color: #043385;
+    color: #fff;
+    z-index: 1000;
+    left: 20px;
 }
-
-*/
 
 
 

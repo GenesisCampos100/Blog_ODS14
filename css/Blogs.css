@@ -91,8 +91,8 @@
 }
 
 /* Animación general para cada publicación */
-.publicacion {
-  background-color: #f7f8f9; 
+.publicacion{
+  background-color: #ddeffa;
     width: 100%;
     height: fit-content;
     /*background-color: rgb(4, 69, 125);*/
@@ -100,8 +100,22 @@
     align-items: center;
     justify-content: center;
     padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 12px;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+.coverimg
+{
+    position: relative;
+    width: 400px;
+    height: 250px;
+}
+
+.coverimg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
 }
 
 /* Efecto al pasar el cursor por encima */
@@ -112,38 +126,30 @@
 }
 
 /* Imagen con zoom al hacer hover */
-.coverimg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.4s ease-in-out;
-  border-radius: 8px;
-}
+
 
 .coverimg:hover img {
   transform: scale(1.05);
 }
 
-/* Categoria con transición de color al hacer hover */
-.categoriap {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #007ade;
-  color: #ffffff;
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-family: 'Novecentos';
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
-}
 
-.coverimg:hover .categoriap {
+.categoriap {
+    position: absolute;
+    top: 10px; /* distancia desde la parte inferior */
+    left: 10px;/* distancia desde la izquierda */
+    background-color: #007ade;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Novecentos';
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+.coverimg:hover{
   background-color: #005a9e;
 }
 
@@ -182,14 +188,20 @@
     font-weight: bold;
     font-family: 'Novecentos';
     text-transform: uppercase;
+    color: #007ade;
 }
 
 .resumen
 {
     margin-top: 20px;
     font-family: 'Questrial';
-    font-size: 15px;
+    font-size: 20px;
     text-align: justify;
+      display: -webkit-box;
+  -webkit-line-clamp: 4; /* Número de líneas visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn
@@ -207,6 +219,8 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'Questrial';
+  font-size: 16px;
 }
 
 
@@ -257,7 +271,7 @@
   padding-left: 20px;
   width: 100%;
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  color: #ffffff;
+  color: #fdfdfd;
   z-index: 2;
   font-weight: bold;
 }
@@ -276,30 +290,46 @@
   left: 50%;
     transform: translateX(-50%);
 }
-
 .tarjetascat .card {
-  background-color: #ffffff;
-  border-radius: 15px;
-  border: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
+  border: none;
+  border-radius: 15px;
+  background-color: #ffffff;
 }
 
 .tarjetascat .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 12px 25px rgba(0, 123, 255, 0.2);
+}
+
+.tarjetascat .iconotarjeta {
+  font-size: 40px;
+  color: #007ade;
+  margin-bottom: 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.tarjetascat .card:hover .iconotarjeta {
+  color: #0056b3;
+  transform: scale(1.1);
 }
 
 .tarjetascat .card-title {
-  color: #0077b6;
+  font-size: 20px;
   font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  color: #072036;
+  font-family: 'Roboto', sans-serif;
 }
 
 .tarjetascat .card-text {
+  font-size: 15px;
   color: #333;
-  font-size: 0.95rem;
+  font-family: 'Questrial', sans-serif;
+}
+
+.tarjetascat a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media (max-width: 768px) {
@@ -361,7 +391,6 @@
 }
 
 .card-text {
-  font-size: 0.95rem;
   color: #555;
   margin-bottom: 1rem;
 }
@@ -388,6 +417,31 @@
 .card:hover .iconotarjeta {
   color: #00bcd4;
   transform: scale(1.2);
+}
+
+.sumate
+{
+  background-color: #022473;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 250px;
+  margin-bottom: 30px;
+}
+
+.sumate h1{
+  font-family: 'Roboto';
+}
+
+.sumate:hover h1{
+  color:#35e7ff;
+}
+
+.sumate p{
+  font-family: 'Questrial';
+  font-size: 20px;
 }
 
 

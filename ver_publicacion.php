@@ -50,6 +50,26 @@ $elementos = obtenerElementosPublicacion($_GET['id']);
 if (!$post) {
     die("Publicación no encontrada.");
 }
+
+
+function obtenerPublicacionesAleatorias($id_actual, $limite = 5) {
+    $bd = conectarBaseDatos();
+    $sql = "
+        SELECT p.*, c.nombre AS categoria 
+        FROM publicaciones p
+        JOIN categorias c ON p.categoria_id = c.id
+        WHERE p.id != ?
+        ORDER BY RAND()
+        LIMIT ?
+    ";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute([$id_actual, $limite]);
+    return $stmt->fetchAll();
+}
+
+// Obtener 5 publicaciones aleatorias
+$recomendadas = obtenerPublicacionesAleatorias($_GET['id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +108,24 @@ if (!$post) {
     window.addEventListener('load', ajustarAlturaBarra);
     window.addEventListener('resize', ajustarAlturaBarra);
   </script>
+
+  <script>
+  // Mostrar el botón cuando el usuario baja
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Función para volver al inicio
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 
 <script crossorigin="anonymous"></script>
 
@@ -173,22 +211,32 @@ if (!$post) {
   <div class="navbar-categories">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Conservacion de Ecosistemas</a>
+        <!-- Usa ID o nombre -->
+        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Contaminación Marina</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Educacion Oceanica</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>
-  <nav>
+  </nav>
 
 </header>
+
+<!--
+<button onclick="window.history.back()" 
+  class="btn rounded-0 position-absolute d-none d-md-block"
+  style="top: 140px; width: fit-content; height: fit-content; z-index: 998;">
+  <i class="bi bi-arrow-left text-white fs-1"></i>
+</button>
+-->
+
 
 
 
@@ -202,8 +250,11 @@ if (!$post) {
     </div>
 
     <div class="categoriass">
-      <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
-    </div>
+  <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>" class="categoria-link">
+    <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
+  </a>
+</div>
+
 
     <div class="titulopublicacion"><?= htmlspecialchars($post->titulo) ?></div>
 
@@ -258,14 +309,84 @@ if (!$post) {
         </ul>
     </div>
     </div>
+<!-- From Uiverse.io by JesusRafaelNavaCruz --> 
+<div class="publicacionesrecientes">
 
-    <?php endif; ?>
-<!-- Fin del bloque si hay referencias -->
+<div class="titulopublicaciones">Publicaciones Recomendadas</div>
+
+  <?php foreach ($recomendadas as $tarjeta): ?>
+    <div class="publicacion_tarjeta">
+      <img src="<?= htmlspecialchars($tarjeta->imagen_portada) ?>" alt="Imagen de portada" class="imagen_tarjeta">
+      <a href="categoria.php?id=<?= urlencode($tarjeta->categoria_id) ?>" class="categoria-link">
+        <div class="categoria_tarjeta"><?= htmlspecialchars($tarjeta->categoria) ?></div>
+      </a>
+      <div class="contenido_tarjeta">
+        <p class="titulo_tarjeta"><?= htmlspecialchars($tarjeta->titulo) ?></p>
+        <p class="resumen_tarjeta"><?= htmlspecialchars($tarjeta->resumen) ?></p>
+        <a href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" id="leer">Leer más</a>
+      </div>
+    </div>
+  <?php endforeach; ?>
+</div>
+
+        <?php endif; ?>
+
+  </div>
+
+<!-- Botón Volver Arriba -->
+<button onclick="scrollToTop()" id="scrollTopBtn"
+  class="btn btn-primary position-fixed"
+  style="bottom: 20px; right: 80px; display: none; width: 50px; height: 50px; z-index: 900;">
+  <i class="bi bi-arrow-up text-white fs-4"></i>
+</button>
 
 
-
-    <a href="blog.php" class="btn btn-secondary mt-3">Volver al Blog</a>
+        <footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Información y logo -->
+    <div class="footer-col">
+      <img src="img/logooo.png" alt="Logo" class="footer-logo">
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
     </div>
 
+    <!-- Columna 2: Enlaces -->
+    <div class="footer-col">
+      <h4 id="enlaces">ENLACES</h4>
+      <ul>
+        <li><a id="iniciofo"href="index.php">Inicio</a></li>
+        <li><a id="nosotrosfo" href="index_about.php">Acerca De</a></li>
+        <li><a id="blogfo"href="#">Blog</a></li>
+        <li><a id="contactofo" href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Redes Sociales -->
+    <div class="footer-col">
+      <h4 id="redessocial">REDES SOCIALES</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 4: Newsletter -->
+    <div class="footer-col">
+      <h4 id="contacto">CONTACTANOS</h4>
+      <form class="newsletter">
+      <input type="email" placeholder="Email">
+        <input type="text" placeholder="Mensaje">
+        <button id="correo"type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>©Dipsy 2025</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
