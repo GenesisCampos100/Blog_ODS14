@@ -4,11 +4,12 @@ const region = "southcentralus";
 
 // Lista de IDs a traducir
 const ids = [
-  "navInicio", "navAcercaDe", "navBlog", "navCategoria1", "navCategoria2",
+  "homel", "aboutl", "blogl","loginn","search", "navCategoria1", "navCategoria2",
   "navCategoria3", "navCategoria4",
   "parrafoDipsy", "tituloMetas", "tituloMision", "parrafoMision",
   "tituloVision", "parrafoVision", "tituloObjectivo", "parrafoObjectivo",
-  "tituloHistoria", "parrafoHistoria", "parrafoFooter"
+  "tituloHistoria", "parrafoHistoria", "parrafoFooter", "enlaces", "iniciofo",
+  "nosotrosfo", "blogfo", "redessocial", "contacto", "correo"
 ];
 
 // Diccionario para guardar el contenido original (en español)
@@ -60,6 +61,10 @@ async function traducirContenido(from, to) {
   }
 }
 
+
+
+
+  
 
 
 
