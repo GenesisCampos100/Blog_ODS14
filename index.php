@@ -32,6 +32,8 @@ function obtenerUltimaPublicacion() {
     return $stmt->fetch();
 }
 
+
+
 function obtenerElementosPublicacion($id_publicacion) {
     $bd = conectarBaseDatos();
     $sql = "SELECT tipo, contenido FROM publicacion_elementos WHERE publicacion_id = ? ORDER BY orden ASC";
@@ -42,6 +44,7 @@ function obtenerElementosPublicacion($id_publicacion) {
 
 // Obtener publicación más reciente
 $post = obtenerUltimaPublicacion();
+$id_publicacion = $post ? $post->id : null;
 $elementos = $post ? obtenerElementosPublicacion($post->id) : [];
 
 function obtenerPublicacionesRecientes($limite = 5, $offset = 1) {
@@ -59,6 +62,53 @@ function obtenerPublicacionesRecientes($limite = 5, $offset = 1) {
 }
 
 $tarjetas = obtenerPublicacionesRecientes();
+
+
+// Función para insertar comentario
+function agregarComentario($publicacion_id, $usuario_id, $contenido) {
+    $bd = conectarBaseDatos();
+    $sql = "INSERT INTO comentarios (publicacion_id, usuario_id, contenido) VALUES (?, ?, ?)";
+    $stmt = $bd->prepare($sql);
+    return $stmt->execute([$publicacion_id, $usuario_id, $contenido]);
+}
+
+// Función para obtener comentarios como objetos
+function obtenerComentarios($id_publicacion) {
+    $bd = conectarBaseDatos();
+    $sql = "SELECT c.*, u.nombre AS autor 
+            FROM comentarios c 
+            JOIN usuarios u ON c.usuario_id = u.id 
+            WHERE c.publicacion_id = ? 
+            ORDER BY c.fecha_comentario DESC";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute([$id_publicacion]);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+// Procesar comentario si se envía
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_comentar'])) {
+    if (isset($_SESSION['idUsuario']) && !empty($_POST['comentario'])) {
+        $usuario_id = $_SESSION['idUsuario'];
+        $contenido = trim($_POST['comentario']);
+
+        if (!empty($contenido)) {
+            if (agregarComentario($id_publicacion, $usuario_id, $contenido)) {
+                header("Location: " . $_SERVER['REQUEST_URI']);
+                exit();
+            } else {
+                $_SESSION['error_comentario'] = "Hubo un error al guardar tu comentario.";
+            }
+        } else {
+            $_SESSION['error_comentario'] = "El comentario no puede estar vacío.";
+        }
+    } else {
+        $_SESSION['error_comentario'] = "Debes iniciar sesión para comentar.";
+    }
+
+    // Redirigir para evitar reenvío del formulario
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
+}
 
 ?>
 
@@ -99,8 +149,43 @@ $tarjetas = obtenerPublicacionesRecientes();
     window.addEventListener('resize', ajustarAlturaBarra);
   </script>
 
+   <script>
+  // Mostrar el botón cuando el usuario baja
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Función para volver al inicio
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 <script crossorigin="anonymous"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const boton = document.getElementById("toggleComentarios");
+    const icono = document.getElementById("iconoComentarios");
+    const texto = boton.querySelector("span");
+    const collapse = document.getElementById("seccionComentarios");
+
+    collapse.addEventListener('shown.bs.collapse', function () {
+        texto.textContent = "Ocultar comentarios";
+        icono.className = "bi bi-eye-slash";
+    });
+
+    collapse.addEventListener('hidden.bs.collapse', function () {
+        texto.textContent = "Ver comentarios";
+        icono.className = "bi bi-eye";
+    });
+});
+</script>
 
 </head>
 
@@ -296,8 +381,106 @@ $tarjetas = obtenerPublicacionesRecientes();
         <a href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" id="leer">Leer más</a>
       </div>
     </div>
+    
   <?php endforeach; ?>
+
+  </div>
+
+    <div class="text-center" style="margin-top:50px">
+  <button class="btn btn-outline-primary mb-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#seccionComentarios" aria-expanded="false" aria-controls="seccionComentarios" id="toggleComentarios">
+    <i class="bi bi-eye" id="iconoComentarios"></i>
+    <span>Ver comentarios</span>
+</button>
 </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Contenedor de comentarios colapsable -->
+<div class="collapse" id="seccionComentarios">
+        <div class="comentarios">
+            <div class="titulopublicaciones">Comentarios</div>
+
+            <?php if (isset($_SESSION['usuario_nombre'])): ?>
+                <form action="" method="POST">
+                    <div class="comment-input">
+                        <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+                    </div>
+                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+                </form>
+            <?php else: ?>
+                <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error_comentario'])): ?>
+                <p class="text-danger"><?= $_SESSION['error_comentario'] ?></p>
+                <?php unset($_SESSION['error_comentario']); ?>
+            <?php endif; ?>
+
+            <div class="lista-comentarios">
+                <?php
+                $comentarios = obtenerComentarios($id_publicacion);
+                if ($comentarios):
+                    foreach ($comentarios as $comentario):
+                ?>
+                    <div class="comentario border-bottom">
+                        <strong><?= htmlspecialchars($comentario->autor) ?></strong><br>
+                        <p ><?= nl2br(htmlspecialchars($comentario->contenido)) ?></p>
+                        <small class="text-muted"><?= $comentario->fecha_comentario ?></small>
+                    </div>
+                <?php
+                    endforeach;
+                else:
+                    echo "<p class='text-muted'>Aún no hay comentarios.</p>";
+                endif;
+                ?>
+            
+        </div>
+    </div>
+</div>
+    
+
+
+<!-- Botón Volver Arriba -->
+<button onclick="scrollToTop()" id="scrollTopBtn"
+  class="btn btn-primary position-fixed"
+  style="bottom: 20px; right: 80px; display: none; width: 50px; height: 50px; z-index: 900;">
+  <i class="bi bi-arrow-up text-white fs-4"></i>
+</button>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Mostrar/ocultar botón scroll arriba
+window.onscroll = function () {
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  scrollBtn.style.display = window.scrollY > 100 ? "block" : "none";
+};
+
+// Actualizar texto e icono del botón de comentarios
+const toggleBtn = document.getElementById("toggleComentarios");
+const icono = document.getElementById("iconoComentarios");
+const texto = toggleBtn.querySelector("span");
+const collapse = document.getElementById("seccionComentarios");
+
+collapse.addEventListener('shown.bs.collapse', () => {
+  texto.textContent = "Ocultar comentarios";
+  icono.className = "bi bi-eye-slash";
+});
+
+collapse.addEventListener('hidden.bs.collapse', () => {
+  texto.textContent = "Ver comentarios";
+  icono.className = "bi bi-eye";
+});
+</script>
+
 
         <?php endif; ?>
 
@@ -306,11 +489,14 @@ $tarjetas = obtenerPublicacionesRecientes();
     <p>No hay publicaciones aún.</p>
 </div>
 <?php endif; ?>
-</div>
 
- 
-<!--FOOTEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR-->
-<footer class="footer">
+
+<?php echo '<!-- antes-footer-debug -->';?>
+  
+
+
+
+        <footer class="footer">
   <div class="footer-container">
     <!-- Columna 1: Información y logo -->
     <div class="footer-col">
@@ -356,7 +542,6 @@ $tarjetas = obtenerPublicacionesRecientes();
   </div>
 </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
