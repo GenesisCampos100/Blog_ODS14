@@ -128,7 +128,7 @@
     <!-- SECCIÓN DEL ABOUT -->
   <main class="main-content">
   <section class="about">
-    <h1><b>DIPSY🌊</b></h1>
+    <h1 style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px">DIPSY🌊</h1>
 
     <div class="about-dipsy-container">
       <!-- Texto -->
@@ -155,7 +155,7 @@
   </section>
 
         <section class="metas">
-            <h2 id="tituloMetas"><b>NUESTAS METAS</b></h2>
+            <div id="tituloMetas" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px; margin-bottom:20px;">NUESTRAS METAS</div>
             <div class="goals">
                 <div class="goal mission">
                     <br><h2 id="tituloMision">🌊MISIÓN</h2></b>
@@ -174,7 +174,7 @@
                      <!-- Imagen de la visión -->
                 </div>
                 <div class="goal vision">
-                    <br><h2 id="tituloObjectivo">🎯OBJECTIVO</h2></b>
+                    <br><h2 id="tituloObjectivo">🎯OBJETIVO</h2></b>
                     <p id="parrafoObjectivo">
                     Desarrollar un blog informativo e interactivo que difunda la importancia de la vida submarina, los desafíos que enfrenta y las soluciones para su conservación.
                     A través de artículos, entrevistas, infografías y contenido multimedia, queremos fortalecer la educación ambiental y motivar el cambio hacia un futuro sostenible para nuestros océanos.
@@ -186,7 +186,7 @@
 
         <section class="history">
             <div class="history-content">
-                <h2 id="tituloHistoria"><b>HISTORIA</b></h2>
+                <div id="tituloHistoria" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px;"><b>HISTORIA</b></div>
                 <p id="parrafoHistoria">
                     Desde pequeños hemos sentido una profunda fascinación por el mar y sus misterios. Cada ola, cada criatura y cada arrecife cuentan una historia increíble que queremos compartir contigo.
 
@@ -198,13 +198,13 @@
         </section>
 </main>
 
-<footer class="footer">
+        <footer class="footer">
   <div class="footer-container">
     <!-- Columna 1: Información y logo -->
     <div class="footer-col">
       <img src="img/logooo.png" alt="Logo" class="footer-logo">
-      <p><i class="fas fa-envelope"></i> dipsy@dipsy.com</p>
-      <p><i class="fas fa-map-marker-alt"></i>Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
     </div>
 
     <!-- Columna 2: Enlaces -->
@@ -222,10 +222,10 @@
     <div class="footer-col">
       <h4 id="redessocial">REDES SOCIALES</h4>
       <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61576567344359"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DipsyBlog?t=sr9bvN7EyopDopxJWOQtmA&s=09"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-whatsapp"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/dipsy.blog/"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 
@@ -242,7 +242,6 @@
   <div class="footer-bottom">
     <p>©Dipsy 2025</p>
   </div>
-</div>
 </footer>
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -199,7 +199,7 @@ $nombre_categoria = obtenerNombreCategoria($categoria_id);
   <?php endforeach; ?>
 </div>
 
-<footer class="footer">
+        <footer class="footer">
   <div class="footer-container">
     <!-- Columna 1: Información y logo -->
     <div class="footer-col">
@@ -223,10 +223,10 @@ $nombre_categoria = obtenerNombreCategoria($categoria_id);
     <div class="footer-col">
       <h4 id="redessocial">REDES SOCIALES</h4>
       <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61576567344359"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DipsyBlog?t=sr9bvN7EyopDopxJWOQtmA&s=09"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-whatsapp"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/dipsy.blog/"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 

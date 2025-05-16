@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <!-- Contenedor de comentarios colapsable -->
-<div class="collapse" id="seccionComentarios">
+<div class="collapse" id="seccionComentarios" style="margin-top:0px">
         <div class="comentarios">
             <div class="titulopublicaciones">Comentarios</div>
 
@@ -491,7 +491,6 @@ collapse.addEventListener('hidden.bs.collapse', () => {
 <?php endif; ?>
 
 
-<?php echo '<!-- antes-footer-debug -->';?>
   
 
 
@@ -520,10 +519,10 @@ collapse.addEventListener('hidden.bs.collapse', () => {
     <div class="footer-col">
       <h4 id="redessocial">REDES SOCIALES</h4>
       <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61576567344359"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DipsyBlog?t=sr9bvN7EyopDopxJWOQtmA&s=09"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-whatsapp"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/dipsy.blog/"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 

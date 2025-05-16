@@ -65,7 +65,7 @@ body {
 
 .about-dipsy-text p {
     font-family: 'Questrial', sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
     line-height: 1.6;
     text-align: justify;
@@ -78,7 +78,7 @@ body {
 }
 /* --- Sección Nuestras Metas --- */
 .metas {
-    background: #35b7c1;
+    background: #003ea3;
     color: white;
     padding: 40px 20px;
     border-radius: 0;
@@ -94,19 +94,19 @@ body {
 }
 
 .goal {
-    background: white;
+    background: rgb(255, 255, 255);
     color: #00202e;
     padding: 20px;
     border-radius: 10px;
     height: 500px;
     width: 350px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 10px #009ff5e0;
 }
 
 .goal p {
-    font-size: 18px;
+    font-size: 20px;
     text-align: justify;
-    font-family: Questrial, sans-serif;
+    font-family: 'Questrial', sans-serif;
 }
 
 /* --- Sección Nuestra Historia --- */
@@ -154,8 +154,9 @@ body {
 }
 
 .history-content p {
-    font-size: 18px;
+    font-size: 20px;
     text-align: justify;
+    font-family: 'Questrial', sans-serif;
 }
 
 /* --- Responsividad (Móviles) --- */
