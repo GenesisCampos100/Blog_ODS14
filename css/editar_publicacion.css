@@ -48,146 +48,137 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Recuperar contraseña - diseño impactante */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    background: linear-gradient(90deg, #f0f2f2, #00d6d8);
-    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8; /* Tu fondo original (si tenías otro, solo cámbialo aquí) */
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-    width: 100%;
-    max-width: 850px;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, .2);
-    padding: 30px;
+/* Importar fuente bonita */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+form {
+    max-width: 700px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease-in-out;
+    position: relative;
 }
 
-h1 {
-    font-size: 30px;
-    margin-bottom: 20px;
-    color: #043385;
-    text-align: center;
-}
-
-form .mb-3 {
-    margin-bottom: 20px;
-}
-
-label.form-label {
+form input[type="text"],
+form input[type="password"],
+form input[type="submit"] {
     display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #333;
-}
-
-input[type="text"],
-input[type="file"],
-textarea,
-select {
     width: 100%;
-    padding: 12px 15px;
-    background: #f0f0f0;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #333;
-    outline: none;
-    transition: 0.3s;
-}
-
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
-    background: #e6f7ff;
-    box-shadow: 0 0 0 2px #00a1e1;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-input[type="file"] {
-    background: #fff;
+    padding: 14px 16px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.boton, .btn {
-    display: inline-block;
-    background-color: #00a1e1;
-    color: white;
-    border: none;
-    padding: 12px 25px;
+    border-radius: 10px;
     font-size: 15px;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #3399ff;
+    box-shadow: 0 0 5px rgba(51, 153, 255, 0.4);
+    outline: none;
+}
+
+form input[type="submit"] {
+    background-color: #3399ff;
+    color: white;
     font-weight: 600;
-    border-radius: 8px;
     cursor: pointer;
-    margin: 10px 5px;
-    text-decoration: none;
+    border: none;
     transition: 0.3s ease;
 }
 
-.boton:hover, .btn:hover {
-    background-color: #007bbd;
+form input[type="submit"]:hover {
+    background-color: #1a8cff;
 }
 
-img {
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
-}
-
-/* Editor CKEditor */
-.ck-editor__editable_inline {
-    min-height: 200px;
-    background: #f0f0f0;
-    border-radius: 8px;
-    padding: 15px;
-}
-
-/* Alertas personalizadas */
-.custom-alert {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 25px;
+/* Estilo para mensajes */
+.alert {
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 15px 20px;
     border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.alert-success {
+    background-color: #d1f5d3;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.alert-danger {
+    background-color: #ffe0e0;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* Botones adicionales (como volver al panel) */
+.botones-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Por si la pantalla es pequeña */
+}
+
+.boton {
+    display: inline-block;
+    background-color: #6666cc;
     color: white;
-    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.boton:hover {
+    background-color: #4d4db3;
+}
+
+
+.modal-cancelar {
+    display: none;
+    position: fixed;
     z-index: 9999;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    animation: slideIn 0.4s ease, fadeOut 0.4s ease 3s forwards;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
 }
 
-.custom-alert.success { background-color: #28a745; }
-.custom-alert.error { background-color: #dc3545; }
-.custom-alert.warning { background-color: #ffc107; color: #333; }
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.modal-caja {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
-@keyframes fadeOut {
-    to { opacity: 0; transform: translateY(-20px); display: none; }
+.botones-modal {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 
-/* Responsive */
-@media screen and (max-width: 600px) {
-    .container {
-        padding: 20px;
-    }
-
-    .boton, .btn {
-        width: 100%;
-        margin: 8px 0;
-    }
-}

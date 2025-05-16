@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/editar_publicacion.css">
      <link rel="stylesheet" href="css/admin.css">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <title>Editar</title>
 </head>
@@ -114,8 +115,9 @@
 
 
 <!-- TITULO -->
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data"> <center> <h3>Editar publicacion</h3></center>
 <div class="container mt-4">
+   
 <div class="mb-3">
     <label for="publicacion" class="form-label">Título</label>
     <input type="text" name="publicacion" class="cuadroTexto" id="publicacion" 
@@ -179,7 +181,8 @@
 
     <div class="text-center mt-3">
         <input type="submit" name="registrar" value="Registrar" class="boton"></input>
-        <a href="index_admin.php" class="boton"><i class=" "></i> Volver al panel</a>
+        <button type="button" class="boton" onclick="mostrarModalVolver()">Volver al panel</button>
+
     </div>
   </form>  
   </div>
@@ -376,6 +379,28 @@ if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === U
     
 }
 ?>
+
+<!-- Modal confirmar regreso -->
+<div id="modal-volver" class="modal-cancelar">
+    <div class="modal-caja">
+        <p>¿Estás segura de que quieres volver al panel?<br><small>Se perderán los cambios no guardados.</small></p>
+        <div class="botones-modal">
+            <button onclick="ocultarModalVolver()" class="btn btn-outline-secondary">Cancelar</button>
+            <a href="index_admin.php" class="btn btn-danger">Sí, volver</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function mostrarModalVolver() {
+    document.getElementById('modal-volver').style.display = 'flex';
+}
+
+function ocultarModalVolver() {
+    document.getElementById('modal-volver').style.display = 'none';
+}
+</script>
+
 
 </body>
 </html>
