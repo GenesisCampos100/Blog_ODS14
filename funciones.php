@@ -36,7 +36,30 @@ function enviarCorreo($para, $codigo) {
         $mail->setFrom('tu_correo@gmail.com', 'Tu Nombre');
         $mail->addAddress($para);
         $mail->Subject = 'Código de recuperación';
-        $mail->Body = "Tu código de verificación es: $codigo";
+       // 🎨 📩 Mensaje con HTML atractivo
+        $mensaje = "
+        <html>
+        <head>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f9fa; padding: 20px; }
+                .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+                h2 { color: #008dcf; }
+                .codigo { font-size: 24px; font-weight: bold; color: #28a745; }
+                .footer { font-size: 14px; color: #666; margin-top: 20px; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <h2>🔒 Recuperación de Contraseña</h2>
+                <p>Usa este código para recuperar tu cuenta:</p>
+                <p class='codigo'>$codigo</p>
+                <p class='footer'>Si no solicitaste este código, ignora este mensaje.</p>
+            </div>
+        </body>
+        </html>";
+
+        $mail->isHTML(true); // Activar formato HTML en el correo
+        $mail->Body = $mensaje;
 
         $mail->send();
     } catch (Exception $e) {

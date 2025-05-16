@@ -72,14 +72,9 @@
         return;
     }
 
-    echo '
-        <div class="container text-center col-10">
-            <div class="text-center alert alert-success mt-3" role="alert">
-                Publicación eliminada con éxito.                    
-            </div>
-        </div>';
+   
 
-    header("refresh:1;url=index_admin.php");
+    header("refresh:0;url=index_admin.php");
 ?>
 </body>
 </html>

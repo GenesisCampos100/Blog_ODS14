@@ -60,6 +60,40 @@ if ($categoria_id) {
         .blog-preview .contenido {
             margin-top: 30px;
         }
+
+        .modal-cancelar {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-caja {
+    background: #fff;
+    padding: 25px 35px;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-caja p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.botones-modal {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
     </style>
 </head>
 <body class="bg-light">
@@ -76,10 +110,57 @@ if ($categoria_id) {
     <p><strong>Referencias:</strong><br><?php echo nl2br(htmlspecialchars($referencias)); ?></p>
 
     <form method="post" action="agregar_publicacion.php" class="mt-4 text-center">
-        <button type="submit" name="registrar" class="btn btn-success me-2">✅ Publicar</button>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='agregar_publicacion.php?cancelar=1'">❌ Cancelar</button>
+        <button type="button" class="btn btn-success me-2" onclick="mostrarModalPublicar()">✅ Publicar</button>
+
+        <button type="button" class="btn btn-secondary" onclick="mostrarModalCancelar()">❌ Cancelar</button>
     </form>
 </div>
+
+
+<!-- Modal de confirmación -->
+<div id="modal-cancelar" class="modal-cancelar">
+    <div class="modal-caja">
+        <p>¿Estás seguro de que deseas cancelar y descartar esta publicación?</p>
+        <div class="botones-modal">
+            <button onclick="ocultarModalCancelar()" class="btn btn-outline-secondary">Volver</button>
+            <a href="agregar_publicacion.php?cancelar=1" class="btn btn-danger">Sí, cancelar</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para publicar -->
+<div id="modal-publicar" class="modal-cancelar">
+    <div class="modal-caja">
+        <p>¿Estás seguro de que deseas publicar esta entrada?</p>
+        <div class="botones-modal">
+            <button onclick="ocultarModalPublicar()" class="btn btn-outline-secondary">Volver</button>
+            <form method="post" action="agregar_publicacion.php">
+                <button type="submit" name="registrar" class="btn btn-success">Sí, publicar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function mostrarModalPublicar() {
+    document.getElementById('modal-publicar').style.display = 'flex';
+}
+
+function ocultarModalPublicar() {
+    document.getElementById('modal-publicar').style.display = 'none';
+}
+</script>
+
+
+<script>
+function mostrarModalCancelar() {
+    document.getElementById('modal-cancelar').style.display = 'flex';
+}
+
+function ocultarModalCancelar() {
+    document.getElementById('modal-cancelar').style.display = 'none';
+}
+</script>
 
 </body>
 </html>

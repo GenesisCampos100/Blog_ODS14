@@ -92,9 +92,10 @@
                         <td>
 
                             
-                            <a class="btn eliminar" href="eliminar_publicacion.php?id=<?php echo $cliente->id;?>">
-                                <i class="fa fa-trash"></i> Eliminar
-                            </a>
+                            <a class="btn eliminar" onclick="confirmarEliminacion(<?php echo $cliente->id; ?>)">
+    <i class="fa fa-trash"></i> Eliminar
+</a>
+
                      </td>
                     </tr>
                 <?php
@@ -114,24 +115,36 @@ if (isset($_SESSION['usuario'])) {
     echo '<br><div class="">';
     echo '<a href="cerrar_sesion.php" class="texto">Cerrar Sesión</a>';
     echo '</div>';
-    echo '<br>';
-    echo '<div class="">';
-    echo '<a href="cambiarContrasenia.php" class="texto">Cambiar Comtraseña</a>';
-    echo '</div>';
-    echo '<br>';
-    echo '</div>';
-
-    echo '<div class="mensaje-nivel">';
-    echo '<p>Tu nivel de seguridad es: ' . $_SESSION['nivelSeguridad'] . '</p>';
-    echo '</div>';
-
-    echo '</div>';
-}
+ }
 
 
 ?>
 
 </center>
+
+<div id="modal-confirmacion" class="modal">
+    <div class="modal-contenido">
+        <p>¿Estás seguro de que deseas eliminar esta publicación?</p>
+        <div class="botones">
+            <button onclick="cancelarEliminacion()">Cancelar</button>
+            <a id="confirmar-boton" class="btn confirmar">Eliminar</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmarEliminacion(id) {
+    const modal = document.getElementById("modal-confirmacion");
+    const confirmarBtn = document.getElementById("confirmar-boton");
+    confirmarBtn.href = "eliminar_publicacion.php?id=" + id;
+    modal.style.display = "flex";
+}
+
+function cancelarEliminacion() {
+    document.getElementById("modal-confirmacion").style.display = "none";
+}
+</script>
+
     
 </body>
 </html>
