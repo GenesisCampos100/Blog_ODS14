@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +48,7 @@
                 <button type="submit" name="btningresar" class="btn login-btn">Login</button>
                 <p>Welcome to Dipsy</p>
                 <div class="forgot-link">
-                    <a href="#">Forgot password?</a>
+                    <a href="recuperar_contraseña.php">Forgot password?</a>
                 </div>
             </form>
         </div>

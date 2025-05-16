@@ -219,13 +219,14 @@ $categorias = obtenerCategorias();
     <meta charset="UTF-8">
     <title>Añadir</title>
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap/all.min.css">
+    
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/editar_publicacion.css">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
 <div class="container mt-4">
-    <h3>Agregar Publicación</h3>
+   <center> <h3>Agregar Publicación</h3></center>
     <?php if (!empty($mensaje)) echo $mensaje; ?>
     <form method="post" enctype="multipart/form-data">
 

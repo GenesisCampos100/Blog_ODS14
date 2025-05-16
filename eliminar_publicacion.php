@@ -79,7 +79,7 @@
             </div>
         </div>';
 
-    header("refresh:2;url=index_admin.php");
+    header("refresh:1;url=index_admin.php");
 ?>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-  session_start();
+session_start();
 
   // Conexión a la base de datos
   function conectarBaseDatos() {
@@ -139,9 +139,8 @@ var carousel = new bootstrap.Carousel(myCarousel)
             </label>
           </form>
 
-          <!-- Botón de login -->
           
-   <!-- Botón de login -->
+        <!-- Botón de login -->
   <?php
 // Si aún no hay URL guardada y no estamos en login
 if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
@@ -176,6 +175,8 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
         </div>
       </div>
     </div>
+  
+
   
 
   <!-- Categorías -->

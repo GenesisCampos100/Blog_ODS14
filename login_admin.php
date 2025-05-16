@@ -29,7 +29,7 @@ if (isset($_SESSION['mensaje'])) {
        
        <div class="form-box login">
        
-           <form action="controlador.php" method="POST">
+           <form action="controlador_admin.php" method="POST">
                <h1>Login</h1>
                <div class="input-box">
                    <input type="text" name="admin_usuario" placeholder="Username" >

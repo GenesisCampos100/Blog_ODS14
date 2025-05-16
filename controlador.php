@@ -46,34 +46,6 @@ function select($sentencia, $parametros = []) {
     return $respuesta->fetchAll();
 }
 
-// Validación de Inicio de Admin
-if (isset($_POST['btningresar_admin'])) {
-
-    if (empty($_POST['admin_usuario']) || empty($_POST['admin_contrasenia'])) {
-        $_SESSION['tipo_mensaje'] = 'warning';
-        $_SESSION['mensaje'] = 'Debes completar todos los datos.';
-        header("Location: login_admin.php"); // Ajusta a tu archivo real
-        exit();
-    } else {
-        $usuario = filter_input(INPUT_POST, 'admin_usuario', FILTER_SANITIZE_STRING);
-        $password = filter_input(INPUT_POST, 'admin_contrasenia', FILTER_SANITIZE_STRING);
-
-        $sentencia = "SELECT id, contrasenia FROM admin WHERE usuario = ?";
-        $resultado = select($sentencia, [$usuario]);
-
-        if ($resultado && password_verify($password, $resultado[0]->contrasenia)) {
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['idUsuario'] = $resultado[0]->id;
-            header("location: index_admin.php");
-            exit();
-        } else {
-            $_SESSION['tipo_mensaje'] = 'error';
-            $_SESSION['mensaje'] = 'Nombre de usuario y/o contraseña incorrectos.';
-            header("Location:login_admin.php");
-            exit();
-        }
-    }
-}
 
 
 

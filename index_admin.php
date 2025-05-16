@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap/all.min.css">
-    <script src="bootstrap/bootstrap.min.js"></script>
-    <script src="bootstrap/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="css/admin.css">
+    
+    <link rel="stylesheet" href="css/administrador.css">
     <title>Admin</title>
 </head>
 <body>
@@ -53,14 +50,17 @@
         $clientes = obtenerClientes();
     ?>
     
-        <h1 class="Titulo">
-            
-           Publicaciones
-        </h1>
-
-      
+        <div class="publicaciones-container">
+        <h1>Publicaciones</h1>
+        <a class="btn agregar" href="agregar_publicacion.php">
+            <i class="fa fa-plus"></i> Agregar +
+        </a>
+        </div>
+    
+        
 
         <div class="contenedor">
+            
         <div class="cuadros">
         <table class="table">
             <thead>
@@ -75,35 +75,36 @@
             </thead>
             <tbody>
                 <?php
+                $contador = 1; // Iniciar el contador
                 foreach($clientes as $cliente){
                 ?>
                     <tr class="cuadros">  
-                        <td><?php echo $cliente->id; ?></td>
+                        <td><?php echo $contador; ?></td> <!-- Número consecutivo -->
                         <td><?php echo $cliente->titulo; ?></td>
                         <td><?php echo $cliente->autor_nombre; ?></td>
                         <td><?php echo $cliente->fecha_publicacion; ?></td>
                         <td>
-                            <a class="" href="editar_publicacion.php?id=<?php echo $cliente->id;?>">
-                                <i class="fa fa-edit"></i>
-                                Editar
+                           <a class="btn editar" href="editar_publicacion.php?id=<?php echo $cliente->id;?>">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
                             </a>
                         </td>
                         <td>
-                            <a class="" href="eliminar_publicacion.php?id=<?php echo $cliente->id;?>">
-                                <i class="fa fa-trash"></i>
-                                Eliminar
+
+                            
+                            <a class="btn eliminar" href="eliminar_publicacion.php?id=<?php echo $cliente->id;?>">
+                                <i class="fa fa-trash"></i> Eliminar
                             </a>
-                        </td>
+                     </td>
                     </tr>
-                <?php } ?>
+                <?php
+                     $contador++; // Incrementar el número
+                    } ?>
             </tbody>
         </table></div>
-    <br>
-    <a class="" href="agregar_publicacion.php">
-    <i class="fa fa-plus"></i>
-     Agregar
-    </a>
+   
     </div> 
+    
 
     <?php
 // Comprueba si el usuario ha iniciado sesión

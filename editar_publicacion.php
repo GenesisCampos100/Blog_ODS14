@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="bootstrap/all.min.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/editar_publicacion.css">
+     <link rel="stylesheet" href="css/admin.css">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <title>Editar</title>
 </head>
@@ -114,6 +115,7 @@
 
 <!-- TITULO -->
 <form method="POST" enctype="multipart/form-data">
+<div class="container mt-4">
 <div class="mb-3">
     <label for="publicacion" class="form-label">Título</label>
     <input type="text" name="publicacion" class="cuadroTexto" id="publicacion" 
@@ -180,6 +182,7 @@
         <a href="index_admin.php" class="boton"><i class=" "></i> Volver al panel</a>
     </div>
   </form>  
+  </div>
     
   <?php if (!empty($_SESSION['exito'])): ?>
     <div class="alert alert-success text-center" id="mensajeAnimado">
