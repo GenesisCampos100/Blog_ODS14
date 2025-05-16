@@ -39,9 +39,42 @@
 }
 
 body {
-    background-color: #00a1e1;
+    background: linear-gradient(90deg, #00a1e1, #043be1) ;
+    /*background-color: #44a5e7;*/
     background-size: cover;
     background-repeat: no-repeat;
     
 }
 
+ .modal-cancelar {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-caja {
+    background: #fff;
+    padding: 25px 35px;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-caja p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.botones-modal {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

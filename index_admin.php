@@ -108,15 +108,42 @@
     
 
     <?php
+
 // Comprueba si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
-    // Si el usuario ha iniciado sesión, muestra el botón de cierre de sesión
-    echo '<br> <div class="contenedor">';
-    echo '<br><div class="">';
-    echo '<a href="cerrar_sesion.php" class="texto">Cerrar Sesión</a>';
-    echo '</div>';
- }
+    echo '
+    <br>
+    <div class="contenedor text-center">
+    <button onclick="confirmarCerrarSesion()" class="btn-cerrar-sesion">Cerrar Sesión</button>
+</div>
 
+
+    <!-- Modal de confirmación -->
+    <div id="modalCerrarSesion" class="modal">
+        <div class="modal-contenido">
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <div class="botones-modal">
+                <button onclick="cerrarSesion()" class="btn-confirmar">Sí, cerrar</button>
+                <button onclick="cerrarModal()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmarCerrarSesion() {
+            document.getElementById("modalCerrarSesion").style.display = "flex";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modalCerrarSesion").style.display = "none";
+        }
+
+        function cerrarSesion() {
+            window.location.href = "cerrar_sesion.php";
+        }
+    </script>
+    ';
+}
 
 ?>
 

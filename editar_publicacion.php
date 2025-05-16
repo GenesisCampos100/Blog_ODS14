@@ -115,7 +115,7 @@
 
 
 <!-- TITULO -->
-<form method="POST" enctype="multipart/form-data"> <center> <h3>Editar publicacion</h3></center>
+<form method="POST" enctype="multipart/form-data"> <center> <h3>Editar publicación</h3></center>
 <div class="container mt-4">
    
 <div class="mb-3">

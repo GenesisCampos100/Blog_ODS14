@@ -32,6 +32,8 @@ function obtenerUltimaPublicacion() {
     return $stmt->fetch();
 }
 
+
+
 function obtenerElementosPublicacion($id_publicacion) {
     $bd = conectarBaseDatos();
     $sql = "SELECT tipo, contenido FROM publicacion_elementos WHERE publicacion_id = ? ORDER BY orden ASC";
@@ -42,6 +44,7 @@ function obtenerElementosPublicacion($id_publicacion) {
 
 // Obtener publicación más reciente
 $post = obtenerUltimaPublicacion();
+$id_publicacion = $post ? $post->id : null;
 $elementos = $post ? obtenerElementosPublicacion($post->id) : [];
 
 function obtenerPublicacionesRecientes($limite = 5, $offset = 1) {
@@ -59,6 +62,53 @@ function obtenerPublicacionesRecientes($limite = 5, $offset = 1) {
 }
 
 $tarjetas = obtenerPublicacionesRecientes();
+
+
+// Función para insertar comentario
+function agregarComentario($publicacion_id, $usuario_id, $contenido) {
+    $bd = conectarBaseDatos();
+    $sql = "INSERT INTO comentarios (publicacion_id, usuario_id, contenido) VALUES (?, ?, ?)";
+    $stmt = $bd->prepare($sql);
+    return $stmt->execute([$publicacion_id, $usuario_id, $contenido]);
+}
+
+// Función para obtener comentarios como objetos
+function obtenerComentarios($id_publicacion) {
+    $bd = conectarBaseDatos();
+    $sql = "SELECT c.*, u.nombre AS autor 
+            FROM comentarios c 
+            JOIN usuarios u ON c.usuario_id = u.id 
+            WHERE c.publicacion_id = ? 
+            ORDER BY c.fecha_comentario DESC";
+    $stmt = $bd->prepare($sql);
+    $stmt->execute([$id_publicacion]);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+// Procesar comentario si se envía
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_comentar'])) {
+    if (isset($_SESSION['idUsuario']) && !empty($_POST['comentario'])) {
+        $usuario_id = $_SESSION['idUsuario'];
+        $contenido = trim($_POST['comentario']);
+
+        if (!empty($contenido)) {
+            if (agregarComentario($id_publicacion, $usuario_id, $contenido)) {
+                header("Location: " . $_SERVER['REQUEST_URI']);
+                exit();
+            } else {
+                $_SESSION['error_comentario'] = "Hubo un error al guardar tu comentario.";
+            }
+        } else {
+            $_SESSION['error_comentario'] = "El comentario no puede estar vacío.";
+        }
+    } else {
+        $_SESSION['error_comentario'] = "Debes iniciar sesión para comentar.";
+    }
+
+    // Redirigir para evitar reenvío del formulario
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
+}
 
 ?>
 
@@ -99,8 +149,43 @@ $tarjetas = obtenerPublicacionesRecientes();
     window.addEventListener('resize', ajustarAlturaBarra);
   </script>
 
+   <script>
+  // Mostrar el botón cuando el usuario baja
+  window.onscroll = function () {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Función para volver al inicio
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 <script crossorigin="anonymous"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const boton = document.getElementById("toggleComentarios");
+    const icono = document.getElementById("iconoComentarios");
+    const texto = boton.querySelector("span");
+    const collapse = document.getElementById("seccionComentarios");
+
+    collapse.addEventListener('shown.bs.collapse', function () {
+        texto.textContent = "Ocultar comentarios";
+        icono.className = "bi bi-eye-slash";
+    });
+
+    collapse.addEventListener('hidden.bs.collapse', function () {
+        texto.textContent = "Ver comentarios";
+        icono.className = "bi bi-eye";
+    });
+});
+</script>
 
 </head>
 
@@ -166,10 +251,16 @@ $tarjetas = obtenerPublicacionesRecientes();
             </label>
           </form>
 
-          <!-- Botón de login -->
+           <!-- Botón de login -->
+  <?php
+// Si aún no hay URL guardada y no estamos en login
+if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+}
+?>
+
+  <?php if (isset($_SESSION['usuario_nombre'])): ?>
     
-         
-         <?php if (isset($_SESSION['usuario_nombre'])): ?>
   <div class="dropdown">
     <a class="usuario-logeado d-flex align-items-center text-white dropdown-toggle text-decoration-none" href="" id="dropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-person-circle fs-5 me-2"></i>
@@ -191,6 +282,7 @@ $tarjetas = obtenerPublicacionesRecientes();
             </a>
           </div>
 <?php endif; ?>
+
 
         </div>
       </div>
@@ -216,7 +308,7 @@ $tarjetas = obtenerPublicacionesRecientes();
       </li>
     </ul>
   </div>
-  <nav>
+  </nav>
 
 </header>
 
@@ -232,8 +324,10 @@ $tarjetas = obtenerPublicacionesRecientes();
     </div>
 
   <div class="categoriass">
-      <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
-    </div>
+  <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>" class="categoria-link">
+    <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
+  </a>
+</div>
 
 
   <div class="titulopublicacion">
@@ -303,16 +397,115 @@ $tarjetas = obtenerPublicacionesRecientes();
   <?php foreach ($tarjetas as $tarjeta): ?>
     <div class="publicacion_tarjeta">
       <img src="<?= htmlspecialchars($tarjeta->imagen_portada) ?>" alt="Imagen de portada" class="imagen_tarjeta">
-      <div class="categoria_tarjeta"><?= htmlspecialchars($tarjeta->categoria) ?></div>
+      <a href="categoria.php?id=<?= urlencode($tarjeta->categoria_id) ?>" class="categoria-link">
+        <div class="categoria_tarjeta"><?= htmlspecialchars($tarjeta->categoria) ?></div>
+      </a>
       <div class="contenido_tarjeta">
         <p class="titulo_tarjeta"><?= htmlspecialchars($tarjeta->titulo) ?></p>
         <p class="resumen_tarjeta"><?= htmlspecialchars($tarjeta->resumen) ?></p>
         <a href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" id="leer">Leer más</a>
       </div>
-
     </div>
+    
   <?php endforeach; ?>
+
+  </div>
+
+    <div class="text-center" style="margin-top:50px">
+  <button class="btn btn-outline-primary mb-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#seccionComentarios" aria-expanded="false" aria-controls="seccionComentarios" id="toggleComentarios">
+    <i class="bi bi-eye" id="iconoComentarios"></i>
+    <span>Ver comentarios</span>
+</button>
 </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Contenedor de comentarios colapsable -->
+<div class="collapse" id="seccionComentarios" style="margin-top:0px">
+        <div class="comentarios">
+            <div class="titulopublicaciones">Comentarios</div>
+
+            <?php if (isset($_SESSION['usuario_nombre'])): ?>
+                <form action="" method="POST">
+                    <div class="comment-input">
+                        <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+                    </div>
+                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+                </form>
+            <?php else: ?>
+                <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error_comentario'])): ?>
+                <p class="text-danger"><?= $_SESSION['error_comentario'] ?></p>
+                <?php unset($_SESSION['error_comentario']); ?>
+            <?php endif; ?>
+
+            <div class="lista-comentarios">
+                <?php
+                $comentarios = obtenerComentarios($id_publicacion);
+                if ($comentarios):
+                    foreach ($comentarios as $comentario):
+                ?>
+                    <div class="comentario border-bottom">
+                        <strong><?= htmlspecialchars($comentario->autor) ?></strong><br>
+                        <p ><?= nl2br(htmlspecialchars($comentario->contenido)) ?></p>
+                        <small class="text-muted"><?= $comentario->fecha_comentario ?></small>
+                    </div>
+                <?php
+                    endforeach;
+                else:
+                    echo "<p class='text-muted'>Aún no hay comentarios.</p>";
+                endif;
+                ?>
+            
+        </div>
+    </div>
+</div>
+    
+
+
+<!-- Botón Volver Arriba -->
+<button onclick="scrollToTop()" id="scrollTopBtn"
+  class="btn btn-primary position-fixed"
+  style="bottom: 20px; right: 80px; display: none; width: 50px; height: 50px; z-index: 900;">
+  <i class="bi bi-arrow-up text-white fs-4"></i>
+</button>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Mostrar/ocultar botón scroll arriba
+window.onscroll = function () {
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  scrollBtn.style.display = window.scrollY > 100 ? "block" : "none";
+};
+
+// Actualizar texto e icono del botón de comentarios
+const toggleBtn = document.getElementById("toggleComentarios");
+const icono = document.getElementById("iconoComentarios");
+const texto = toggleBtn.querySelector("span");
+const collapse = document.getElementById("seccionComentarios");
+
+collapse.addEventListener('shown.bs.collapse', () => {
+  texto.textContent = "Ocultar comentarios";
+  icono.className = "bi bi-eye-slash";
+});
+
+collapse.addEventListener('hidden.bs.collapse', () => {
+  texto.textContent = "Ver comentarios";
+  icono.className = "bi bi-eye";
+});
+</script>
+
 
         <?php endif; ?>
 
@@ -321,137 +514,58 @@ $tarjetas = obtenerPublicacionesRecientes();
     <p>No hay publicaciones aún.</p>
 </div>
 <?php endif; ?>
-</div>
-
- 
-<footer class="footerd">
-
-  <img class="logo_footer" src="img/Logooo.png"  alt="Logo">
 
 
-<!--
-<div class="Eslogan">
-“Explora, comprende y protege: el océano es vida, y su futuro depende de lo que hagamos hoy.”
-</div>
--->
+  
 
 
-<!--
-<div class="link-barra">
-    <a href="index.php">Inicio</a>
-    <span>|</span>
-    <a href="index_about.php">Acerca De</a>
-    <span>|</span>
-    <a href="blog.php">Blog</a>
-</div>
--->
 
-  <!-- From Uiverse.io by vinodjangid07 --> 
-<!-- From Uiverse.io by javierBarroso --> 
-<div class="social-login-icons">
-  <div class="socialcontainer">
-    <div class="icon social-icon-1-1">
-      <svg
-        viewBox="0 0 512 512"
-        height="1.7em"
-        xmlns="http://www.w3.org/2000/svg"
-        class="svgIcontwit"
-        fill="white"
-      >
-        <path
-          d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
-        ></path>
-      </svg>
+        <footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Información y logo -->
+    <div class="footer-col">
+      <img src="img/logooo.png" alt="Logo" class="footer-logo">
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
     </div>
-    <div class="social-icon-1">
-      <svg
-        viewBox="0 0 512 512"
-        height="1.7em"
-        xmlns="http://www.w3.org/2000/svg"
-        class="svgIcontwit"
-        fill="white"
-      >
-        <path
-          d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
-        ></path>
-      </svg>
+
+    <!-- Columna 2: Enlaces -->
+    <div class="footer-col">
+      <h4 id="enlaces">ENLACES</h4>
+      <ul>
+        <li><a id="iniciofo"href="index.php">Inicio</a></li>
+        <li><a id="nosotrosfo" href="index_about.php">Acerca De</a></li>
+        <li><a id="blogfo"href="#">Blog</a></li>
+        <li><a id="contactofo" href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Redes Sociales -->
+    <div class="footer-col">
+      <h4 id="redessocial">REDES SOCIALES</h4>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61576567344359"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DipsyBlog?t=sr9bvN7EyopDopxJWOQtmA&s=09"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/dipsy.blog/"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 4: Newsletter -->
+    <div class="footer-col">
+      <h4 id="contacto">CONTACTANOS</h4>
+      <form class="newsletter">
+      <input type="email" placeholder="Email">
+        <input type="text" placeholder="Mensaje">
+        <button id="correo"type="submit">ENVIAR</button>
+      </form>
     </div>
   </div>
-  <div class="socialcontainer">
-    <div class="icon social-icon-2-2">
-      <svg
-        fill="white"
-        class="svgIcon"
-        viewBox="0 0 448 512"
-        height="1.5em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-        ></path>
-      </svg>
-    </div>
-    <div class="social-icon-2">
-      <svg
-        fill="white"
-        class="svgIcon"
-        viewBox="0 0 448 512"
-        height="1.5em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-        ></path>
-      </svg>
-    </div>
+  <div class="footer-bottom">
+    <p>©Dipsy 2025</p>
   </div>
-  <div class="socialcontainer">
-    <div class="icon social-icon-3-3">
-      <svg
-        viewBox="0 0 384 512"
-        fill="white"
-        height="1.6em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"
-        ></path>
-      </svg>
-    </div>
-    <div class="social-icon-3">
-      <svg
-        viewBox="0 0 384 512"
-        fill="white"
-        height="1.6em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"
-        ></path>
-      </svg>
-    </div>
-  </div>
-  <div class="socialcontainer">
-    <div class="icon social-icon-4-4">
-      <svg fill="white" viewBox="0 0 496 512" height="1.6em">
-        <path
-          d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-        ></path>
-      </svg>
-    </div>
-    <div class="social-icon-4">
-      <svg fill="white" viewBox="0 0 496 512" height="1.6em">
-        <path
-          d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-        ></path>
-      </svg>
-    </div>
-  </div>
-</div>
-          
 </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

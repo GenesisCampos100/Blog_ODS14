@@ -50,11 +50,11 @@
 
 /* Recuperar contraseña - diseño impactante */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f0f4f8; /* Tu fondo original (si tenías otro, solo cámbialo aquí) */
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(90deg, #f0f2f2, #00d6d8);
+    padding: 20px;
+    color: #333;
 }
+
 
 /* Importar fuente bonita */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');

@@ -234,3 +234,52 @@ a.btn.agregar:hover {
     color: white;
     text-decoration: none;
 }
+
+.botones-modal {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-confirmar {
+    background-color: #e10f0f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-confirmar:hover, .btn-cancelar:hover {
+    opacity: 0.9;
+}
+
+.btn-cerrar-sesion {
+    background-color: #e10f0f;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-cerrar-sesion:hover {
+    background-color: #c60d0d;
+}

@@ -41,7 +41,7 @@
     flex-direction: column;
     align-items: center;
     color: #051f34;
-    padding-bottom: 120px;
+    padding-bottom: 60px;
     
 
 }
@@ -96,6 +96,10 @@
     text-transform: uppercase;
 }
 
+.categoria-link {
+  display: inline-block; /* Así solo el contenido es clickeable */
+  text-decoration: none; /* Opcional: quitar subrayado */
+}
 
 .resumenpublicacion{
     margin-top: 30px;
@@ -150,8 +154,8 @@
 }
 
 .imagen-publicacion{
-    width: 70%;
-    height: auto;
+    width: 70% !important;
+    height: auto !important;
     padding: 0%;
 }
 
@@ -177,86 +181,128 @@
     text-align: justify;
 }
 
-
-
-
-
-
-/*
-.imagenportada {
-    position: relative;
-    width: 100%;
-    display: inline-block;
-}
-    */
-
-    /*
-#barracolor {
-    margin-top: 190px;
-    background-color: #043385;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0px;
-    z-index: 0; 
-}
-
-*/
-
-
-/*
-.content {
-    margin-top: 150px; 
-    background-color: #f7f8f9; 
-    width: 90%;  
-    height: auto;
-    border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #051f34;
-    padding-top: 40px; 
-    padding-bottom: 100px;
-}
-
-.imgtituloblog {
-    width: 100%;
-    height: auto;
-    position: relative;
-    z-index: 1;
-    display: block;
-}
-
-.titulo{
-    margin-top: 20px;
-    width:70%;
-    height: fit-content;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    font-size: 40px;
-}
-
-
-
-
-
-
-
-.tarjetas
+.flechaatras
 {
-    margin-top: 80px;
-    position: relative;
-    width: 90%;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    position: fixed;
+    background-color: #043385;
+    color: #fff;
+    z-index: 1000;
+    left: 20px;
 }
 
-*/
+
+
+
+/* comentarios.css */
+#seccionComentarios {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    transform: translate(-50%);
+    left: 50%;
+    position: relative;
+
+}
+
+
+.comentarios {
+    width: 90%;
+    margin: 0 auto; /* centra horizontalmente */
+    background-color: #f8f9fa;
+    padding-top: 5px;
+    padding-bottom: 80px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+}
+
+.comentario
+{
+    border-left: solid 2px #0d6efd;
+}
+
+
+.comentarios h3 {
+    font-family: 'Roboto';
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #0d6efd;
+}
+
+.lista-comentarios .comentario {
+    
+    background-color: #d7ecf8;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.lista-comentarios .comentario:hover {
+    background-color: #b5daff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lista-comentarios strong {
+    font-family: 'Roboto';
+    font-size: 22px;
+    color: #0445a7;
+}
+
+.lista-comentarios p {
+    margin-bottom: 0.3rem;
+    font-size: 20px;
+    color: #333;
+}
+
+.lista-comentarios small {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+textarea.form-control {
+    resize: none;
+    border-radius: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+#toggleComentarios {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+#toggleComentarios i {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 576px) {
+    .comentarios {
+        padding: 1rem;
+    }
+
+    #toggleComentarios {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.comment-input {
+    border-radius: 20px;
+    padding: 15px 20px;
+    border: 2px solid #007ade;
+    transition: all 0.3s;
+    background-color: transparent;
+    margin-top: 15px;
+}
 
 
 
@@ -268,38 +314,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
 
 .comment-section {
     margin-top: 100px !important;
@@ -319,7 +334,7 @@
     margin-bottom: 20px;
 
     border: #007ade 1px solid;
-    /*border: 1px solid #007ade;*/
+    border: 1px solid #007ade;
 }
 
 .comment-box:hover {
@@ -398,3 +413,4 @@
     padding-left: 10px;
     border-left: 6px solid #0d6efd;
 }
+    */

@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -22,7 +21,6 @@ function conectarBaseDatos() {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,17 +29,13 @@ function conectarBaseDatos() {
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Dipssy</title>
 
-  
-
   <!-- Estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="css/barra.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet" />
-  <!--<link href="css/cartas.css" rel="stylesheet" />-->
-  <!--<link href="css/estructurablog.css" rel="stylesheet" />-->
+  <link href="css/footer.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <link href="css/estructurablog.css" rel="stylesheet"/>
   <link rel="stylesheet" href="css/about.css" />
   
 
@@ -56,12 +50,12 @@ function conectarBaseDatos() {
 <body>
   
 <header>
-  <div class="navbar navbar-expand-lg navbar-dark custom-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
     <div class="container-fluid">
 
       <!-- Logo -->
       <a class="navbar-brand" href="#">
-        <img src="img/Logoo.png" alt="Logo" />
+        <img src="img/Logoo.png" alt="Logo" style="max-height: 60px;" />
       </a>
 
       <!-- Botón hamburguesa -->
@@ -84,19 +78,12 @@ function conectarBaseDatos() {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <!-- Ícono de idioma -->
-        <li class="nav-item mx-2">
-          <div class="dropdown">
-            <button id="botonIdioma" class="icon-button dropdown-toggle btn btn-link p-0" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-              <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="botonIdioma">
-              <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
-              <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">English</a></li>
             </ul>
-          </div>
-        </li>
+          </li>
         </ul>
 
         <!-- Búsqueda y Login -->
@@ -122,7 +109,7 @@ function conectarBaseDatos() {
             </label>
           </form>
 
-          <!-- Botón de login -->
+            <!-- Botón de login -->
   <?php
 // Si aún no hay URL guardada y no estamos en login
 if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
@@ -154,6 +141,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
           </div>
 <?php endif; ?>
 
+
         </div>
       </div>
     </div>
@@ -164,34 +152,35 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
   <div class="navbar-categories">
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Conservacion de Ecosistemas</a>
+        <!-- Usa ID o nombre -->
+        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Contaminación Marina</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link categoria-link" href="#">Educacion Oceanica</a>
+      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>
-  <div>
+</nav>
 
 </header>
 
   
 
     <!-- SECCIÓN DEL ABOUT -->
-    < class="main-content">
+  <main class="main-content">
   <section class="about">
-    <h1><b>ABOUT DIPSY🌊</b></h1>
+    <h1 style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px">DIPSY🌊</h1>
 
     <div class="about-dipsy-container">
       <!-- Texto -->
       <div class="about-dipsy-text">
-        <p>
+        <p id="parrafoDipsy">
           Bienvenido a Dipsy, un blog dedicado a la fascinante vida marina. 
           Nuestro objetivo es explorar los misterios del océano, compartir información 
           sobre las especies que lo habitan y concienciar sobre la importancia de su conservación. 
@@ -213,27 +202,27 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
   </section>
 
         <section class="metas">
-            <h2><b>OUR GOALS</b></h2>
+            <div id="tituloMetas" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px; margin-bottom:20px;">NUESTRAS METAS</div>
             <div class="goals">
                 <div class="goal mission">
-                    <br><h2>🌊MISSION</h2></b>
-                    <p>
+                    <br><h2 id="tituloMision">🌊MISIÓN</h2></b>
+                    <p id="parrafoMision">
                     Informar, concientizar y educar a la comunidad sobre la importancia de la vida marina y la conservación de los océanos. 
                     A través de contenido accesible y actualizado, buscamos fomentar prácticas sostenibles y promover el respeto por los ecosistemas marinos.
                     </p>
                     <!-- Imagen de la misión -->
                 </div>
                 <div class="goal objective">
-                    <br><h2>🌍VISION</h2></b>
-                    <p>
+                    <br><h2 id="tituloVision">🌍VISIÓN</h2></b>
+                    <p id="parrafoVision">
                     Ser un referente digital en la divulgación del ODS 14, inspirando a estudiantes, investigadores y ciudadanos a tomar acciones concretas para la protección de los océanos. 
                     Buscamos generar un impacto positivo en la sociedad mediante el conocimiento y la sensibilización ambiental.
                     </p>
                      <!-- Imagen de la visión -->
                 </div>
                 <div class="goal vision">
-                    <br><h2>🎯OBJECTIVE</h2></b>
-                    <p>
+                    <br><h2 id="tituloObjectivo">🎯OBJETIVO</h2></b>
+                    <p id="parrafoObjectivo">
                     Desarrollar un blog informativo e interactivo que difunda la importancia de la vida submarina, los desafíos que enfrenta y las soluciones para su conservación.
                     A través de artículos, entrevistas, infografías y contenido multimedia, queremos fortalecer la educación ambiental y motivar el cambio hacia un futuro sostenible para nuestros océanos.
                     </p>
@@ -244,8 +233,8 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 
         <section class="history">
             <div class="history-content">
-                <h2><b>HISTORY</b></h2>
-                <p>
+                <div id="tituloHistoria" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px;"><b>HISTORIA</b></div>
+                <p id="parrafoHistoria">
                     Desde pequeños hemos sentido una profunda fascinación por el mar y sus misterios. Cada ola, cada criatura y cada arrecife cuentan una historia increíble que queremos compartir contigo.
 
                     Este blog nació como un proyecto universitario con un propósito claro: explorar, informar y sensibilizar sobre la importancia de la vida marina. Queremos que más personas descubran la belleza de los océanos y comprendan por qué es vital protegerlos.
@@ -254,21 +243,55 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
                 </p>
             </div>
         </section>
+</main>
 
-  
+        <footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Información y logo -->
+    <div class="footer-col">
+      <img src="img/logooo.png" alt="Logo" class="footer-logo">
+      <p><i class="fas fa-envelope"></i> Dipsy@dipsy.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Carretera Manzanillo-Cihuatlán kilómetro 20, El Naranjo, 28860 Manzanillo, Col.</p>
+    </div>
 
+    <!-- Columna 2: Enlaces -->
+    <div class="footer-col">
+      <h4 id="enlaces">ENLACES</h4>
+      <ul>
+        <li><a id="iniciofo"href="index.php">Inicio</a></li>
+        <li><a id="nosotrosfo" href="index_about.php">Acerca De</a></li>
+        <li><a id="blogfo"href="#">Blog</a></li>
+        <li><a id="contactofo" href="#">Contacto</a></li>
+      </ul>
+    </div>
 
+    <!-- Columna 3: Redes Sociales -->
+    <div class="footer-col">
+      <h4 id="redessocial">REDES SOCIALES</h4>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61576567344359"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DipsyBlog?t=sr9bvN7EyopDopxJWOQtmA&s=09"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/dipsy.blog/"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Columna 4: Newsletter -->
+    <div class="footer-col">
+      <h4 id="contacto">CONTACTANOS</h4>
+      <form class="newsletter">
+      <input type="email" placeholder="Email">
+        <input type="text" placeholder="Mensaje">
+        <button id="correo"type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>©Dipsy 2025</p>
+  </div>
+</footer>
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+  <script src="traductor.js"></script>
 </body>
-</html>
-
-
-
-    
-    <footer>
-        &copy; 2025 Mi Página Web
-    </footer>
-
 </html>
