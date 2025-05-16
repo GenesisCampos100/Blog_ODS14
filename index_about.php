@@ -78,12 +78,17 @@ function conectarBaseDatos() {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
-          </li>
+           <!-- Ícono de idioma alineado -->
+        <li class="nav-item mx-2 dropdown">
+          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
+          </ul>
+        </li>
         </ul>
 
         <!-- Búsqueda y Login -->
@@ -153,16 +158,16 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
     <ul class="nav justify-content-center">
       <li class="nav-item">
         <!-- Usa ID o nombre -->
-        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
+        <a class="nav-link categoria-link" id="navCategoria1" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
+      <a class="nav-link categoria-link" id="navCategoria2" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" id="navCategoria3" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
+      <a class="nav-link categoria-link" id="navCategotia4" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>

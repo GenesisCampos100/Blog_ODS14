@@ -151,12 +151,17 @@ document.addEventListener("DOMContentLoaded", function () {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
-          </li>
+           <!-- Ícono de idioma alineado -->
+        <li class="nav-item mx-2 dropdown">
+          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
+          </ul>
+        </li>
         </ul>
 
         <!-- Búsqueda y Login -->
@@ -181,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
               </button>
             </label>
           </form>
+
 
           <!-- Botón de login -->
   <?php
@@ -563,6 +569,7 @@ new Chart(ctx, {
   </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="traductor.js"></script>
 </body> 
 </html>
 
