@@ -95,9 +95,10 @@ function conectarBaseDatos() {
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
 
           <!-- Formulario de búsqueda -->
-          <form class="form">
+                    <!-- Formulario de búsqueda -->
+          <form class="form" method="GET" action="busqueda.php">
             <label for="search">
-              <input class="input" type="text" required placeholder="Busca en el blog..." id="search">
+              <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">
               <div class="fancy-bg"></div>
               <div class="search">
                 <svg viewBox="0 0 24 24" aria-hidden="true">

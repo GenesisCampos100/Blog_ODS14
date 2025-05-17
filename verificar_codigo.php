@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,9 +62,14 @@
 <body>
 
 <div class="contenedor-formulario">
+    <div class="titulo-bloque">
+        
+        <p>Revisa tu correo electrónico y escribe el código que te enviamos para continuar.</p>
+    </div> <!-- ✅ Se cierra correctamente aquí -->
+
     <?php
     require 'funciones.php';
-    session_start();
+   session_start();
 
     if (isset($_POST['verificar_codigo'])) {
         $usuario = trim($_POST['usuario']);
@@ -96,7 +101,6 @@
     }
     ?>
 
-    <!-- Formulario -->
     <form method="post">
         <input type="text" name="usuario" placeholder="Usuario" required>
         <input type="text" name="codigo" placeholder="Código de verificación" required>

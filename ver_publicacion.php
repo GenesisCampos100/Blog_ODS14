@@ -431,19 +431,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Contenedor de comentarios colapsable -->
 <div class="collapse" id="seccionComentarios">
-        <div class="comentarios">
-            <div class="titulopublicaciones">Comentarios</div>
+<div class="comentarios">
+    <div class="comentario-header">
+        <div class="titulopublicaciones">Comentarios</div>
+        <?php if (isset($_SESSION['usuario_nombre'])): ?>
+            <form action="" method="POST" class="form-comentario">
+                <button type="submit" name="btn_comentar" class="btn btn-primary" style="margin-bottom:100px">Comentar</button>
+            </form>
+        <?php endif; ?>
+    </div>
 
-            <?php if (isset($_SESSION['usuario_nombre'])): ?>
-                <form action="" method="POST">
-                    <div class="comment-input">
-                        <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
-                    </div>
-                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
-                </form>
-            <?php else: ?>
-                <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
-            <?php endif; ?>
+    <?php if (isset($_SESSION['usuario_nombre'])): ?>
+        <form action="" method="POST">
+            <div class="comment-input">
+                <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+            </div>
+        </form>
+    <?php else: ?>
+        <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
+    <?php endif; ?>
+</div>
+
+
 
             <?php if (isset($_SESSION['error_comentario'])): ?>
                 <p class="text-danger"><?= $_SESSION['error_comentario'] ?></p>

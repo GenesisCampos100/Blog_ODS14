@@ -27,6 +27,18 @@
     z-index: 0; 
 }
 
+#barracolorr
+{
+    margin-top: 100px;
+    background-color: #043385;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    z-index: 0; 
+}
+
 .publicacionhome{
     margin-top: 150px;
     background-color: #f7f8f9; 
@@ -44,6 +56,26 @@
     padding-bottom: 60px;
     
 
+}
+
+.publicacionhomee
+{
+
+    background-color: #f7f8f9; 
+    width: 90%;  
+    height: auto;
+    border-radius:  10px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #051f34;
+    padding-bottom: 60px;
+    margin-top: 40px; /* Add some space at the top */
+    margin-bottom: 40px; /* Add space at the bottom before buttons */
+    
 }
 
 .imagenportada {

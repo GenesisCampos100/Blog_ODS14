@@ -128,7 +128,10 @@ input[type="submit"]:hover {
 <body>
 
 <div class="contenedor-formulario">
-
+     <div class="titulo-bloque">
+        <h2>Restablecer tu contraseña</h2>
+        <p>Ingresa una nueva contraseña segura para tu cuenta.</p>
+    
     <?php if (!empty($mensaje)): ?>
         <div class="alerta <?= $clase_alerta ?>"><?= $mensaje ?></div>
     <?php endif; ?>
@@ -139,6 +142,6 @@ input[type="submit"]:hover {
         <input type="submit" name="cambiar_contraseña" value="Cambiar Contraseña">
     </form>
 </div>
-
+</div>
 </body>
 </html>

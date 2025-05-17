@@ -1,5 +1,4 @@
 
-
 #mensajeAnimado {
     position: fixed;
     top: 50%;
@@ -181,4 +180,3 @@ form input[type="submit"]:hover {
     display: flex;
     justify-content: space-around;
 }
-

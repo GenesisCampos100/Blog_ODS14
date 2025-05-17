@@ -62,6 +62,11 @@
 <body>
 
 <div class="contenedor-formulario">
+  <div class="titulo-bloque">
+    <h2>Verifica tu cuenta</h2>
+    <p>Por favor, ingresa tu usuario o correo electrónico para enviarte el código de verificación.</p>
+
+
     <?php
     require 'funciones.php';
     $mensaje = '';
@@ -111,6 +116,7 @@
         <input type="submit" name="enviar_codigo" value="Enviar Código">
     </form>
 </div>
+
 
 </body>
 </html>

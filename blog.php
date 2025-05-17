@@ -1,4 +1,3 @@
-
 <?php
   session_start();
 
@@ -151,44 +150,39 @@ document.addEventListener("DOMContentLoaded", function () {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-           <!-- Ícono de idioma alineado -->
-        <li class="nav-item mx-2 dropdown">
-          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
-                  data-bs-toggle="dropdown" aria-expanded="false">
-            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
-          </ul>
-        </li>
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">English</a></li>
+            </ul>
+          </li>
         </ul>
 
         <!-- Búsqueda y Login -->
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
 
           <!-- Formulario de búsqueda -->
-          <form class="form">
-            <label for="search">
-              <input class="input" type="text" required placeholder="Busca en el blog..." id="search">
-              <div class="fancy-bg"></div>
-              <div class="search">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <g>
-                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-                  </g>
-                </svg>
-              </div>
-              <button class="close-btn" type="reset">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                </svg>
-              </button>
-            </label>
-          </form>
+                    <!-- Formulario de búsqueda -->
+<form class="form" method="GET" action="busqueda.php">
+  <label for="search">
+    <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">
+    <div class="fancy-bg"></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+        </g>
+      </svg>
+    </div>
+    <button class="close-btn" type="reset">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+      </svg>
+    </button>
+  </label>
+</form>
 
-
-          <!-- Botón de login -->
+         <!-- Botón de login -->
   <?php
 // Si aún no hay URL guardada y no estamos en login
 if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
@@ -418,7 +412,7 @@ foreach ($publicaciones as $post) {
               <p class="text-muted">de los océanos están gravemente afectados por la actividad humana.</p>
             </div>
           </div>
-          <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
               <i class="bi bi-exclamation-triangle-fill icono text-warning"></i>
 
@@ -426,7 +420,7 @@ foreach ($publicaciones as $post) {
               <p class="text-muted">especies de peces están sobreexplotadas.</p>
             </div>
           </div>
-          <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-card">
               <i class="bi bi-globe2 icono text-warning"></i>
               <h4>90%</h4>
@@ -569,10 +563,7 @@ new Chart(ctx, {
   </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="traductor.js"></script>
 </body> 
 </html>
 
 
-
-  

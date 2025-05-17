@@ -43,7 +43,7 @@
         }
 
         function obtenerClientes(){
-            $sentencia = "SELECT * FROM publicaciones";
+           $sentencia = "SELECT * FROM publicaciones ORDER BY fecha_publicacion DESC";
             return select($sentencia);
         }
 
