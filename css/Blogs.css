@@ -197,7 +197,6 @@
     margin-top: 20px;
     font-family: 'Questrial';
     font-size: 20px;
-    text-align: justify;
       display: -webkit-box;
   -webkit-line-clamp: 4; /* Número de líneas visibles */
   -webkit-box-orient: vertical;

@@ -219,17 +219,20 @@ $categorias = obtenerCategorias();
     <meta charset="UTF-8">
     <title>Añadir</title>
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap/all.min.css">
+    
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/editar_publicacion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
 <div class="container mt-4">
-    <h3>Agregar Publicación</h3>
+   
     <?php if (!empty($mensaje)) echo $mensaje; ?>
     <form method="post" enctype="multipart/form-data">
 
-    <div class="mb-3">
+    <div class="mb-3"><center> <h3>Agregar Publicación</h3></center>
     <label>Título</label>
     <input type="text" name="publicacion" class="form-control" value="<?= htmlspecialchars($titulo) ?>">
     </div>
@@ -287,10 +290,31 @@ $categorias = obtenerCategorias();
         <div class="text-center mt-3">
         <input type="submit" name="previa" value="Listo (Previsualizar)" class="btn btn-success me-2">
         
-            <a href="index_admin.php" class="btn btn-secondary"><i class="fa fa-times"></i> Cancelar</a>
+            <button type="button" class="boton" onclick="mostrarModalVolver()">Cancelar</button>
         </div>
     </form>
 </div>
+
+<!-- Modal confirmar regreso -->
+<div id="modal-volver" class="modal-cancelar">
+    <div class="modal-caja">
+        <p>¿Estás segura de que quieres volver al panel?<br><small>Se perderán los cambios no guardados.</small></p>
+        <div class="botones-modal">
+            <button onclick="ocultarModalVolver()" class="btn btn-outline-secondary">Cancelar</button>
+            <a href="index_admin.php" class="btn btn-danger">Sí, volver</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function mostrarModalVolver() {
+    document.getElementById('modal-volver').style.display = 'flex';
+}
+
+function ocultarModalVolver() {
+    document.getElementById('modal-volver').style.display = 'none';
+}
+</script>
 </body>
 </html>
 
@@ -323,4 +347,3 @@ $categorias = obtenerCategorias();
             console.error(error);
         });
 </script>
-

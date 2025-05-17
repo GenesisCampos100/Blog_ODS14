@@ -15,6 +15,7 @@
 
 session_start();
 
+
 // Función para conectar a la base de datos
 function conectarBaseDatos() {
     $host = "localhost";
@@ -45,34 +46,8 @@ function select($sentencia, $parametros = []) {
     return $respuesta->fetchAll();
 }
 
-// Validación de Inicio de Admin
-if (isset($_POST['btningresar_admin'])) {
 
-    if (empty($_POST['admin_usuario']) || empty($_POST['admin_contrasenia'])) {
-        $_SESSION['tipo_mensaje'] = 'warning';
-        $_SESSION['mensaje'] = 'Debes completar todos los datos.';
-        header("Location: login_admin.php"); // Ajusta a tu archivo real
-        exit();
-    } else {
-        $usuario = filter_input(INPUT_POST, 'admin_usuario', FILTER_SANITIZE_STRING);
-        $password = filter_input(INPUT_POST, 'admin_contrasenia', FILTER_SANITIZE_STRING);
 
-        $sentencia = "SELECT id, contrasenia FROM admin WHERE usuario = ?";
-        $resultado = select($sentencia, [$usuario]);
-
-        if ($resultado && password_verify($password, $resultado[0]->contrasenia)) {
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['idUsuario'] = $resultado[0]->id;
-            header("location: index_admin.php");
-            exit();
-        } else {
-            $_SESSION['tipo_mensaje'] = 'error';
-            $_SESSION['mensaje'] = 'Nombre de usuario y/o contraseña incorrectos.';
-            header("Location:login_admin.php");
-            exit();
-        }
-    }
-}
 
 // Validación de Inicio de Sesión
 if (isset($_POST['btningresar'])) {
@@ -81,7 +56,7 @@ if (isset($_POST['btningresar'])) {
     if (empty($_POST['login_usuario']) || empty($_POST['login_contrasenia'])) {
         $_SESSION['tipo_mensaje'] = 'warning';
         $_SESSION['mensaje'] = 'Debes completar todos los datos.';
-        header("Location: login_usuarios.php"); // Ajusta a tu archivo real
+        header("Location: login_usuarios.php");
         exit();
     } else {
         $usuario = filter_input(INPUT_POST, 'login_usuario', FILTER_SANITIZE_STRING);
@@ -91,21 +66,32 @@ if (isset($_POST['btningresar'])) {
         $resultado = select($sentencia, [$usuario]);
 
         if ($resultado && password_verify($password, $resultado[0]->contrasenia)) {
-            $_SESSION['usuario'] = $usuario;
+            // Guardar el nombre del usuario en la sesión
+            $_SESSION['usuario_nombre'] = $usuario;
             $_SESSION['idUsuario'] = $resultado[0]->id;
-            header("location: index_admin.php");
+
+           $redirectUrl = "index.php"; // Valor por defecto
+
+            if (isset($_SESSION['redirect_url'])) {
+                $url = $_SESSION['redirect_url'];
+                unset($_SESSION['redirect_url']);
+
+                // Verifica que no sea login_usuarios.php (ni contenga la ruta)
+                if (!str_contains($url, 'login_usuarios.php')) {
+                    $redirectUrl = $url;
+                }
+            }
+
+            header("Location: $redirectUrl");
             exit();
+
         } else {
             $_SESSION['tipo_mensaje'] = 'error';
             $_SESSION['mensaje'] = 'Nombre de usuario y/o contraseña incorrectos.';
-            header("Location:login_usuarios.php");
+            header("Location: login_usuarios.php");
             exit();
         }
     }
-     // Redirigir al mismo formulario
-     $_SESSION['formulario_actual'] = 'login';
-     header("Location: login_usuarios.php");
-     exit();
 }
 
 // Validación de Registro

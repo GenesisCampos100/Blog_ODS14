@@ -24,12 +24,12 @@ if (isset($_SESSION['mensaje'])) {
 ?>
         <body>
             
-    <<!-- Login Form -->
+    <!-- Login Form -->
     <div class="container">
        
        <div class="form-box login">
        
-           <form action="controlador.php" method="POST">
+           <form action="controlador_admin.php" method="POST">
                <h1>Login</h1>
                <div class="input-box">
                    <input type="text" name="admin_usuario" placeholder="Username" >
@@ -40,10 +40,7 @@ if (isset($_SESSION['mensaje'])) {
                    <i class='bx bxs-lock-alt'></i>
                </div>
                <button type="submit" name="btningresar_admin" class="btn">Login</button>
-               <p>Welcome to Dipsy</p>
-               <div class="forgot-link">
-                   <a href="#">Forgot password?</a>
-               </div>
+               
            </form>
        </div>
        
