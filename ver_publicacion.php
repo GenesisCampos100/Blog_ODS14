@@ -238,21 +238,27 @@ document.addEventListener('DOMContentLoaded', function () {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
-          </li>
+          <!-- Ícono de idioma alineado -->
+        <li class="nav-item mx-2 dropdown">
+          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+                      <!-- Por esto -->
+          <li><a class="dropdown-item" href="#" onclick="cambiarIdioma('es','en')">Inglés</a></li>
+          <li><a class="dropdown-item" href="#" onclick="cambiarIdioma('en','es')">Español</a></li>
+         </ul>
+        </li>
         </ul>
 
         <!-- Búsqueda y Login -->
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
 
-          <!-- Formulario de búsqueda -->
-          <form class="form">
+        <!-- Formulario de búsqueda -->
+          <form class="form" method="GET" action="busqueda.php">
             <label for="search">
-              <input class="input" type="text" required placeholder="Busca en el blog..." id="search">
+              <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">
               <div class="fancy-bg"></div>
               <div class="search">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -305,16 +311,16 @@ document.addEventListener('DOMContentLoaded', function () {
     <ul class="nav justify-content-center">
       <li class="nav-item">
         <!-- Usa ID o nombre -->
-        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
+        <a class="nav-link categoria-link" id="navCategoria1" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
+      <a class="nav-link categoria-link" id="navCategoria2" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" id="navCategoria3" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
+      <a class="nav-link categoria-link" id="navCategoria4" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>
@@ -358,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="autorr"><?= htmlspecialchars($post->autor_nombre) ?></div>
             <div class="fecha"><?= htmlspecialchars($post->fecha_publicacion) ?></div>
         </div>
-        <div class="comentariolink">COMENTARIOS</div>
+        <div id="comentariosPublicacion" class="comentariolink">COMENTARIOS</div>
     </div>
 
     <?php foreach ($elementos as $el): ?>
@@ -375,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <?php if (!empty($post->referencias)): ?>
         <div class="referencias">
-            <div class="tituloref">Referencias</div>
+            <div id="tituloReferencias" class="tituloref">Referencias</div>
             <div class="referenciass">
                 <ul>
                     <?php 
@@ -398,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
 
         <div class="publicacionesrecientes">
-            <div class="titulopublicaciones">Publicaciones Recomendadas</div>
+            <div id="tituloPublicacionesRecomendadas" class="titulopublicaciones">Publicaciones Recomendadas</div>
             <?php foreach ($recomendadas as $tarjeta): ?>
                 <div class="publicacion_tarjeta">
                     <img src="<?= htmlspecialchars($tarjeta->imagen_portada) ?>" alt="Imagen de portada" class="imagen_tarjeta">
@@ -431,28 +437,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Contenedor de comentarios colapsable -->
 <div class="collapse" id="seccionComentarios">
-<div class="comentarios">
-    <div class="comentario-header">
-        <div class="titulopublicaciones">Comentarios</div>
-        <?php if (isset($_SESSION['usuario_nombre'])): ?>
-            <form action="" method="POST" class="form-comentario">
-                <button type="submit" name="btn_comentar" class="btn btn-primary" style="margin-bottom:100px">Comentar</button>
-            </form>
-        <?php endif; ?>
-    </div>
+        <div class="comentarios">
+            <div id="tituloComentarios" class="titulopublicaciones">Comentarios</div>
 
-    <?php if (isset($_SESSION['usuario_nombre'])): ?>
-        <form action="" method="POST">
-            <div class="comment-input">
-                <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
-            </div>
-        </form>
-    <?php else: ?>
-        <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
-    <?php endif; ?>
-</div>
-
-
+            <?php if (isset($_SESSION['usuario_nombre'])): ?>
+                <form action="" method="POST">
+                    <div class="comment-input">
+                        <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+                    </div>
+                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+                </form>
+            <?php else: ?>
+                <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
+            <?php endif; ?>
 
             <?php if (isset($_SESSION['error_comentario'])): ?>
                 <p class="text-danger"><?= $_SESSION['error_comentario'] ?></p>
@@ -567,5 +564,6 @@ collapse.addEventListener('hidden.bs.collapse', () => {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="traductor.js"></script>
 </body>
 </html>

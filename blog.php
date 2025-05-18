@@ -150,13 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
-          </li>
-        </ul>
+          <!-- Ícono de idioma alineado  actualizado-->
+          <li class="nav-item mx-2 dropdown">
+          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
+            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
+          </ul>
+        </li>
+          </ul>
 
         <!-- Búsqueda y Login -->
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
@@ -225,16 +230,16 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
     <ul class="nav justify-content-center">
       <li class="nav-item">
         <!-- Usa ID o nombre -->
-        <a class="nav-link categoria-link" href="categoria.php?id=2">Conservación de Ecosistemas</a>
+        <a class="nav-link categoria-link" id="navCategoria1" href="categoria.php?id=2">Conservación de Ecosistemas</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=1">Contaminación Marina</a>
+      <a class="nav-link categoria-link" id ="navCategoria2" href="categoria.php?id=1">Contaminación Marina</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=3">Pesca Sostenible</a>
+      <a class="nav-link categoria-link" id="navCategoria3" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" href="categoria.php?id=4">Educación Oceánica</a>
+      <a class="nav-link categoria-link" id="navCategoria4" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>
@@ -261,8 +266,8 @@ foreach ($publicaciones as $post) {
     <div class="carousel-item active">
       <img src="img/11.jpg" class="d-block w-100" alt="Coral">
       <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
-        <h5>Protección de los ecosistemas marinos</h5>
-        <p>La ODS 14 promueve la conservación de hábitats marinos como los arrecifes de coral, vitales para millones de especies y comunidades costeras.</p>
+        <h5 id="tituloCarousel1">Protección de los ecosistemas marinos</h5>
+        <p id="parrafoCarousel1">La ODS 14 promueve la conservación de hábitats marinos como los arrecifes de coral, vitales para millones de especies y comunidades costeras.</p>
       </div>
     </div>
 
@@ -270,8 +275,8 @@ foreach ($publicaciones as $post) {
     <div class="carousel-item">
       <img src="img/22.jpg" class="d-block w-100" alt="Contaminación Marina">
       <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
-        <h5>Reducción de la contaminación marina</h5>
-        <p>Se busca frenar el vertido de plásticos, petróleo y otros contaminantes que destruyen la vida marina y afectan la salud humana.</p>
+        <h5 id="tituloCarousel2">Reducción de la contaminación marina</h5>
+        <p id="parrafoCarousel2">Se busca frenar el vertido de plásticos, petróleo y otros contaminantes que destruyen la vida marina y afectan la salud humana.</p>  
       </div>
     </div>
 
@@ -279,8 +284,8 @@ foreach ($publicaciones as $post) {
     <div class="carousel-item">
       <img src="img/33.jpg" class="d-block w-100" alt="Pesca sostenible">
       <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
-        <h5>Pesca sostenible</h5>
-        <p>La ODS 14 aboga por técnicas de pesca que respeten los ciclos naturales y eviten la sobreexplotación de las especies.</p>
+        <h5 id="tituloCarousel3">Pesca sostenible</h5>
+        <p id="parrafoCarousel3">La ODS 14 aboga por técnicas de pesca que respeten los ciclos naturales y eviten la sobreexplotación de las especies.</p>
       </div>
     </div>
 
@@ -288,8 +293,8 @@ foreach ($publicaciones as $post) {
     <div class="carousel-item">
       <img src="img/44.jpg" class="d-block w-100" alt="Biodiversidad marina">
       <div class="carousel-caption d-block bg-dark bg-opacity-50 rounded">
-        <h5>Preservación de la biodiversidad marina</h5>
-        <p>Los océanos albergan una enorme diversidad de especies. Protegerlos es esencial para el equilibrio ecológico global.</p>
+        <h5 id="tituloCarousel4">Preservación de la biodiversidad marina</h5>
+        <p id="parrafoCarousel4">Los océanos albergan una enorme diversidad de especies. Protegerlos es esencial para el equilibrio ecológico global.</p>
       </div>
     </div>
 
@@ -359,7 +364,7 @@ foreach ($publicaciones as $post) {
 
 <div class="titulopubli" style="margin-top: 40px">
   <!--<img src="img/5.jpg" class="imgt">-->
-  <div class="titulopublii"> Últimas publicaciones...</div>
+  <div id="tituloUltimasPublicaciones" class="titulopublii"> Últimas publicaciones...</div>
 </div>
   
 <!-- Publicaciones recientes -->
@@ -383,48 +388,47 @@ foreach ($publicaciones as $post) {
   </div>
 </div>
 
-<!-- Sección con estadísticas -->
+<!-- Statistics section -->
 <section class="estadisticas-ods14 py-5" id="estadisticas-ods14" style="margin-top:50px; margin-bottom:50px">
   <div class="container">
-    <h2 class="text-center mb-4 text-ods" data-aos="fade-down">Estadísticas clave del ODS 14</h2>
-    <p class="text-center mb-5" data-aos="fade-up" style="font-family:'Questrial'; font-size:25px; color: #00ddff;">Datos que reflejan la urgencia de conservar nuestros mares y océanos.</p>
+    <h2 id="tituloEstadisticas" class="text-center mb-4 text-ods" data-aos="fade-down">Key Statistics of SDG 14</h2>
+    <p id="parrafoEstadisticas" class="text-center mb-5" data-aos="fade-up" style="font-family:'Questrial'; font-size:25px; color: #00ddff;">Data reflecting the urgency of conserving our seas and oceans.</p>
 
     <div class="row align-items-center">
-      <!-- Gráfico a la izquierda -->
+      <!-- Chart on the left -->
       <div class="col-lg-6 mb-4" data-aos="fade-right">
         <canvas id="graficoOds14" style="color:white"></canvas>
       </div>
 
-      <!-- Tarjetas a la derecha -->
+      <!-- Cards on the right -->
       <div class="col-lg-6">
         <div class="row g-4">
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
               <i class="bi bi-recycle icono"></i>
-              <h4>11 millones</h4>
-              <p class="text-muted">de toneladas de plástico entran al océano anualmente.</p>
+              <h4 id="h411">11 million</h4>
+              <p id="parrafo411" class="text-muted">tons of plastic enter the ocean annually.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-card">
               <i class="bi bi-droplet-half icono text-info"></i>
               <h4>40%</h4>
-              <p class="text-muted">de los océanos están gravemente afectados por la actividad humana.</p>
+              <p id="parrafo412" class="text-muted">of oceans are severely affected by human activity.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
               <i class="bi bi-exclamation-triangle-fill icono text-warning"></i>
-
-              <h4>1 de cada 3</h4>
-              <p class="text-muted">especies de peces están sobreexplotadas.</p>
+              <h4 id="idecada">1 in 3</h4>
+              <p id="parrafo413" class="text-muted">fish species are overexploited.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-card">
               <i class="bi bi-globe2 icono text-warning"></i>
               <h4>90%</h4>
-              <p class="text-muted">del calor del cambio climático es absorbido por los océanos.</p>
+              <p id="parrafo414" class="text-muted">of climate change heat is absorbed by the oceans.</p>
             </div>
           </div>
         </div>
@@ -445,7 +449,10 @@ new Chart(ctx, {
       data: [35, 25, 30, 10],
       backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#6c757d'],
       borderWidth: 1
-    }]
+    }]<div class="col-12 col-md-8 col-lg-6 mb-4" data-aos="fade-right">
+  <canvas id="graficoOds14" style="color:white"></canvas>
+</div>
+
   },
   options: {
     responsive: true,
@@ -463,7 +470,7 @@ new Chart(ctx, {
 
 <div class="titulopubli">
   <!--<img src="img/5.jpg" class="imgt">-->
-  <div class="titulopublii"> Descubre más...</div>
+  <div id="tituloDescubreMas" class="titulopublii"> Descubre más...</div>
 </div>
 <!-- Otras publicaciones -->
 <div class="publicacionescaja">
@@ -504,9 +511,9 @@ new Chart(ctx, {
 
 
 <section class="sumate">
-  <h1>¡Súmate al cambio!</h1>
-  <p>Participa en nuestras campañas, comparte información y actúa.</p>
-  <a href="index_about.php" class="btn btn-light">Más sobre nosotors</a>
+  <h1 id="tituloSumate">¡Súmate al cambio!</h1>
+  <p id="parrafoSumate">Participa en nuestras campañas, comparte información y actúa.</p>
+  <a id="botonSumate" href="index_about.php" class="btn btn-light">Más sobre nosotors</a>
 </section>
 
         <footer class="footer">
@@ -563,7 +570,6 @@ new Chart(ctx, {
   </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="traductor.js"></script>
 </body> 
 </html>
-
-

@@ -97,6 +97,9 @@ if (isset($_POST['btningresar'])) {
 // Validación de Registro
 if (isset($_POST['btnregistrar'])) {
     $_SESSION['formulario_actual'] = 'registro';
+
+    
+    
     // Recolectar y sanitizar
     $nombre_usuario = trim(filter_input(INPUT_POST, 'registrar-usuario', FILTER_SANITIZE_STRING));
     $correo = trim(filter_input(INPUT_POST, 'registrar-correo', FILTER_SANITIZE_EMAIL));

@@ -93,9 +93,8 @@ function conectarBaseDatos() {
 
         <!-- Búsqueda y Login -->
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
-
-          <!-- Formulario de búsqueda -->
-                    <!-- Formulario de búsqueda -->
+          
+ <!-- Formulario de búsqueda -->
           <form class="form" method="GET" action="busqueda.php">
             <label for="search">
               <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">

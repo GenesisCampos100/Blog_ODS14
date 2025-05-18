@@ -227,35 +227,35 @@ document.addEventListener('DOMContentLoaded', function () {
             <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
           </button>
           <ul class="dropdown-menu" aria-labelledby="botonIdioma">
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
-          </ul>
+                      <!-- Por esto -->
+          <li><a class="dropdown-item" href="#" onclick="cambiarIdioma('es','en')">Inglés</a></li>
+          <li><a class="dropdown-item" href="#" onclick="cambiarIdioma('en','es')">Español</a></li>
+         </ul>
         </li>
         </ul>
 
         <!-- Búsqueda y Login -->
         <div class="d-flex align-items-center ms-lg-auto flex-column flex-lg-row gap-2">
 
-         <!-- Formulario de búsqueda -->
-                    
-<form class="form" method="GET" action="busqueda.php">
-  <label for="search">
-    <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">
-    <div class="fancy-bg"></div>
-    <div class="search">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <g>
-          <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-        </g>
-      </svg>
-    </div>
-    <button class="close-btn" type="reset">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-      </svg>
-    </button>
-  </label>
-</form>
+          <!-- Formulario de búsqueda -->
+          <form class="form" method="GET" action="busqueda.php">
+            <label for="search">
+              <input class="input" type="search" name="search" required placeholder="Busca en el blog..." id="search">
+              <div class="fancy-bg"></div>
+              <div class="search">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                  </g>
+                </svg>
+              </div>
+              <button class="close-btn" type="reset">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+              </button>
+            </label>
+          </form>
 
            <!-- Botón de login -->
   <?php
@@ -275,7 +275,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUsuario">
       <li>
         <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?');">
-          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+          <i id="cerrarSesion"class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
         </a>
       </li>
     </ul>
@@ -325,12 +325,12 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 <div class="publicacionhome">
 
   <div class="imagenportada">
-  <img id="tituloimg" class="imgtituloblog img-fluid" src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen Portada">
+  <img id="tituloimg" class="imgtituloblog img-fluid no-traducir" src="<?= htmlspecialchars($post->imagen_portada) ?>" alt="Imagen Portada">
 
     </div>
 
   <div id="categoria" class="categoriass">
-  <a href="categoria.php?id=<?= urlencode($post->categoria_id) ?>" class="categoria-link">
+  <a id="categoriaa" href="categoria.php?id=<?= urlencode($post->categoria_id) ?>" class="categoria-link">
     <div class="categoria"><?= htmlspecialchars($post->categoria) ?></div>
   </a>
 </div>
@@ -358,11 +358,11 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 
     <?php foreach ($elementos as $el): ?>
         <?php if ($el->tipo === 'texto'): ?>
-          <div class="textoblog">
+          <div id="textopubli1" class="textoblog">
             <?= $el->contenido ?>
         </div>
         <?php elseif ($el->tipo === 'imagen'): ?>
-            <div class="imagen-publicacion">
+            <div class="imagen-publicacion no-traducir">
                 <img src="<?= htmlspecialchars($el->contenido) ?>" alt="Imagen de la publicación" class="img-fluid">
             </div>
         <?php endif; ?>
@@ -372,7 +372,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
     <?php if (!empty($post->referencias)): ?>
 
       <div class="referencias">
-      <div class="tituloref">Referencias</div>
+      <div id="referencias" class="tituloref">Referencias</div>
       <div class="referenciass">
       <ul>
                 <?php 
@@ -398,7 +398,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 <!-- From Uiverse.io by JesusRafaelNavaCruz --> 
 <div class="publicacionesrecientes">
 
-<div class="titulopublicaciones">Publicaciones Recientes</div>
+<div id="tituloPublicacionesRecientes" class="titulopublicaciones">Publicaciones Recientes</div>
 
   <?php foreach ($tarjetas as $tarjeta): ?>
     <div class="publicacion_tarjeta">
@@ -409,7 +409,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
       <div class="contenido_tarjeta">
         <p class="titulo_tarjeta"><?= htmlspecialchars($tarjeta->titulo) ?></p>
         <p class="resumen_tarjeta"><?= htmlspecialchars($tarjeta->resumen) ?></p>
-        <a href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" id="leer">Leer más</a>
+        <a id="leer" href="ver_publicacion.php?id=<?= htmlspecialchars($tarjeta->id) ?>" class="btn btn-primary" >Leer más</a>
       </div>
     </div>
     
@@ -420,17 +420,12 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
     <div class="text-center" style="margin-top:50px">
   <button class="btn btn-outline-primary mb-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#seccionComentarios" aria-expanded="false" aria-controls="seccionComentarios" id="toggleComentarios">
     <i class="bi bi-eye" id="iconoComentarios"></i>
-    <span>Ver comentarios</span>
+    <span id="textoVerComentarios">Ver comentarios</span>
 </button>
 </div>
 
 
 </div>
-
-
-
-
-
 
 <!-- Contenedor de comentarios colapsable -->
 <div class="collapse" id="seccionComentarios" style="margin-top:0px">

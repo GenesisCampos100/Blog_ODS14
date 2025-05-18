@@ -1,4 +1,3 @@
-
 .navbar {
     background-color: #051334 !important; 
     position: fixed;
@@ -35,10 +34,6 @@
   color: #48c9ef;
 }
 
-#languagel
-{
-  color: #39cded;
-}
 
 
 
@@ -136,6 +131,33 @@
 .navbar-categories .nav-link:hover {
   color: #ffffff;
 }
+/* Ajustes para el botón de idioma */
+.nav-item.dropdown {
+    display: flex;
+    align-items: center;
+  }
+  
+  #botonIdioma {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  #banderaIdioma {
+    transition: transform 0.2s;
+  }
+  
+  #botonIdioma:hover #banderaIdioma {
+    transform: scale(1.1);
+  }
+  
+  /* Asegurar que el dropdown esté alineado */
+  .dropdown-menu {
+    margin-top: 0.5rem;
+  }
+
 
 
 @media (max-width: 768px) {

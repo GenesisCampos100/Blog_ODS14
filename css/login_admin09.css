@@ -380,3 +380,22 @@ form {
 .fade-out {
     animation: fadeOut 0.4s ease forwards;
 }
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    width: 100%;
+    padding-right: 40px; /* espacio para el ícono */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+}

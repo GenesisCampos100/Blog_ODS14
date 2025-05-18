@@ -62,10 +62,12 @@ if (isset($_POST['btningresar_admin'])) {
         $resultado = select($sentencia, [$usuario]);
 
         if ($resultado && password_verify($password, $resultado[0]->contrasena)) {
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['idUsuario'] = $resultado[0]->id;
-            header("location: index_admin.php");
-            exit();
+    session_regenerate_id(true); // Evita secuestro de sesión
+    $_SESSION['usuario'] = $usuario;
+    $_SESSION['idUsuario'] = $resultado[0]->id;
+    header("Location: index_admin.php");
+    exit();
+
         } else {
             $_SESSION['tipo_mensaje'] = 'error';
             $_SESSION['mensaje'] = 'Nombre de usuario y/o contraseña incorrectos.';

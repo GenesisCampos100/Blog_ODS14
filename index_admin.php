@@ -9,8 +9,19 @@
     <title>Admin</title>
 </head>
 <body>
+
+
     <?php
-        session_start();
+        
+session_start(); // Iniciar sesión
+
+// Si no hay sesión iniciada, redirigir al login
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login_admin.php"); // Redirige al login si el usuario no está autenticado
+    exit;
+}
+
+
 
         //if(empty($_SESSION['usuario'])) header("location: login.php");
 
