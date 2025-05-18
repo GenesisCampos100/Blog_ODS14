@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'autenticacion.php';
 
 // Eliminar todas las variables de sesión
 $_SESSION = [];

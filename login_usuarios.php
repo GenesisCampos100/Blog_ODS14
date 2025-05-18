@@ -1,5 +1,5 @@
 <?php session_start(); 
-
+require_once 'autenticacion.php';
 
 
 ?>
@@ -48,8 +48,11 @@
                 <button id="login" type="submit" name="btningresar" class="btn login-btn">Iniciar Sesión</button>
                 <p id="welcome">Bienvenido a Dipsy</p>
                 <div class="forgot-link">
-                    <a id="passaword" href="recuperar_contraseña.php">¿Olvidaste tu contraseña?</a>
-                </div>
+    <a id="passaword" href="recuperar_contraseña.php" style="color: #007BFF; text-decoration: underline; font-weight: 500;">
+         ¿Olvidaste tu contraseña?
+    </a>
+</div>
+
             </form>
         </div>
 

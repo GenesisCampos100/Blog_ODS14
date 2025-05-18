@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require_once 'autenticacion.php';
 
   // Conexión a la base de datos
   function conectarBaseDatos() {
@@ -387,47 +388,48 @@ foreach ($publicaciones as $post) {
   </div>
 </div>
 
-<!-- Statistics section -->
+<!-- Sección con estadísticas -->
 <section class="estadisticas-ods14 py-5" id="estadisticas-ods14" style="margin-top:50px; margin-bottom:50px">
   <div class="container">
-    <h2 id="tituloEstadisticas" class="text-center mb-4 text-ods" data-aos="fade-down">Key Statistics of SDG 14</h2>
-    <p id="parrafoEstadisticas" class="text-center mb-5" data-aos="fade-up" style="font-family:'Questrial'; font-size:25px; color: #00ddff;">Data reflecting the urgency of conserving our seas and oceans.</p>
+    <h2 class="text-center mb-4 text-ods" data-aos="fade-down">Estadísticas clave del ODS 14</h2>
+    <p class="text-center mb-5" data-aos="fade-up" style="font-family:'Questrial'; font-size:25px; color: #00ddff;">Datos que reflejan la urgencia de conservar nuestros mares y océanos.</p>
 
     <div class="row align-items-center">
-      <!-- Chart on the left -->
+      <!-- Gráfico a la izquierda -->
       <div class="col-lg-6 mb-4" data-aos="fade-right">
         <canvas id="graficoOds14" style="color:white"></canvas>
       </div>
 
-      <!-- Cards on the right -->
+      <!-- Tarjetas a la derecha -->
       <div class="col-lg-6">
         <div class="row g-4">
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
               <i class="bi bi-recycle icono"></i>
-              <h4 id="h411">11 million</h4>
-              <p id="parrafo411" class="text-muted">tons of plastic enter the ocean annually.</p>
+              <h4>11 millones</h4>
+              <p class="text-muted">de toneladas de plástico entran al océano anualmente.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-card">
               <i class="bi bi-droplet-half icono text-info"></i>
               <h4>40%</h4>
-              <p id="parrafo412" class="text-muted">of oceans are severely affected by human activity.</p>
+              <p class="text-muted">de los océanos están gravemente afectados por la actividad humana.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="stat-card">
               <i class="bi bi-exclamation-triangle-fill icono text-warning"></i>
-              <h4 id="idecada">1 in 3</h4>
-              <p id="parrafo413" class="text-muted">fish species are overexploited.</p>
+
+              <h4>1 de cada 3</h4>
+              <p class="text-muted">especies de peces están sobreexplotadas.</p>
             </div>
           </div>
           <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="stat-card">
               <i class="bi bi-globe2 icono text-warning"></i>
               <h4>90%</h4>
-              <p id="parrafo414" class="text-muted">of climate change heat is absorbed by the oceans.</p>
+              <p class="text-muted">del calor del cambio climático es absorbido por los océanos.</p>
             </div>
           </div>
         </div>

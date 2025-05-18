@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'autenticacion.php';
 
 function conectarBaseDatos() {
     $host = "localhost";
@@ -426,6 +427,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 
 </div>
 
+
 <!-- Contenedor de comentarios colapsable -->
 <div class="collapse" id="seccionComentarios" style="margin-top:0px">
         <div class="comentarios">
@@ -467,6 +469,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
             
         </div>
     </div>
+
 </div>
     
 

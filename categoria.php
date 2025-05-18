@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'autenticacion.php';
 
 // Conexión a la base de datos
 function conectarBaseDatos() {

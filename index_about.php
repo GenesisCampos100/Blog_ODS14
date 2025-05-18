@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require_once 'autenticacion.php';
 
 function conectarBaseDatos() {
     $host = "localhost";
