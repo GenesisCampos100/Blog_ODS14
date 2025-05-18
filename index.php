@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <?php $fecha = new DateTime($post->fecha_publicacion); ?>
 <div class="fecha"><?= $fecha->format('d/m/Y') ?></div>
       </div>
-      <div class="comentariolink">COMENTARIOS</div>
+      <a href="#comentariosss" class="comentariolink">COMENTARIOS</a>
     </div>
 
 
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
-    <div class="text-center" style="margin-top:50px">
+    <div class="text-center" style="margin-top:50px" id="comentariosss">
   <button class="btn btn-outline-primary mb-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#seccionComentarios" aria-expanded="false" aria-controls="seccionComentarios" id="toggleComentarios">
     <i class="bi bi-eye" id="iconoComentarios"></i>
     <span>Ver comentarios</span>
