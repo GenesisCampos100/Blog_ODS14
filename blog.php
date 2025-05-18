@@ -156,10 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   data-bs-toggle="dropdown" aria-expanded="false">
             <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
           </button>
-          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
-          </ul>
+         
         </li>
           </ul>
 

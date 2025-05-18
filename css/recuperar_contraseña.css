@@ -20,7 +20,9 @@ body::before {
     background: url('waves.svg') no-repeat center;
     background-size: cover;
     opacity: 0.4;
+    pointer-events: none; /* ✅ Esto evita que bloquee clics */
 }
+
 
 /* 📌 Contenedor estilizado */
 form {

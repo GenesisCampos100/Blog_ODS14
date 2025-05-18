@@ -84,10 +84,7 @@ function conectarBaseDatos() {
                   data-bs-toggle="dropdown" aria-expanded="false">
             <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
           </button>
-          <ul class="dropdown-menu" aria-labelledby="botonIdioma">
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('es','en')">Inglés</a></li>
-            <li><a class="dropdown-item" href="#" onclick="traducirContenido('en','es')">Español</a></li>
-          </ul>
+         
         </li>
         </ul>
 
@@ -238,7 +235,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 
         <section class="history">
             <div class="history-content">
-                <div id="tituloHistoria" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px;"><b>HISTORIA</b></div>
+                <div id="tituloHistoria" style="font-family:'Roboto', sans-serif; font-weight:bold; font-size:50px;"><center><b>HISTORIA</b><br></center></div>
                 <p id="parrafoHistoria">
                     Desde pequeños hemos sentido una profunda fascinación por el mar y sus misterios. Cada ola, cada criatura y cada arrecife cuentan una historia increíble que queremos compartir contigo.
 

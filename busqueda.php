@@ -66,6 +66,9 @@ function resaltarCoincidencia($texto, $busqueda) {
   <link href="css/footer.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet"/>
   <link href="css/Blogs.css" rel="stylesheet"/> 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  
 
 
 
@@ -109,12 +112,14 @@ function resaltarCoincidencia($texto, $busqueda) {
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="languagel">Español</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">English</a></li>
-            </ul>
-          </li>
+           <!-- Ícono de idioma alineado -->
+        <li class="nav-item mx-2 dropdown">
+          <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="banderaIdioma" src="img/espana.png" alt="Idioma" style="height: 20px;">
+          </button>
+          
+        </li>
         </ul>
 
         <!-- Búsqueda y Login -->
@@ -141,13 +146,38 @@ function resaltarCoincidencia($texto, $busqueda) {
 </form>
 
 
-          <!-- Botón de login -->
-          <div class="logg">
-            <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
-              <i class="bi bi-person fs-5 me-1"></i>
-              <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
+      <!-- Botón de login -->
+      <?php
+    // Si aún no hay URL guardada y no estamos en login
+    if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
+        $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+    }
+    ?>
+
+      <?php if (isset($_SESSION['usuario_nombre'])): ?>
+        
+      <div class="dropdown">
+        <a class="usuario-logeado d-flex align-items-center text-white dropdown-toggle text-decoration-none" href="" id="dropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-person-circle fs-5 me-2"></i>
+          <span class="d-none d-sm-inline"><?= htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUsuario">
+          <li>
+            <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('¿Estás seguro de que deseas cerrar sesión?');">
+              <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
             </a>
-          </div>
+          </li>
+        </ul>
+      </div>
+    <?php else: ?>
+      <div class="logg">
+                <a href="login_usuarios.php" class="d-flex align-items-center text-white text-decoration-none">
+                  <i class="bi bi-person fs-5 me-1"></i>
+                  <span class="d-none d-sm-inline" id="loginn">Iniciar Sesión</span>
+                </a>
+              </div>
+    <?php endif; ?>
+
 
         </div>
       </div>
@@ -278,6 +308,7 @@ function resaltarCoincidencia($texto, $busqueda) {
   </div>
 </footer>
 
+<script src="traductor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
