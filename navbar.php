@@ -27,7 +27,6 @@
           <li class="nav-item mx-2">
             <a class="nav-link" href="blog.php" id="blogl">Blog</a>
           </li>
-          
            <!-- Ícono de idioma alineado -->
         <li class="nav-item mx-2 dropdown">
           <button id="botonIdioma" class="btn nav-link p-0 border-0 bg-transparent" 
