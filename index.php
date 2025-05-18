@@ -129,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_comentar'])) {
   <link href="css/footer.css" rel="stylesheet" />
   <link href="css/general.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  
 
 
   <!-- jQuery -->
@@ -255,11 +256,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
            <!-- Botón de login -->
   <?php
-// Si aún no hay URL guardada y no estamos en login
+
+// Guardar la URL actual si no está en login_usuarios.php
 if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
-    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
 }
+
 ?>
+
 
   <?php if (isset($_SESSION['usuario_nombre'])): ?>
     
@@ -347,7 +351,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
         <?php $fecha = new DateTime($post->fecha_publicacion); ?>
 <div class="fecha"><?= $fecha->format('d/m/Y') ?></div>
       </div>
-      <div id="comentarios" class="comentariolink">COMENTARIOS</div>
+     <a href="#comentariosss" class="comentariolink">COMENTARIOS</a>
     </div>
 
 
@@ -413,13 +417,12 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 
   </div>
 
-    <div class="text-center" style="margin-top:50px">
+    <div class="text-center" style="margin-top:50px" id="comentariosss">
   <button class="btn btn-outline-primary mb-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#seccionComentarios" aria-expanded="false" aria-controls="seccionComentarios" id="toggleComentarios">
     <i class="bi bi-eye" id="iconoComentarios"></i>
-    <span id="textoVerComentarios">Ver comentarios</span>
+    <span>Ver comentarios</span>
 </button>
 </div>
-
 
 </div>
 

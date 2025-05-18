@@ -121,5 +121,17 @@ text-align: center;
 font-family: 'miFuenteUndertale';
 display: inline-block;
 background-color: black;
-        
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap'); /* Importa la fuente Questrial */
+/* Fuente e íconos */
+
+@font-face {
+    font-family: 'Kaytek';
+    src: url(../fuentes/KaytekRounded-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'Questrial';
+  src: url(../fuentes/Questrial-Regular.ttf); 
 }

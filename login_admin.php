@@ -30,28 +30,47 @@ if (isset($_SESSION['mensaje'])) {
        <div class="form-box login">
        
            <form action="controlador_admin.php" method="POST">
-               <h1>Login</h1>
+               <h1>Iniciar Sesión</h1>
                <div class="input-box">
-                   <input type="text" name="admin_usuario" placeholder="Username" >
+                   <input type="text" name="admin_usuario" placeholder="Usuario" >
                    <i class='bx bxs-user'></i>
                </div>
                <div class="input-box">
-                   <input type="password" name="admin_contrasenia" placeholder="Password" >
-                   <i class='bx bxs-lock-alt'></i>
-               </div>
-               <button type="submit" name="btningresar_admin" class="btn">Login</button>
+            <input type="password" name="admin_contrasenia" id="password" placeholder="Password" required>
+            
+            <i class='bx bx-show toggle-password' data-target="password" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
+        </div>
+               <button type="submit" name="btningresar_admin" class="btn">Entrar</button>
                
            </form>
        </div>
        
         <div class="toggle-box">
             <div class="toggle-panel toggle-left">
-                <h1>Hello, Welcome</h1>
+                <h1>Hola, Bienvenido</h1>
             </div>
           
         </div>
     </div>
 
+    <script>
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', () => {
+        const inputId = icon.getAttribute('data-target');
+        const input = document.getElementById(inputId);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bx-show');
+            icon.classList.add('bx-hide');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bx-hide');
+            icon.classList.add('bx-show');
+        }
+    });
+});
+</script>
     
 </body>
 

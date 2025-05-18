@@ -60,15 +60,23 @@ if (!isset($_SESSION['usuario'])) {
 
         $clientes = obtenerClientes();
     ?>
-    
+
+
+     <!-- ✅ Mensaje de bienvenida -->
+        <div style="max-width: 800px; margin: 20px auto; background-color: #e0f7fa; padding: 20px; border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.1); font-family: 'Segoe UI', sans-serif; text-align: center;">
+            <h2 style="color: #007bff; margin-bottom: 10px;">¡Bienvenido, Administrador!</h2>
+            <p style="color: #333;">Aquí puedes gestionar todas las publicaciones del blog.</p>
+        </div>
+
+      <!-- ✅ Contenedor de publicaciones -->
         <div class="publicaciones-container">
-        <h1>Publicaciones</h1>
+        <h1 class="titulo-seccion">Publicaciones</h1>
         <a class="btn agregar" href="agregar_publicacion.php">
             <i class="fa fa-plus"></i> Agregar +
         </a>
         </div>
     
-        
+       
 
         <div class="contenedor">
             

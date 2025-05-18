@@ -113,9 +113,9 @@ function conectarBaseDatos() {
 
             <!-- Botón de login -->
   <?php
-// Si aún no hay URL guardada y no estamos en login
+// Guardar la URL actual si no está en login_usuarios.php
 if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'login_usuarios.php') {
-    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // Página actual
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
 }
 ?>
 
@@ -164,7 +164,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
       <a class="nav-link categoria-link" id="navCategoria3" href="categoria.php?id=3">Pesca Sostenible</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link categoria-link" id="navCategotia4" href="categoria.php?id=4">Educación Oceánica</a>
+      <a class="nav-link categoria-link" id="navCategoria4" href="categoria.php?id=4">Educación Oceánica</a>
       </li>
     </ul>
   </div>

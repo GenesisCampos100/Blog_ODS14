@@ -49,6 +49,7 @@ function select($sentencia, $parametros = []) {
 
 
 
+
 // Validación de Inicio de Sesión
 if (isset($_POST['btningresar'])) {
     $_SESSION['formulario_actual'] = 'login';
