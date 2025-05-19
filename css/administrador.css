@@ -135,6 +135,13 @@ a.btn.agregar:hover {
     background-color: #128d26;
 }
 
+a.btn.ver {
+    background-color: #1476a0;
+}
+
+a.btn.ver:hover {
+    background-color: #1fa4dd;
+}
 
 .btn:hover {
     background-color: #008dcf;

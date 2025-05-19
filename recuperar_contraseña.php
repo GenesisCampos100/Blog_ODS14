@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/recuperar_contraseña.css">
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Enviar Código</title>
+
+
     <style>
         .contenedor-formulario {
             max-width: 450px;
@@ -57,9 +60,71 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .return-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 70px; /* 💙 Tamaño del botón */
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: #fff; /* 💙 Color del ícono */
+    background: #0077b6; /* 💙 Azul que combina mejor */
+    border-radius: 12px; /* 🔵 Esquinas redondeadas */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* ✨ Efecto de sombra */
+}
+
+/* 🌟 Animación al pasar el mouse */
+.return-btn:hover {
+    transform: scale(1.15); /* 🔄 Crece suavemente */
+    background-color: #0096c7; /* 💙 Azul más brillante */
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.4s ease forwards;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    width: 100%;
+    padding-right: 40px; /* espacio para el ícono */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+}
+
     </style>
 </head>
 <body>
+
+<a href="login_usuarios.php" class="return-btn">
+    <i class='bx bx-left-arrow-alt'></i>
+</a>
 
 <div class="contenedor-formulario">
   <div class="titulo-bloque">

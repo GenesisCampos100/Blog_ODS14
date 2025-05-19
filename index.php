@@ -189,6 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<link rel="icon" type="image/png" href="img/Logoo.png">
+
 </head>
 
 <body>

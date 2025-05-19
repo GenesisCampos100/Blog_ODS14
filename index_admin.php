@@ -53,12 +53,15 @@ if (!isset($_SESSION['usuario'])) {
             return $respuesta->fetchAll();
         }
 
+
+
         function obtenerClientes(){
            $sentencia = "SELECT * FROM publicaciones ORDER BY fecha_publicacion DESC";
             return select($sentencia);
         }
 
         $clientes = obtenerClientes();
+       
     ?>
 
 
@@ -78,16 +81,16 @@ if (!isset($_SESSION['usuario'])) {
     
        
 
-        <div class="contenedor">
-            
-        <div class="cuadros">
+       <div class="contenedor">
+    <div class="cuadros">
         <table class="table">
             <thead>
                 <tr>
                     <th class="texto">No.</th>
-                    <th class="texto"> Titulo</th>
+                    <th class="texto">Título</th>
                     <th class="texto">Autor</th>
                     <th class="texto">Fecha</th>
+                    <th class="texto">Previsualizar</th>
                     <th class="texto">Editar</th>
                     <th class="texto">Eliminar</th>
                 </tr>
@@ -95,35 +98,40 @@ if (!isset($_SESSION['usuario'])) {
             <tbody>
                 <?php
                 $contador = 1; // Iniciar el contador
-                foreach($clientes as $cliente){
+                foreach ($clientes as $cliente) {
                 ?>
-                    <tr class="cuadros">  
+                    <tr class="cuadros">
                         <td><?php echo $contador; ?></td> <!-- Número consecutivo -->
                         <td><?php echo $cliente->titulo; ?></td>
                         <td><?php echo $cliente->autor_nombre; ?></td>
                         <td><?php echo $cliente->fecha_publicacion; ?></td>
+                        
                         <td>
-                           <a class="btn editar" href="editar_publicacion.php?id=<?php echo $cliente->id;?>">
-                                <i class="fa fa-edit"></i> Editar
-                            </a>
+                            <a class="btn ver" href="previa_admin.php?id=<?php echo $cliente->id; ?>">
+                                <i class="fa fa-eye"></i> Previsualizar
                             </a>
                         </td>
+
                         <td>
+                            <a class="btn editar" href="editar_publicacion.php?id=<?php echo $cliente->id; ?>">
+                                <i class="fa fa-edit"></i> Editar
+                            </a>
+                        </td>
 
-                            
+                        <td>
                             <a class="btn eliminar" onclick="confirmarEliminacion(<?php echo $cliente->id; ?>)">
-    <i class="fa fa-trash"></i> Eliminar
-</a>
-
-                     </td>
+                                <i class="fa fa-trash"></i> Eliminar
+                            </a>
+                        </td>
                     </tr>
                 <?php
-                     $contador++; // Incrementar el número
-                    } ?>
+                    $contador++; // Incrementar el número
+                } ?>
             </tbody>
-        </table></div>
-   
-    </div> 
+        </table>
+    </div>
+</div>
+
     
 
     <?php
