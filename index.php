@@ -354,7 +354,7 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
         <?php $fecha = new DateTime($post->fecha_publicacion); ?>
 <div class="fecha"><?= $fecha->format('d/m/Y') ?></div>
       </div>
-     <a href="#comentariosss" class="comentariolink">COMENTARIOS</a>
+     <a href="#comentariosss" class="comentariolink">COMENTARIOS</a> 
     </div>
 
 
@@ -433,14 +433,15 @@ if (!isset($_SESSION['redirect_url']) && basename($_SERVER['PHP_SELF']) !== 'log
 <!-- Contenedor de comentarios colapsable -->
 <div class="collapse" id="seccionComentarios" style="margin-top:0px">
         <div class="comentarios">
-            <div class="titulopublicaciones">Comentarios</div>
+            <div class="titulopublicaciones">Comentarios</div> <br> <br>
 
             <?php if (isset($_SESSION['usuario_nombre'])): ?>
                 <form action="" method="POST">
                     <div class="comment-input">
                         <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
                     </div>
-                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+                    <br>
+                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button><br><br>
                 </form>
             <?php else: ?>
                 <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>

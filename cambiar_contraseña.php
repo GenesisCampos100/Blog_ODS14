@@ -123,8 +123,6 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
-
-
     </style>
 </head>
 <body>
@@ -139,43 +137,11 @@ input[type="submit"]:hover {
     <?php endif; ?>
 
     <form method="post">
-        <!-- Contraseña -->
-        <div class="input-box">
-            <input type="password" name="registrar-contrasenia" id="password1" placeholder="Password" required>
-            
-            <i class='bx bx-show toggle-password' data-target="password1" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
-        </div>
-
-        <!-- Confirmar contraseña -->
-        <div class="input-box">
-            <input type="password" name="registrar-confirmar" id="password2" placeholder="Confirm Password" required>
-            
-            <i class='bx bx-show toggle-password' data-target="password2" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
-        </div>
-<!-- Botón de envío -->
+        <input type="password" name="nueva_contraseña" placeholder="Nueva Contraseña" required>
+        <input type="password" name="confirmar_contraseña" placeholder="Confirmar Contraseña" required>
         <input type="submit" name="cambiar_contraseña" value="Cambiar Contraseña">
     </form>
 </div>
 </div>
-
-<script>
-document.querySelectorAll('.toggle-password').forEach(icon => {
-    icon.addEventListener('click', () => {
-        const inputId = icon.getAttribute('data-target');
-        const input = document.getElementById(inputId);
-
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bx-show');
-            icon.classList.add('bx-hide');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bx-hide');
-            icon.classList.add('bx-show');
-        }
-    });
-});
-</script>
-
 </body>
 </html>

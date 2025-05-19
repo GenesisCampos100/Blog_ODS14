@@ -435,16 +435,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <!-- Contenedor de comentarios colapsable -->
-<div class="collapse" id="seccionComentarios">
+<div class="collapse" id="seccionComentarios" style="margin-top:0px">
         <div class="comentarios">
-            <div id="tituloComentarios" class="titulopublicaciones">Comentarios</div>
+            <div class="titulopublicaciones">Comentarios</div> <br> <br>
 
             <?php if (isset($_SESSION['usuario_nombre'])): ?>
                 <form action="" method="POST">
                     <div class="comment-input">
                         <textarea name="comentario" class="form-control" rows="3" placeholder="Escribe tu comentario..." required></textarea>
                     </div>
-                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button>
+                    <br>
+                    <button type="submit" name="btn_comentar" class="btn btn-primary">Comentar</button><br><br>
                 </form>
             <?php else: ?>
                 <p class="text-muted" style="margin-top:60px">Debes <a href="login_usuarios.php">iniciar sesión</a> para comentar.</p>
@@ -475,8 +476,8 @@ document.addEventListener('DOMContentLoaded', function () {
             
         </div>
     </div>
+
 </div>
-    
 
 
 <!-- Botón Volver Arriba -->
