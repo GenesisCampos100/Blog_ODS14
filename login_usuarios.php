@@ -38,11 +38,11 @@ require_once 'autenticacion.php';
             <form action="controlador.php" method="POST">
                 <h1 id="login3">Iniciar Sesión</h1>
                 <div class="input-box">
-                    <input type="text" name="login_usuario" placeholder="Username">
+                    <input type="text" name="login_usuario" placeholder="Usuario">
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" name="login_contrasenia" placeholder="Password">
+                    <input type="password" name="login_contrasenia" placeholder="Contraseña">
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <button id="login" type="submit" name="btningresar" class="btn login-btn">Iniciar Sesión</button>
@@ -64,38 +64,38 @@ require_once 'autenticacion.php';
 
         <!-- Usuario -->
         <div class="input-box">
-            <input type="text" name="registrar-usuario" placeholder="Username" >
+            <input type="text" name="registrar-usuario" placeholder="Usuario" >
             <i class='bx bxs-user'></i>
         </div>
 
         <!-- Correo -->
         <div class="input-box">
-            <input type="email" name="registrar-correo" placeholder="Email" >
+            <input type="email" name="registrar-correo" placeholder="Correo" >
             <i class='bx bxs-envelope'></i>
         </div>
 
         <!-- Nombre -->
         <div class="input-box">
-            <input type="text" name="registrar-nombre" placeholder="First Name" >
+            <input type="text" name="registrar-nombre" placeholder="Primer Nombre" >
             <i class='bx bxs-id-card'></i>
         </div>
 
         <!-- Apellidos -->
         <div class="input-box">
-            <input type="text" name="registrar-apellidos" placeholder="Last Name" >
+            <input type="text" name="registrar-apellidos" placeholder="Apellidos" >
             <i class='bx bxs-id-card'></i>
         </div>
 
                 <!-- Contraseña -->
         <div class="input-box">
-            <input type="password" name="registrar-contrasenia" id="password1" placeholder="Password" required>
+            <input type="password" name="registrar-contrasenia" id="password1" placeholder="Contraseña" required>
             
             <i class='bx bx-show toggle-password' data-target="password1" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
         </div>
 
         <!-- Confirmar contraseña -->
         <div class="input-box">
-            <input type="password" name="registrar-confirmar" id="password2" placeholder="Confirm Password" required>
+            <input type="password" name="registrar-confirmar" id="password2" placeholder="Confirmar contraseña" required>
             
             <i class='bx bx-show toggle-password' data-target="password2" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
         </div>
